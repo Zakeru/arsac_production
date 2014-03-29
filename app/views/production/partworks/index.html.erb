@@ -1,0 +1,112 @@
+<div class="row">
+    <div class="span7">
+        <h1>Produccion <small>Parte Diario</small> <%= image_tag('glyphicons_045_calendar.png') %></h1>
+    </div>
+    <div class="span5">
+        <br>
+        <%= link_to raw('Nuevo <i class="icon-plus icon-white"></i>'), new_production_partwork_path, :class => "btn btn-primary pull-right" %>
+    </div>
+</div>
+<br>
+
+<div class="row">
+  <div class="span6">
+    <!-- Paginacion-->
+    <div class="pull-left">
+      <%= will_paginate @partworks, renderer: BootstrapPagination::Rails %> 
+    </div>
+    <!-- End Paginacion -->
+  </div>
+  <div class="span6">
+    <!-- Search-->
+    <%= form_tag "/production/partworks", :method => 'get', :class => "form-search pull-right well" , :style => "padding:4px;" do %>
+
+        <% if !params[:parteobra_campo].nil? and !params[:parteobra_opcion].nil? %>
+            <% parteobra_campo = params[:parteobra_campo] %>
+            <% parteobra_opcion = params[:parteobra_opcion] %>
+            <% preselect_opcion = parteobra_opcion %>
+            <% if parteobra_campo.to_i == 1 %>
+              <% preselect_campo = 1 %>
+            <% elsif parteobra_campo.to_i == 2 %>
+              <% preselect_campo = 2 %>
+            <% elsif parteobra_campo.to_i == 3 %>
+              <% preselect_campo = 3 %>
+            <% elsif parteobra_campo.to_i == 4 %>
+              <% preselect_campo = 4 %>
+            <% elsif parteobra_campo.to_i == 5 %>
+              <% preselect_campo = 5 %>
+            <% elsif parteobra_campo.to_i == 6 %>
+              <% preselect_campo = 6 %>
+            <% elsif parteobra_campo.to_i == 7 %>
+              <% preselect_campo = 7 %>
+            <% end %>
+        <% else %>
+            <% preselect_opcion = 0 %>
+            <% preselect_campo = 0 %>    
+        <% end %>
+
+
+        <%= select_tag :parteobra_campo, options_for_select([['Numero', 1], ['Frente', 2], ['Grupos de Trabajo',7], ['Jefe de Frente', 3], ['Sub Contratista', 4], ['Maestro de Obra', 5], ['Fecha', 6]],preselect_campo), :prompt => "Seleccione",  :class => 'input-medium' %>
+        <%= select_tag :parteobra_opcion, options_for_select(@combo_opcions,preselect_opcion), :prompt => "Seleccione",  :class => 'input-xlarge' %>        
+        <%= button_tag(type: "submit", class: "btn ") do %><i class="icon-search"></i> Buscar <% end %>
+    <% end %>
+    <!-- End Search -->
+  </div>
+</div><!-- End Row -->
+
+
+<table class="table table-striped table-bordered table-condensed table-hover">
+  <tr>    
+    <th>Numero</th>
+    <th>Frente</th>   
+    <th>Jefe de Frente</th>
+    <th>Sub Contratista</th>
+    <th>Maestro de Obra</th>    
+    <th>Fecha</th>    
+    <th>Acciones</th>
+  </tr>
+
+<% @partworks.each do |partwork| %>
+  <tr style="font-size:12px;">        
+    <td><%= partwork.numero %></td>  
+    <td><%= partwork.front.nombre %></td>
+    <td>
+      <%= partwork.groupsofwork.chiefoffront.entity.nombre %>
+      <%= partwork.groupsofwork.chiefoffront.entity.apellido %>
+      <%= partwork.groupsofwork.chiefoffront.entity.razon_social %>
+    </td>
+    <td>
+      <%= partwork.groupsofwork.subcontract.supplier.entity.nombre %>
+      <%= partwork.groupsofwork.subcontract.supplier.entity.apellido %> 
+      <%= partwork.groupsofwork.subcontract.supplier.entity.razon_social %>
+    </td>
+    <td>
+      <%= partwork.groupsofwork.teacherofwork.entity.nombre %>
+      <%= partwork.groupsofwork.teacherofwork.entity.apellido %>
+      <%= partwork.groupsofwork.teacherofwork.entity.razon_social %>
+    </td>    
+    <td><%= l(partwork.fecha, format: :fecha) %></td>   
+        <td>
+            <%= link_to raw('<i class="icon-eye-open icon-white"></i>'), production_partwork_path(partwork), :class => "btn btn-mini btn-info" %>
+            <% if partwork.aprobado.blank? %>
+              <%= link_to raw('<i class="icon-edit icon-white"></i>'), edit_production_partwork_path(partwork), :class => "btn btn-mini btn-success" %>
+              <%= link_to raw('<i class="icon-trash icon-white"></i>'), production_partwork_path(partwork), method: :delete, data: { confirm: 'Seguro que desea Eliminar?' }, :class => "btn btn-mini btn-danger" %>
+            <% else %>
+              <button class="btn btn-mini btn-success disabled" type="button"><i class='icon-edit icon-white'></i></button>
+              <button class="btn btn-mini btn-danger disabled" type="button"><i class='icon-trash icon-white'></i></button>
+            <% end %>
+        </td>
+  </tr>
+<% end %>
+</table>
+
+
+<!-- Paginacion -->
+<div class="pull-right">
+  <%= will_paginate @partworks, renderer: BootstrapPagination::Rails %>  
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function() { $("#partwork_opcion").select2(); });
+
+</script>

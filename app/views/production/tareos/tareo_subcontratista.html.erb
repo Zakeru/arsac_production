@@ -1,0 +1,193 @@
+<div class="page-header">
+	<h1><%= link_to "Tareos", production_tareos_path %>  <small>Ejecutor</small></h1>
+</div>
+
+<div class="row">
+	<div class="span12">
+		<%= form_tag('tareo_subcontratista',{:method => :post, :class => 'form-inline well'}) do %>
+			<%= select_tag :gruposdetrabajo_id, options_for_select(@array_gruposdetrabajo, !@gruposdetrabajo_id.nil? ? @gruposdetrabajo_id : ''), :prompt => 'Sector - Subsector - Jefedefrente - Ejecutor - Maestrodedeobra', class: 'span6' %>
+			<%= text_field_tag :inicio, nil, :placeholder => 'fecha inicio', :value => !@inicio.nil? ? @inicio : '', :class => 'input-small' %>
+			<%= text_field_tag :fin, nil, :placeholder => 'fecha fin', :value => !@fin.nil? ? @fin : '', :class => 'input-small' %>
+			<%= button_tag(type: "submit", class: "btn btn-primary") do %>
+		    	<i class="icon-search icon-white"></i> Buscar
+			<% end %>
+		<% end %>
+	</div>
+</div>
+<div class="clearfix"></div>
+<script type="text/javascript">
+  $('#inicio').datepicker({
+      format: 'yyyy-mm-dd',
+      language: 'es',
+      autoclose: true
+  });
+    $('#fin').datepicker({
+      format: 'yyyy-mm-dd',
+      language: 'es',
+      autoclose: true
+  });
+</script>
+
+<% if @pase.nil? %>
+	<h4>Esperando Datos..</h4>
+<% elsif @pase == 0  %>
+	<h4>Esperando Datos..</h4>
+<% elsif @pase == 1 %>	
+		<h5>
+			<%= @subcontratista_nombre %>	
+		</h5>		
+		<table class="table table-bordered table-condensed table-hover">
+			<tr class="well">
+				<th style="text-align: right;" class="span1">Item</th>
+				<th class="span4">Apellidos y Nombres</th>
+				<th style="text-align: right;">Categoria</th>
+				<% @dias_habiles.each do |dias| %>
+					<th style="text-align: right;"><%= dias.to_time.strftime("%d/%m/%y") %></th>
+				<% end %>				
+				<th style="text-align: right;">T. Normales</th>
+				<th style="text-align: right;">T. 60%</th>
+				<th style="text-align: right;">T. 100%</th>
+				<th style="text-align: right;">Total Horas</th>
+			</tr>
+			<% item = 1 %>
+			<% sumariza_total_normales= 0 %>
+			<% sumariza_total_60 = 0 %>
+			<% sumariza_total_100 = 0 %>
+			<% sumariza_total_horas = 0 %>
+			<% array_suma = Array.new(@dias_habiles.length, 0.00) %>			
+			<% @trabajadores_array.each do |trabajador| %>
+				<tr>
+					<td style="text-align: right;"><%= item %></td>
+					<td><%= trabajador[1] %></td>
+					<td style="text-align: right;"><%= trabajador[2] %></td>
+					<% indice = 0 %>
+					<% trabajador[3].each do |dias| %>
+						<td style="text-align: right;">
+							<%= dias.to_f == 0 ? ' -- ' : (number_to_currency dias.to_f, unit: '') %>
+						</td>
+						<% array_suma[indice] += dias.to_f %>
+						<% indice += 1 %>
+					<% end %>					
+					<td style="text-align: right;"><%= number_to_currency trabajador[5], unit: '' %></td>
+					<td style="text-align: right;"><%= number_to_currency trabajador[6], unit: '' %></td>
+					<td style="text-align: right;"><%= number_to_currency trabajador[7], unit: '' %></td>
+					<td style="text-align: right;"><%= number_to_currency  trabajador[4], unit:'' %></td>
+				</tr>
+				<% item += 1 %>
+				<% sumariza_total_normales += trabajador[5] %>
+				<% sumariza_total_60 += trabajador[6] %>
+				<% sumariza_total_100 += trabajador[7] %>
+				<% sumariza_total_horas += trabajador[4] %>
+			<% end %>
+			<tr class="well">
+				<td></td>
+				<td colspan="2">
+					<b>Total</b>
+				</td>				
+				<% array_suma.each do |arraysum| %>
+					<td style="text-align: right;">
+						<b><%= arraysum.to_f == 0 ? ' -- ' : (number_to_currency arraysum.to_f, unit: '') %></b>
+					</td>
+				<% end %>				
+				<td style="text-align: right;">
+					<b><%= number_to_currency sumariza_total_normales, unit: '' %></b>
+				</td>
+				<td style="text-align: right;">
+					<b><%= number_to_currency sumariza_total_60, unit: '' %></b>
+				</td>
+				<td style="text-align: right;">
+					<b><%= number_to_currency sumariza_total_100, unit: '' %></b>
+				</td>
+				<td style="text-align: right;">
+					<b><%= number_to_currency sumariza_total_horas, unit: '' %></b>					
+				</td>
+			</tr>
+		</table>
+					
+<% elsif @pase == 4 %>
+
+	<% indice_title = 0 %>
+	<% @tareos_total_arrays.each do |trabajadores_array| %>
+		<h5><%=  @subcontratista_arrays[indice_title] %></h5>
+		
+		<% indice_title += 1 %>
+		<table class="table table-bordered table-condensed table-hover">
+			<tr class="well">
+				<th style="text-align: right;" class="span1">Item</th>
+				<th class="span4">Apellidos y Nombres</th>
+				<th style="text-align: right;">Categoria</th>
+				<% @dias_habiles.each do |dias| %>
+					<th style="text-align: right;"><%= dias.to_time.strftime("%d/%m/%y") %></th>
+				<% end %>
+				<th style="text-align: right;">T. Normales</th>
+				<th style="text-align: right;">T. 60%</th>
+				<th style="text-align: right;">T. 100%</th>
+				<th style="text-align: right;">Total Horas</th>
+			</tr>
+			<% item = 1 %>
+			<% sumariza_total_normales= 0 %>
+			<% sumariza_total_60 = 0 %>
+			<% sumariza_total_100 = 0 %>
+			<% sumariza_total_horas = 0 %>
+			<% array_suma = Array.new(@dias_habiles.length, 0.00) %>
+			<% trabajadores_array.each do |trabajador| %>
+				<tr>
+					<td style="text-align: right;"><%= item %></td>
+					<td><%= trabajador[1] %></td>
+					<td style="text-align: right;"><%= trabajador[2] %></td>					
+					<% indice = 0 %>	
+					<% trabajador[3].each do |dias| %>
+						<td style="text-align: right;">
+							<%= dias.to_f == 0 ? ' -- ' : (number_to_currency dias.to_f, unit: '') %>								
+						</td>
+						<% array_suma[indice] += dias.to_f %>
+						<% indice += 1 %>
+					<% end %>
+					<td style="text-align: right;"><%= number_to_currency trabajador[5], unit: '' %></td>
+					<td style="text-align: right;"><%= number_to_currency trabajador[6], unit: '' %></td>
+					<td style="text-align: right;"><%= number_to_currency trabajador[7], unit: '' %></td>
+					<td style="text-align: right;"><%= number_to_currency  trabajador[4], unit:'' %></td>
+				</tr>
+				<% item += 1 %>
+				<% sumariza_total_normales += trabajador[5] %>
+				<% sumariza_total_60 += trabajador[6] %>
+				<% sumariza_total_100 += trabajador[7] %>
+				<% sumariza_total_horas += trabajador[4] %>				
+			<% end %>
+			<tr class="well">
+				<td></td>
+				<td colspan="2">
+					<b>Total</b>
+				</td>
+				<% array_suma.each do |arraysum| %>
+					<td style="text-align: right;">
+						<b><%= arraysum.to_f == 0 ? ' -- ' : (number_to_currency arraysum.to_f, unit: '') %></b>
+					</td>
+				<% end %>
+				<td style="text-align: right;">
+					<b><%= number_to_currency sumariza_total_normales, unit: '' %></b>
+				</td>
+				<td style="text-align: right;">
+					<b><%= number_to_currency sumariza_total_60, unit: '' %></b>
+				</td>
+				<td style="text-align: right;">
+					<b><%= number_to_currency sumariza_total_100, unit: '' %></b>
+				</td>
+				<td style="text-align: right;">
+					<b><%= number_to_currency sumariza_total_horas, unit: '' %></b>					
+				</td>
+			</tr>
+		</table>
+		
+
+	<% end %>
+	
+<% elsif @pase == 2 %>
+	<h4>No existen Registros para esos Datos.</h4>
+<% elsif @pase == 3	 %>
+	<h4>Error Ingresando Datos...</h4>
+<% end %>
+<br><br>
+
+
+

@@ -1,0 +1,23 @@
+<h1>Listing tipodedias</h1>
+
+<table>
+  <tr>
+    <th>Nombre</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @tipodedias.each do |tipodedia| %>
+  <tr>
+    <td><%= tipodedia.nombre %></td>
+    <td><%= link_to 'Show', tipodedia %></td>
+    <td><%= link_to 'Edit', edit_tipodedia_path(tipodedia) %></td>
+    <td><%= link_to 'Destroy', tipodedia, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Tipodedia', new_tipodedia_path %>

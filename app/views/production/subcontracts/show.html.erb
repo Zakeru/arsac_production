@@ -1,0 +1,102 @@
+<p id="notice"><%= notice %></p>
+
+<div class="page-header">
+  <h1>Ejecutor <small> <%= @subcontract.supplier.entity.razon_social %></small></h1>
+</div>
+
+<div class="row">
+<table class="table table-bordered table-condensed span6">
+  <tr class="well">
+    <th>Nombre</th>
+    <th>Descripcion</th>
+  </tr>
+  <tr>
+    <td>Proveedor</td>
+    <td>
+      <%= @subcontract.supplier.entity.nombre %>
+      <%= @subcontract.supplier.entity.apellido %>
+      <%= @subcontract.supplier.entity.razon_social %>
+    </td>
+  </tr>
+  <tr>
+    <td>Valorizacion</td>
+    <td><%= @subcontract.valorizacion %></td>
+  </tr>
+  <tr>
+    <td>Condiciones de pago:</td>
+    <td><%= @subcontract.condiciones_de_pago %></td>
+  </tr>
+  <tr>
+    <td>Amortizacion Numero</td>
+    <td><%= @subcontract.amortizacion_numero.blank? ? 0:@subcontract.amortizacion_numero %></td>
+  </tr>  
+  <tr>
+    <td>Amortizacion Porcentaje</td>
+    <td><%= @subcontract.amortizacion_porcentaje.blank? ? 0:@subcontract.amortizacion_porcentaje %>%</td>
+  </tr>
+  <tr>
+    <td>Fondo de garantia</td>
+    <td><%= @subcontract.fondo_garantia_porcentaje.blank? ? 0:@subcontract.fondo_garantia_porcentaje %>% </td>
+  </tr>
+  <tr>
+    <td>Detraccion</td>
+    <td><%= @subcontract.detraccion_total_inicial_porcentaje.blank? ? 0:@subcontract.detraccion_total_inicial_porcentaje %>%</td>
+  </tr> 
+  <tr>
+    <td>Igv:</td>
+    <td><%= @subcontract.igv.blank? ? 0:@subcontract.igv %>%</td>
+  </tr>  
+  <tr>
+    <td>Monto Contratado</td>
+    <td><%= @subcontract.monto_contratado.blank? ? 0:@subcontract.monto_contratado %></td>
+  </tr>
+  <tr>
+    <td>Adelanto 01</td>
+    <td><%= @subcontract.adelanto1.blank? ? (number_to_currency 0, unit: 'S/ '): (number_to_currency @subcontract.adelanto1, unit: 'S/ ') %></td>
+  </tr>
+  <tr>
+    <td>Adelanto 02</td>
+    <td><%= @subcontract.adelanto2.blank? ? (number_to_currency 0, unit: 'S/ '): (number_to_currency @subcontract.adelanto2, unit: 'S/ ') %></td>
+  </tr>
+  <tr>
+    <td>Adelanto 03</td>
+    <td><%= @subcontract.adelanto3.blank? ? (number_to_currency 0, unit: 'S/ '): (number_to_currency @subcontract.adelanto3, unit: 'S/ ') %></td>
+  </tr>
+  <tr>
+    <td>Adelanto 04</td>
+    <td><%= @subcontract.adelanto4.blank? ? (number_to_currency 0, unit: 'S/ '): (number_to_currency @subcontract.adelanto4, unit: 'S/ ') %></td>
+  </tr>
+</table>
+<div class="clearfix"></div>
+</div><!-- End Row -->
+
+<h2>Insumos </h2>
+
+<table class="table table-bordered table-striped table-condensed">
+  <tr>
+    <th>#id</th>
+    <th>Nombre de Insumo</th>
+    <th>Unidad</th>
+    <th>Cantidad</th>
+    <th>Precio Unitario</th>
+    <th>Parcial</th>
+  </tr>
+  <% @subcontract.inputs.each do |input| %>
+  <tr>
+    <td><%= input.id %></td>
+    <td>
+      <%= input.list.nombre %>
+    </td>
+    <td><%= input.unit.nombre %></td>
+    <td><%= input.cantidad %></td>
+    <td><%= input.pu_sin_igv %></td>
+    <td><%= input.parcial %></td>    
+  </tr>
+  <% end %>
+</table>
+
+<div class="form-actions">
+  <%= link_to raw('<i class="icon-edit icon-white"></i> Editar'), edit_production_subcontract_path(@subcontract), :class => "btn btn-success" %>
+  <%= link_to raw('<i class="icon-arrow-left icon-white"></i> Regresar'), production_subcontracts_path, :class => "btn btn-primary" %>  
+</div>
+

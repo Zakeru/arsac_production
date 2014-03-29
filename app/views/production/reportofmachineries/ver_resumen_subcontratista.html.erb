@@ -1,0 +1,72 @@
+<div class="page-header">
+	<h1 style="text-align: center;">Cuadro Resumen Ejecutor</h1>	
+</div>
+
+<table class="table table-condensed table-bordered table-hover">
+  <tr class="well">
+	<td colspan="11" style="text-align: center">
+		<h4>
+			<%= @subcontratodeequipo.supplier.entity.nombre %> 
+			<%= @subcontratodeequipo.supplier.entity.apellido %>			
+			<%= @subcontratodeequipo.supplier.entity.razon_social %>
+
+		<small>Ejecutor (<%= params[:inicio].to_date.strftime("%d %b") %> - <%= params[:fin].to_date.strftime("%d %b. %Y") %>)</small></h4>
+	</td>
+  </tr>
+  <tr class="well">
+    <th rowspan="2">#</th>
+    <th rowspan="2">Equipo</th>
+    <th rowspan="2" style="text-align: right;">Und</th>
+    <th rowspan="2" style="text-align: right;">Precio U.</th>
+    <th colspan="2" style="text-align: center;">Acumulado Anterior</th>
+    <th colspan="2" style="text-align: center;">Presente Valorizacion</th>
+    <th colspan="2" style="text-align: center;">Acumulado Actual</th>
+    <th rowspan="2" style="text-align: center">Accion</th>
+  </tr>
+  <tr class="well">
+    <th style="text-align: right;">Metrado</th>
+    <th style="text-align: right;">Monto</th>
+    <th style="text-align: right;">Metrado</th>
+    <th style="text-align: right;">Monto</th>
+    <th style="text-align: right;">Metrado</th>
+    <th style="text-align: right;">Monto</th>
+  </tr>  
+
+  <% ri = 0 %>
+  <% sumariza_acumulado_anterior_monto = 0 %>
+  <% sumariza_presente_valorizacion_monto = 0 %>
+  <% sumariza_acumulado_actual_monto = 0 %>
+  <% @maquinariaequiporesumenes.each do |resumen| %>
+    <tr>
+      <% ri += 1 %>
+      <td><%= ri %></td>
+      <td><%= resumen.nombre_equipo %></td>
+      <td style="text-align: right;"><%= resumen.unidad %></td>
+      <td style="text-align: right;"><%= resumen.precio_unitario %></td>
+      <td style="text-align: right;"><%= resumen.acumulado_anterior_metrado %></td>
+      <td style="text-align: right;"><%= resumen.acumulado_anterior_monto %></td>
+      <td style="text-align: right;"><%= resumen.presente_valorizacion_metrado %></td>
+      <td style="text-align: right;"><%= resumen.presente_valorizacion_monto %></td>
+      <td style="text-align: right;"><%= resumen.acumulado_actual_metrado %></td>
+      <td style="text-align: right;"><%= resumen.acumulado_actual_monto %></td>
+      <td style="text-align: center;">
+        <%= link_to raw("<i class='icon-eye-open'></i>"), "/reportedemaquinarias/ver_resumen_equipo?maquinariaequiporesumene_id=#{resumen.id}&equipodesubcontrato_id=#{resumen.equiposdesubcontrato_id}&inicio=#{resumen.inicio}&fin=#{resumen.fin}", class: 'btn btn-small', target: '_blank' %>
+      </td>
+    </tr>                
+    <% sumariza_acumulado_anterior_monto += resumen.acumulado_anterior_monto.to_f %>
+    <% sumariza_presente_valorizacion_monto += resumen.presente_valorizacion_monto.to_f %>
+    <% sumariza_acumulado_actual_monto += resumen.acumulado_actual_monto.to_f %>
+  <% end %>
+  <tr>
+    <td colspan="2" style="text-align: center;"><b>SUB TOTAL VALORIZACION</b></td>
+    <td></td>
+    <td></td>
+    <td colspan="2" style="text-align: right;"><b><%= number_to_currency sumariza_acumulado_anterior_monto, unit:' S/.  ' %></b></td>
+    <td colspan="2" style="text-align: right;"><b><%= number_to_currency sumariza_presente_valorizacion_monto, unit:' S/. ' %></b></td>
+    <td colspan="2" style="text-align: right;"><b><%= number_to_currency sumariza_acumulado_actual_monto, unit:' S/. ' %></b></td>
+    <td></td>
+  </tr>
+  
+</table>
+
+

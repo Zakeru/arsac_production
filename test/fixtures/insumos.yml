@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  unidad: MyString
+  cantidad: MyString
+  pu_sin_igv: MyString
+  parcial: MyString
+  descripcion: MyString
+  catalogodeinsumo_id: 1
+  proveedore_id: 1
+
+two:
+  unidad: MyString
+  cantidad: MyString
+  pu_sin_igv: MyString
+  parcial: MyString
+  descripcion: MyString
+  catalogodeinsumo_id: 1
+  proveedore_id: 1

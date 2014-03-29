@@ -1,0 +1,93 @@
+<p id="notice"><%= notice %></p>
+<div class="page-header">
+  <h1>Detalle Proveedor</h1>
+</div>
+
+<div class="row">
+  
+
+<table class="table table-striped table-bordered table-condensed span6">
+  <tr>
+    <th>Nombre</th>
+    <th>Descripcion</th>
+  </tr>  
+  <tr>
+    <td>#id</td>
+    <td><%= @supplier.id %></td>
+  </tr>
+  <tr>
+    <td>Ejecutor</td>
+    <td>
+      <%= @supplier.entity.nombre %> 
+      <%= @supplier.entity.apellido %>
+      <%= @supplier.entity.razon_social %>
+    </td>
+  </tr>
+  <tr>
+    <td>Direccion</td>
+    <td><%= @supplier.direccion %></td>
+  </tr>
+  <tr>
+    <td>Telefono</td>
+    <td><%= @supplier.telefono %></td>
+  </tr>
+  <tr>
+    <td>Movil</td>
+    <td><%= @supplier.movil_1 %></td>
+  </tr>
+  <tr>
+    <td>Movil</td>
+    <td><%= @supplier.movil_2 %></td>
+  </tr>
+  <tr>
+    <td>Cuenta Corriente 1</td>
+    <td><%= @supplier.cuenta_corriente_1 %></td>
+  </tr>
+  <tr>
+    <td>Cuenta Corriente 2</td>
+    <td><%= @supplier.cuenta_corriente_2 %></td>
+  </tr>
+  <tr>
+    <td>Cuenta Corriente 3</td>
+    <td><%= @supplier.cuenta_corriente_3 %></td>
+  </tr>
+  <tr>
+    <td>Cuenta de Detraccion</td>
+    <td><%= @supplier.cuenta_de_detraccion %></td>
+  </tr>
+  <tr>
+    <td>Contacto</td>
+    <td><%= @supplier.contacto %></td>
+  </tr>
+  <tr>
+    <td>Cci 1</td>
+    <td><%= @supplier.cci_1 %></td>
+  </tr>
+  <tr>
+    <td>Cci 2</td>
+    <td><%= @supplier.cci_2 %></td>
+  </tr>
+  <tr>
+    <td>Cci 3</td>
+    <td><%= @supplier.cci_3 %></td>
+  </tr>
+  <tr>
+    <td>Banco 1</td>
+    <td><%= @supplier.banco_1 %></td>
+  </tr>
+  <tr>
+    <td>Banco 2</td>
+    <td><%= @supplier.banco_2 %></td>
+  </tr>
+  <tr>
+    <td>Banco 3</td>
+    <td><%= @supplier.banco_3 %></td>
+  </tr>
+</table>
+</div>
+
+<div class="form-actions">
+  <%= link_to raw('<i class="icon-edit icon-white"></i> Edit'), edit_production_supplier_path(@supplier), :class => "btn btn-success" %>
+  <%= link_to raw('<i class="icon-arrow-left icon-white"></i> Regresar'), production_suppliers_path, :class => "btn btn-primary" %>  
+</div>
+

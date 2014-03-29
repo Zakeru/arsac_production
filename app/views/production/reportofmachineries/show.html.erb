@@ -1,0 +1,235 @@
+<p id="notice"><%= notice %></p>
+
+<table class="table table-bordered table-condensed">
+      <tr class="well">
+        <td colspan="6">
+          <h3 style="text-align: center;"><%= @reportofmachinery.nombre_subcontrato %> ( Val. <%= @reportofmachinery.numero_de_valoriacion.rjust(3, '0')  %>  )<small> <%= l(@reportofmachinery.inicio, :format => :fecha) %> - <%= l(@reportofmachinery.fin, :format => :fecha) %></small></h3>
+        </td>
+      </tr>
+      <tr class="well">
+        <td colspan="6">
+          <table class="table">
+            <tr class="well">
+              <th style="text-align: center;">Monto Contratado</th>
+              <th style="text-align: center;">Adelanto</th>
+              <th style="text-align: center;">Amortizacion Acumulada</th>
+              <th style="text-align: center;">Saldo</th>
+            </tr>
+            <tr class="well">
+              <td style="text-align: center;">
+                <b>
+                  <%= number_to_currency @reportofmachinery.monto_contratado, unit: 'S/ ' %>  
+                </b>                
+              </td>
+              <td style="text-align: center;">
+                <b>
+                  <%= number_to_currency @reportofmachinery.adelanto, unit: 'S/ ' %>
+                </b>
+              </td>
+              <td style="text-align: center;">
+                <b>
+                  <%= number_to_currency @reportofmachinery.amortizacion_acumulada, unit: 'S/ ' %>
+                </b>
+              </td>
+              <td style="text-align: center;">
+                <b>
+                  <%= number_to_currency @reportofmachinery.saldo, unit: 'S/ ' %>
+                </b>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr class="well">
+        <th>ITEM</th>
+        <th>Descripcion</th>
+        <th style="text-align: right;">Porcentaje %</th>        
+        <th style="text-align: right;">Cantidad</th>
+        <th style="text-align: right;">Acumulado Anterior</th>
+        <th style="text-align: right;">Acumulado Actual</th>
+      </tr>
+
+      <!-- 1.00 Valorizacion sin I.G.V. -->
+      <tr>
+        <td>1.00</td>
+        <td>
+          Valorizacion sin IGV          
+        </td>
+        <td style="text-align: right;">
+          <%= link_to raw("<i class='icon-th-list'></i>"), "/production/reportofmachineries/ver_resumen_subcontratista?reportofmachinery_id=#{@reportofmachinery.id}&subcontractofequipment_id=#{@reportofmachinery.subcontractofequipment_id}&inicio=#{@reportofmachinery.inicio}&fin=#{@reportofmachinery.fin}", target: '_blank', class: 'btn btn-small btn-mini' %>
+        </td>
+        <td style="text-align: right;">
+          <span class="label label-info">
+            <%= number_to_currency @reportofmachinery.valorizacion_cantidad, unit: '' %>
+          </span>
+        </td>
+        <td style="text-align: right;"><%= number_to_currency @reportofmachinery.valorizacion_acumulado_anterior, unit: '' %></td>
+        <td style="text-align: right;"><%= number_to_currency @reportofmachinery.valorizacion_acumulado_actual, unit: '' %></td>
+      </tr>
+
+
+
+      <!-- 2.00 Amortizacion inicial -->      
+      <tr>
+        <td>2.00</td>
+        <td>Amortizacion de Adelanto (SIN. I.G.V)</td>
+        <td style="text-align: right;">          
+        	<%= number_to_currency @reportofmachinery.amortizacion_adelanto_porcentaje, unit: '% ' %> 
+        </td>
+        <td style="text-align: right;">
+          <span class="label label-info">
+        	 <%= number_to_currency @reportofmachinery.amortizacion_adelanto_cantidad, unit: '' %>
+          </span>
+        </td>        
+        <td style="text-align: right;">          
+          <%= number_to_currency @reportofmachinery.amortizacion_adelanto_acumulado_anterior, unit: '' %>          
+        </td>
+        <td style="text-align: right;"><%= number_to_currency @reportofmachinery.amortizacion_adelanto_acumulado_actual, unit: '' %></td>        
+      </tr>
+
+
+
+      <!-- 3.00 Total a Facturar -->
+      <tr>
+        <td>3.00</td>
+        <td>Total a Facturar (Val-Amort)</td>
+        <td></td>        
+        <td style="text-align: right;">
+          <span class="label label-info">
+            <%= number_to_currency @reportofmachinery.total_facturar_cantidad, unit: '' %>
+          </span>
+        </td>
+        <td style="text-align: right;"><%= @reportofmachinery.total_facturar_acumulado_anterior %></td>        
+        <td style="text-align: right;"><%= number_to_currency @reportofmachinery.total_facturar_acumulado_actual, unit: '' %></td>
+      </tr>
+
+	  <!-- 4.00 I.G.V Total a Facturar  -->      
+      <tr>
+        <td>4.00</td>
+        <td>I.G.V del Total a Facturar</td>        
+        <td style="text-align: right;">          
+          <%= number_to_currency @reportofmachinery.igv_total_facturar_porcentaje, unit: '% ' %>          
+        </td>        
+        <td style="text-align: right;"> 
+          <span class="label label-info">
+            <%= number_to_currency @reportofmachinery.igv_total_facturar_cantidad, unit: '' %>
+          </span>         
+        </td>
+        <td style="text-align: right;"><%= number_to_currency @reportofmachinery.igv_total_facturar_acumulado_anterior, unit: '' %></td>        
+        <td style="text-align: right;"><%= number_to_currency @reportofmachinery.igv_total_facturar_acumulado_actual, unit: '' %></td>
+      </tr>
+
+
+      <!-- Total Incluido I.G.V. -->
+      <tr>
+        <td></td>
+        <td>TOTAL (INCLUIDO I.G.V.)</td>
+        <td></td>
+        <td style="text-align: right;">
+          <span class="label label-info">
+            <%= number_to_currency @reportofmachinery.total_incluido_igv_cantidad, unit: '' %>
+          </span>
+        </td>
+        <td style="text-align: right;"><%= number_to_currency @reportofmachinery.total_incluido_igv_acumulado_anterior, unit: '' %></td>
+        <td style="text-align: right;"><%= number_to_currency @reportofmachinery.total_incluido_igv_acumulado_actual, unit: '' %></td>
+      </tr>
+
+	  <!-- 5.00 Retenciones -->
+      <tr>
+        <td>5.00</td>
+        <td>Retenciones</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+
+      <!-- 5.01 Detraccion del total incluido I.G.V. -->
+      <tr>
+        <td>5.01</td>
+        <td>Detraccion del Total (INCL. I.G.V)</td>
+        <td style="text-align: right;"><%= number_to_currency @reportofmachinery.detraccion_total_porcentaje, unit: '% ' %> </td>        
+        <td style="text-align: right;">
+          <span class="label label-info">
+            <%= number_to_currency @reportofmachinery.detraccion_total_cantidad, unit: '' %>
+          </span>
+        </td>
+        <td style="text-align: right;"><%= number_to_currency @reportofmachinery.detraccion_total_acumulado_anterior.to_f, unit: '' %></td>        
+        <td style="text-align: right;"><%= number_to_currency @reportofmachinery.detraccion_total_acumulado_actual, unit: '' %></td>
+      </tr>
+
+
+      <!-- 5.02 Descuento Combustible incuido I.G.V -->
+      <tr>
+        <td>5.02</td>
+        <td>Descuento Combustible (Incl. IGV)</td>
+        <td></td>
+        <td style="text-align: right;">
+          <span class="label label-info">
+            <%= number_to_currency @reportofmachinery.descuento_combustible_cantidad, unit: '' %>
+          </span>
+        </td>
+        <td style="text-align: right;"><%= number_to_currency @reportofmachinery.descuento_combustible_acumulado_anterior, unit: '' %></td>
+        <td style="text-align: right;"><%= number_to_currency @reportofmachinery.descuento_combustible_acumulado_actual, unit: '' %></td>
+      </tr>
+
+      <!-- 5.03 Descuentos Otros -->
+      <tr>
+        <td>5.03</td>
+        <td>Descuento Otros (Incl. I.G.V.)</td>
+        <td></td>        
+        <td style="text-align: right;">
+          <span class="label label-info">
+            <%= number_to_currency @reportofmachinery.descuento_otros_cantidad, unit: '' %>
+          </span>
+        </td>
+        <td style="text-align: right;"><%= number_to_currency @reportofmachinery.descuento_otros_acumulado_anterior, unit: '' %></td>        
+        <td style="text-align: right;"><%= number_to_currency @reportofmachinery.descuento_otros_acumulado_actual, unit: '' %></td>
+      </tr>
+
+      
+      <tr>
+        <td></td>
+        <td>TOTAL RETENCIONES</td>
+        <td></td>        
+        <td style="text-align: right;">
+          <span class="label label-info">
+            <%= number_to_currency @reportofmachinery.total_retenciones_cantidad, unit: '' %>
+          </span>
+        </td>        
+        <td style="text-align: right;"><%= number_to_currency @reportofmachinery.total_retenciones_acumulado_anterior, unit: '' %></td>        
+        <td style="text-align: right;"><%= number_to_currency @reportofmachinery.total_retenciones_acumulado_actual, unit: '' %></td>
+      </tr>
+
+
+      <tr class="well">
+        <td><b>6.00</b></td>
+        <td><b>NETO a PAGAR: TOTAL (INCL. IG.V.) TOTAL RETEN.</b></td>
+        <td></td>        
+        <td style="text-align: right;">
+          <span class="label label-info">
+            <b><%= number_to_currency @reportofmachinery.neto_pagar_cantidad, unit: 'S./  ' %></b>
+          </span>
+        </td>
+        <td style="text-align: right;"><b><%= number_to_currency @reportofmachinery.neto_pagar_acumulado_anterior, unit: 'S./ ' %></b></td>       
+        <td style="text-align: right;"><b><%= number_to_currency @reportofmachinery.neto_pagar_acumulado_actual, unit: 'S./ ' %></b></td>
+      </tr>
+      
+
+      
+    </table>
+
+
+<div class="form-actions">
+	<%= form_tag('aprobar',{:method => :post, :style => 'margin: 0; padding: 0; display:inline;'}) do %>    
+		<%= hidden_field_tag 'reportedemaquinaria[id]', @reportofmachinery.id %>
+		<%= hidden_field_tag 'reportedemaquinaria[aprobado]', nil, value: "si" %>
+		<% if @reportofmachinery.aprobado == 'no' %>
+				<%= button_tag(type: "submit", class: "btn btn-success") do %>
+		    		<i class="icon-ok icon-white"></i> Aprobar Valorizacion
+				<% end %>	
+		<% end %>
+	<% end %>	
+	<%= link_to raw("<i class='icon-arrow-left icon-white'></i> Regresar"), production_reportofmachineries_path, class: 'btn btn-primary' %>	
+</div>
+

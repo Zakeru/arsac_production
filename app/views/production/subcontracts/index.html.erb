@@ -1,0 +1,47 @@
+<div class="row">
+    <div class="span6">
+        <h2>Subcontratos</h2>
+    </div>
+    <div class="span6">
+        <br>
+        <%= link_to raw('Nuevo <i class="icon-plus icon-white"></i>'), new_production_subcontract_path, :class => "btn btn-primary pull-right" %>
+    </div>
+</div>
+<br>
+
+<table class="table table-striped table-bordered table-condensed">
+  <tr>
+    <th style="text-align: center;">#id</th>
+    <th style="text-align: center;">Ejecutor</th>
+    <th style="text-align: center;">Valorizacion</th>
+    <th style="text-align: center;">Condiciones de pago</th>
+    <th style="text-align: center;">Igv</th>
+    <th style="text-align: center;">Fondo de garantia</th>
+    <th style="text-align: center;">Monto Contratado</th>
+    <th style="text-align: center;">Acciones</th>
+  </tr>
+
+<% @subcontracts.each do |subcontract| %>
+  <tr>
+    <td style="text-align: center;"><%= subcontract.id %></td>
+    <td>
+        <%= subcontract.supplier.entity.razon_social %> 
+        <%= subcontract.supplier.entity.nombre %> 
+        <%= subcontract.supplier.entity.apellido %> 
+    </td>
+    <td style="text-align: center;"><%= subcontract.valorizacion %></td>    
+    <td style="text-align: center;"><%= subcontract.condiciones_de_pago %></td>
+    <td style="text-align: center;"><%= subcontract.igv %>%</td>
+    <td style="text-align: center;"><%= subcontract.fondo_garantia_porcentaje %>%</td>
+    <td style="text-align: center;"><%= subcontract.monto_contratado %></td>
+    <td>
+        <%= link_to raw('<i class="icon-eye-open icon-white"></i>'), [:production,subcontract], :class => "btn btn-small btn-info" %>
+        <%= link_to raw('<i class="icon-edit icon-white"></i>'), edit_production_subcontract_path(subcontract), :class => "btn btn-small btn-success" %>
+        <%= link_to raw('<i class="icon-trash icon-white"></i>'), [:production,subcontract], method: :delete, data: { confirm: 'Esta Seguro que desea Eliminar?' }, :class => "btn btn-small btn-danger" %>
+    </td>
+  </tr>
+<% end %>
+</table>
+
+
+

@@ -1,0 +1,56 @@
+<p id="notice"><%= notice %></p>
+
+<% if !notice.nil? %>
+  <div class="alert">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>Alerta!</strong> <%= notice %>
+  </div>
+<% end %>
+
+<div class="page-header">
+  <h1>Ver Ente</h1>
+</div>
+
+<div class="row">
+  <table class="table table-striped table-condensed table-bordered span6">
+    <tr>
+      <td><b>Nombre</b></td>
+      <td><%= @entity.nombre %></td>
+    </tr>
+    <tr>
+      <td><b>Apellido</b></td>
+      <td><%= @entity.apellido %></td>
+    </tr>
+    <tr>
+      <td><b>Dni</b></td>
+      <td><%= @entity.dni %></td>
+    </tr>
+    <tr>
+      <td><b>Ruc</b></td>
+      <td><%= @entity.ruc %></td>
+    </tr>
+    <tr>
+      <td><b>Razon Social</b></td>
+      <td><%= @entity.razon_social %></td>
+    </tr>
+    <tr>
+      <td><b>Creado</b></td>
+      <td><%= l(@entity.created_at.to_date, format: :fecha) %></td>
+    </tr>
+    <tr>
+      <td><b>Actualizado</b></td>
+      <td><%= l(@entity.updated_at.to_date, format: :fecha) %></td>
+    </tr>
+  </table>
+</div>
+
+<div class="clearfix"></div>
+
+
+
+
+<div class="form-actions">
+  <%= link_to raw('<i class="icon-edit icon-white"></i> Editar'), edit_production_entity_path(@entity), :class => "btn btn-primary btn-success" %>
+  <%= link_to raw('<i class="icon-arrow-left icon-white"></i> Regresar'), production_entities_path, :class => "btn btn-primary" %>  
+</div>
+

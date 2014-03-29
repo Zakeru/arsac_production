@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  frente: MyString
+  jefefrente: MyString
+  maestrodeobra: MyString
+  casa: MyString
+  subcontratista: MyString
+  fechaingreso: 2013-07-27
+  numeroparte: MyString
+
+two:
+  frente: MyString
+  jefefrente: MyString
+  maestrodeobra: MyString
+  casa: MyString
+  subcontratista: MyString
+  fechaingreso: 2013-07-27
+  numeroparte: MyString

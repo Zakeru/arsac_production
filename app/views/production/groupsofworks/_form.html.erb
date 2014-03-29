@@ -1,0 +1,134 @@
+<%= form_for([:production,@groupsofwork], :html => { :class => "form-horizontal"}) do |f| %>
+  <% if @groupsofwork.errors.any? %>
+    <div class="well" >
+      <h2><%= pluralize(@groupsofwork.errors.count, "errores") %> cometidos al guardar gruposdetrabajo :</h2>
+
+      <ul>
+      <% @groupsofwork.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="control-group">
+    <div class="control-label">
+      <%= f.label :WBS_Nivel_1 %>
+    </div>
+    <div class="controls">
+      <%= f.select :sector_id, Sector.all.collect {|x| [x.descripcion, x.id]}, {:include_blank => 'Seleccione Sector'} %>  
+    </div>    
+  </div>
+
+  <div class="control-group">
+    <div class="control-label">
+      <%= f.label :WBS_Nivel_2 %>  
+    </div>
+    <div class="controls">
+      <%= f.select :subsector_id, Subsector.all.collect {|x| [x.descripcion, x.id]}, { :include_blank => 'Seleccione Subsector'}  %>  
+    </div>    
+  </div>
+
+  <div class="control-group">
+    <div class="control-label">
+      <%= f.label :chiefofront_id %>
+    </div>
+    <div class="controls">
+      <%= f.select :chiefoffront_id, Chiefoffront.all.collect {|x| ["#{x.entity.nombre} #{x.entity.apellido} #{x.entity.razon_social}", x.id]}, { :include_blank => 'Seleccione Jefe de Frente'} %>  
+    </div>
+  </div>
+
+  <div class="control-group">
+    <div class="control-label">
+      <%= f.label :Ejecutor %>
+    </div>    
+    <div class="controls">
+      <%= f.select :subcontract_id, Subcontract.all.collect {|x| ["#{x.supplier.entity.nombre} #{x.supplier.entity.apellido} #{x.supplier.entity.razon_social}", x.id]}, { :include_blank => 'Seleccione Ejecutor'} %>  
+    </div>    
+  </div>
+
+  <div class="control-group">
+    <div class="control-label">
+      <%= f.label :maestrodeobra_id %>  
+    </div>
+    <div class="controls">
+      <%= f.select :teacherofwork_id, Teacherofwork.all.collect {|x| ["#{x.entity.nombre} #{x.entity.apellido} #{x.entity.razon_social}", x.id]}, {:include_blank => "Seleccione Maestro de Obra"} %>  
+    </div>    
+  </div>
+
+  <div class="control-group">
+    <div class="control-label">
+      <%= f.label :activo %>
+    </div>
+    <div class="controls">
+      <%= f.select :activo, [
+                                ['Si'],
+                                ['No']
+                            ], {:include_blank => 'Seleccione Activo'} %>
+    </div>
+  </div>
+
+
+  <div class="controls">
+    <%= f.submit :class => "btn btn-success" %>
+  </div>
+<% end %>
+
+
+<script type="text/javascript">
+    $('form').validate({
+        rules: {
+            'gruposdetrabajo[sectore_id]': {
+                required: true                           
+            },
+            'gruposdetrabajo[subsectore_id]': {
+                required: true             
+            },
+            'gruposdetrabajo[jefedefrente_id]': {
+                required: true
+            },
+            'gruposdetrabajo[subcontrato_id]': {
+                required: true
+            },
+            'gruposdetrabajo[maestrodeobra_id]': {
+                required: true
+            },
+            'gruposdetrabajo[activo]': {
+                required: true
+            }
+        }, messages: {
+          'gruposdetrabajo[sectore_id]': {
+            required: "este Campo es requerido"            
+          },
+          'gruposdetrabajo[subsectore_id]': {
+            required: "este campo es requerido"
+          },
+          'gruposdetrabajo[jefedefrente_id]': {
+            required: "este campo es requerido"
+          },
+          'gruposdetrabajo[subcontrato_id]': {
+            required: "este campo es requerido"
+          },
+          'gruposdetrabajo[maestrodeobra_id]': {
+            required: "este campo es requerido"
+          },
+          'gruposdetrabajo[activo]': {
+            required: "este campo es requerido"
+          }
+    },
+        highlight: function(element) {
+            $(element).closest('.control-group').removeClass('success').addClass('error');            
+        },success: function (element) {
+            $(element).closest('.control-group').addClass('success');               
+        },
+        errorElement: 'span',
+        errorClass: 'help-block',
+        errorPlacement: function(error, element) {
+            if(element.parent('.input-group').length) {
+                error.insertAfter(element.parent());
+            } else {
+                error.insertAfter(element);
+            }
+        }
+    });
+</script>

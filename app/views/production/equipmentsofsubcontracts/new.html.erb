@@ -1,0 +1,10 @@
+<div class="page-header">
+	<h1>Nuevo Equipo de subcontrato</h1>	
+</div>
+
+<%= render 'form' %>
+
+<div class="form-actions">
+	<%= link_to raw("<i class='icon-arrow-left icon-white'></i> Regresar") ,"/subcontratodeequipos/ver_equipos/#{!params[:id].nil? ? params[:id] : @equipmentsofsubcontract.subcontractofequipment_id}", class: 'btn btn-primary' %>
+</div>
+

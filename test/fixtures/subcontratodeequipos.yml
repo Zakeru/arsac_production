@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  proveedor_id: 1
+  valorizacion: MyString
+  adelanto: MyString
+  adelanto_detalle: MyString
+  condiciones_de_pago: MyString
+  igv: MyString
+  fondo_de_garantia: MyString
+
+two:
+  proveedor_id: 1
+  valorizacion: MyString
+  adelanto: MyString
+  adelanto_detalle: MyString
+  condiciones_de_pago: MyString
+  igv: MyString
+  fondo_de_garantia: MyString

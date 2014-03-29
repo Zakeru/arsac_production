@@ -1,0 +1,45 @@
+<%= form_for(@vpartida) do |f| %>
+  <% if @vpartida.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@vpartida.errors.count, "error") %> prohibited this vpartida from being saved:</h2>
+
+      <ul>
+      <% @vpartida.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :valorizacione_id %><br />
+    <%= f.number_field :valorizacione_id %>
+  </div>
+  <div class="field">
+    <%= f.label :codigo %><br />
+    <%= f.text_field :codigo %>
+  </div>
+  <div class="field">
+    <%= f.label :partida_nombre %><br />
+    <%= f.text_field :partida_nombre %>
+  </div>
+  <div class="field">
+    <%= f.label :unidad %><br />
+    <%= f.text_field :unidad %>
+  </div>
+  <div class="field">
+    <%= f.label :cantidad %><br />
+    <%= f.text_field :cantidad %>
+  </div>
+  <div class="field">
+    <%= f.label :precio_unitario %><br />
+    <%= f.text_field :precio_unitario %>
+  </div>
+  <div class="field">
+    <%= f.label :parcial %><br />
+    <%= f.text_field :parcial %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

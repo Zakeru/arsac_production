@@ -1,0 +1,77 @@
+<div class="page-header">
+	<h1>Reporte de trabajo de maquinarias</h1>
+</div>
+<div class="row">
+	<%= form_tag 'primero', {:method => :post, class: 'form-inline well span8'} do %>
+		<%= select_tag :equiposdesubcontrato, options_for_select(@equiposdesubcontrato_array, @equiposdesubcontrato.present? ? @equiposdesubcontrato : ''), prompt: 'Seleccione', class: 'span4' %>
+		<%= text_field_tag :inicio, nil, class: 'input-small', placeholder: '2013-10-28', value: !@inicio.nil? ? "#{@inicio}" : '' %>
+		<%= text_field_tag :fin, nil, class: 'input-small', placeholder: '2013-10-29', value: !@fin.nil? ? "#{@fin}" : '' %>
+		<%= button_tag(type: "submit", class: "btn btn-primary") do %>
+    		<i class="icon-search icon-white"></i> Buscar 
+		<% end %>
+	<% end %>
+</div>
+
+<script type="text/javascript">
+  $('#inicio').datepicker({
+      format: 'yyyy-mm-dd',
+      language: 'es',
+      autoclose: true
+  });
+    $('#fin').datepicker({
+      format: 'yyyy-mm-dd',
+      language: 'es',
+      autoclose: true
+  });
+</script>
+
+<% if @pase == 0 %>
+	<h4>Esperando Datos..</h4>
+<% elsif @pase == 1 %>		
+	<h4><%= @equipodesubcontrato_partes[0][0] %>:</h4>
+	<div class="row">
+		<table class="table table-condensed table-bordered table-hover span7">
+			<tr class="well">
+				<th>#</th>
+				<th style="text-align: right;"># Parte</th>
+				<th style="text-align: right;">Fecha</th>
+				<th style="text-align: right;">H. inicio</th>
+				<th style="text-align: right;">H. fin</th>
+				<th style="text-align: right;">H. horas</th>
+				<th style="text-align: right;">H. Efectivas</th>
+				<th style="text-align: right;">Suministro</th>
+				<th style="text-align: right;">Combustible</th>
+			</tr>
+			<% i = 1 %>
+			<% @equipodesubcontrato_partes[0][4].each do |equipodesubcontrato_parte| %>
+				<tr>
+					<td style="text-align: right;"><%= i %></td>
+					<td style="text-align: right;"><%= equipodesubcontrato_parte[3].present? ? equipodesubcontrato_parte[3] : '-' %></td>
+					<td style="text-align: right;"><%= equipodesubcontrato_parte[0] %></td>
+					<td style="text-align: right;"><%= equipodesubcontrato_parte[1].present? ? (number_to_currency equipodesubcontrato_parte[1], unit: '') : '-'  %></td>
+					<td style="text-align: right;"><%= equipodesubcontrato_parte[2].present? ? (number_to_currency equipodesubcontrato_parte[2], unit: '') : '-'  %></td>
+					<td style="text-align: right;"><%= equipodesubcontrato_parte[4].present? ? (number_to_currency equipodesubcontrato_parte[4], unit: '') : '-' %></td>
+					<td style="text-align: right;"><%= equipodesubcontrato_parte[5].present? ? (number_to_currency equipodesubcontrato_parte[5], unit: '') : '-' %></td>
+					<td style="text-align: right;"><%= equipodesubcontrato_parte[6].present? ?  equipodesubcontrato_parte[6] : '-' %></td>
+					<td style="text-align: right;"><%= equipodesubcontrato_parte[7].present? ? (number_to_currency equipodesubcontrato_parte[7], unit: ''): '-' %></td>
+				</tr>
+				<% i += 1 %>
+			<% end %>
+			<tr class="well">
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td style="text-align: right;"><b><%= @equipodesubcontrato_partes[0][1] != 0 ? (number_to_currency @equipodesubcontrato_partes[0][1], unit: ''): '-' %> <%=  %></b></td>
+				<td style="text-align: right;"><b><%= @equipodesubcontrato_partes[0][2] != 0 ? (number_to_currency @equipodesubcontrato_partes[0][2], unit: ''): '-' %></b></td>
+				<td></td>
+				<td style="text-align: right;"><b><%= @equipodesubcontrato_partes[0][3] != 0 ? (number_to_currency @equipodesubcontrato_partes[0][3], unit: ''): '-' %></b></td>			
+			</tr>	
+		</table>
+	</div>
+	
+	<div class="clearfix"></div>
+<% elsif @pase == 2 %>
+	<h4>Error en los Datos</h4>
+<% end %>

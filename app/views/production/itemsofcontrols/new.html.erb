@@ -1,0 +1,14 @@
+<div class="page-header">
+	<h1>Nueva Partida de Control</h1>
+</div>
+
+<%= render 'form' %>
+
+<div class="form-actions">
+	<%= link_to raw('<i class="icon-arrow-left icon-white"></i> Regresar'), production_itemsofcontrols_path, :class => "btn btn-primary" %>	
+	<%= link_to raw("<i class='icon-th-list'></i> Sectores"), production_sectors_path, :class => "btn" %>
+  	<%= link_to raw("<i class='icon-list'></i></i> Sub Sectores"), production_subsectors_path, :class => "btn" %>
+  	<%= link_to raw("<i class='icon-th-list'></i> Fases"), production_phases_path, :class => "btn" %>
+  	<%= link_to raw("<i class='icon-list'></i></i> Subfases"), production_subphases_path, :class => "btn" %>
+</div>
+

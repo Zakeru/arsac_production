@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  partediariodepersonal_id: 1
+  catalogodetrabajadore_id: 1
+  catalogocategoriatrabajadore_id: 1
+  partidasdecontrol_id: 1
+  normal: MyString
+  normal_60: MyString
+  normal_100: MyString
+  total_horas: MyString
+
+two:
+  partediariodepersonal_id: 1
+  catalogodetrabajadore_id: 1
+  catalogocategoriatrabajadore_id: 1
+  partidasdecontrol_id: 1
+  normal: MyString
+  normal_60: MyString
+  normal_100: MyString
+  total_horas: MyString

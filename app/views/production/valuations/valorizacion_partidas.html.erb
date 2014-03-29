@@ -1,0 +1,40 @@
+<div class="page-header">
+	<h1 style="text-align: center;">Cuadro Resumen Partidas</h1>
+</div>
+
+<% if !@partidas.nil? %>
+<div class="row">
+  <table class="table table-condensed table-bordered table-hover span9" style="margin: 0 auto; float: none;">
+  	<tr class="well">
+  		<td colspan="6">
+  			<h3 style="text-align: center;"><%= @subcontrato_nombre %> <small><%= params[:inicio].to_date.strftime("%d %b") %> - <%= params[:fin].to_date.strftime("%d %b. %Y") %></h3>
+  		</td>
+  	</tr>
+    <tr class="well">
+      <th>Codigo</th>
+      <th>Partida</th>
+      <th style="text-align: right;">Unidad</th>
+      <th style="text-align: right;">Cantidad</th>
+      <th style="text-align: right;">P.U.</th>
+      <th style="text-align: right;">Parcial</th>
+    </tr>
+    <% sumariza_parcial = 0 %>
+    <% @partidas.each do |partida| %>
+      <tr style="font-size:12px;">
+        <td><%= partida[6] %></td>
+        <td><%= partida[1][0,60] %></td>
+        <td style="text-align: right;"><%= partida[2] %></td>
+        <td style="text-align: right;"><%= number_with_precision partida[3], :precision => 2 %></td>
+        <td style="text-align: right;"><%= number_with_precision partida[4], :precision => 2 %></td>
+        <td style="text-align: right;"><%= number_with_precision partida[5], :precision => 2 %></td>
+      </tr>
+      <% sumariza_parcial += partida[5] %>
+    <% end %>
+    <tr class="well">
+      <td></td>
+      <td colspan="4"><b>Total</b></td>
+      <td style="text-align: right;"><b><%= number_to_currency sumariza_parcial, unit: 'S/. ' %></b></td>
+    </tr>
+  </table>
+</div>
+<% end %>

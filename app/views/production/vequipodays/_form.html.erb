@@ -1,0 +1,49 @@
+<%= form_for(@vequipoday) do |f| %>
+  <% if @vequipoday.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@vequipoday.errors.count, "error") %> prohibited this vequipoday from being saved:</h2>
+
+      <ul>
+      <% @vequipoday.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :numero_parte %><br />
+    <%= f.text_field :numero_parte %>
+  </div>
+  <div class="field">
+    <%= f.label :fecha %><br />
+    <%= f.text_field :fecha %>
+  </div>
+  <div class="field">
+    <%= f.label :hora_inicio %><br />
+    <%= f.text_field :hora_inicio %>
+  </div>
+  <div class="field">
+    <%= f.label :hora_fin %><br />
+    <%= f.text_field :hora_fin %>
+  </div>
+  <div class="field">
+    <%= f.label :horas_horas %><br />
+    <%= f.text_field :horas_horas %>
+  </div>
+  <div class="field">
+    <%= f.label :horas_efectivas %><br />
+    <%= f.text_field :horas_efectivas %>
+  </div>
+  <div class="field">
+    <%= f.label :suministro %><br />
+    <%= f.text_field :suministro %>
+  </div>
+  <div class="field">
+    <%= f.label :combustible %><br />
+    <%= f.text_field :combustible %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

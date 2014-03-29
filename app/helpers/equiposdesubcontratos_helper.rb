@@ -1,0 +1,2 @@
+module EquiposdesubcontratosHelper
+end

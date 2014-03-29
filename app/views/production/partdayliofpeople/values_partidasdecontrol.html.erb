@@ -1,0 +1,3 @@
+<% @partidasdecontrols.each do |partidasdecontrol| %>	
+<option value="<%= partidasdecontrol.id %>"><%= "#{partidasdecontrol.phase.codigo}#{partidasdecontrol.subphase.codigo} #{partidasdecontrol.subphase.descripcion}" %></option>
+<% end %>

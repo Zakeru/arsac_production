@@ -1,0 +1,64 @@
+<ul class="breadcrumb">
+  <li><a href="/subcontractofequipments">Equipos de Subcontratos</a> <span class="divider">/</span></li>  
+  <li class="active">proveedor</li>
+</ul>
+
+<div class="row">
+    <div class="span8">
+        <h1>Sub Contratista <small><%= @subcontractofequipment %></small></h1>  
+    </div>
+    <div class="span4">
+        <br>
+        <%= link_to raw('Nuevo <i class="icon-plus icon-white"></i>'), "/production/equipmentsofsubcontracts/new/#{@subcontractofequipment_id}", :class => "btn btn-primary pull-right" %>
+    </div>
+</div>
+
+
+<% if !params[:error].nil? %>
+	<div class="alert">
+	  <button type="button" class="close" data-dismiss="alert">&times;</button>
+	  <strong>Alerta!</strong> No se puede Eliminar ese equipo por que hay registros en los Parte de Equipos.
+	</div>
+<% end %>
+
+
+
+<div class="row">
+<table class="table table-striped table-bordered table-condensed span12">
+	<tr>
+		<th>#id</th>
+		<th>codigo</th>
+		<th>Insumodeequipo</th>
+		<th>Fecha Ingreso</th>
+		<th>Marca</th>
+		<th>Serie</th>
+		<th>Modelo</th>
+		<th>Und</th>
+		<th>PSI</th>
+		<th>Cant</th>
+		<th>Accion</th>
+	</tr>
+	<% @equipos.each do |equipo| %>
+		<tr style="font-size: 12px;">
+			<td><%= equipo.id %></td>
+			<td><%= equipo.codigo %></td>
+			<td><%= equipo.inputofequipment.nombre %></td>
+			<td><%= equipo.fecha %></td>
+			<td><%= equipo.marca %></td>
+			<td><%= equipo.serie %></td>
+			<td><%= equipo.modelo %></td>
+			<td><%= equipo.unit.nombre %></td>
+			<td><%= equipo.precion_sin_igv %></td>
+			<td><%= equipo.cantidad_h_m %></td>
+			<td>
+				<%= link_to raw("<i class='icon-eye-open icon-white'></i>"), "/production/equipmentsofsubcontracts/#{equipo.id}", class: 'btn btn-info btn-small' %>
+				<%= link_to raw("<i class='icon-edit icon-white'></i>"), "/production/equipmentsofsubcontracts/#{equipo.id}/edit", class: 'btn btn-success btn-small' %>
+				<%= link_to raw('<i class="icon-remove icon-white"></i>'), "/production/equipmentsofsubcontracts/destroy?subcontractofequipment_id=#{@subcontractofequipment_id}&equipmentsofsubcontracts_id=#{equipo.id}", method: :delete, data: { confirm: 'Esta Seguro que desea Eliminar este Equipo?' }, :class => "btn btn-small btn-danger" %>				
+			</td>
+		</tr>
+	<% end %>		
+</table>
+</div>
+<div class="form-actions">
+	<%= link_to raw("<i class='icon-arrow-left icon-white'></i> Regresar"), "/production/subcontractofequipments", class: 'btn btn-primary' %>
+</div>

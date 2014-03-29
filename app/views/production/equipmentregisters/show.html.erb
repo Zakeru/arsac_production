@@ -1,0 +1,54 @@
+<p id="notice"><%= notice %></p>
+
+<div class="page-header">
+  <h2>Detalle Equipo Registrado</h2>
+</div>
+<div class="row">
+<table class="table table-striped table-bordered table-condensed table-hover span6">
+  <tr>
+    <th>Nombre</th>
+    <th>Descripcion</th>
+  </tr>
+  <tr>
+    <td>#id</td>
+    <td><%= @equiposregistrado.id %></td>
+  </tr>
+  <tr>
+    <td>Frente</td>
+    <td><%= @equiposregistrado.gruposdetrabajo.frente.nombre %></td>
+  </tr>
+  <tr>
+    <td>Sector</td>
+    <td><%= @equiposregistrado.gruposdetrabajo.sectore.descripcion %></td>
+  </tr>
+  <tr>
+    <td>Subsectore</td>
+    <td><%= @equiposregistrado.gruposdetrabajo.subsectore.descripcion %></td>
+  </tr>
+  <tr>
+    <td>Unidad</td>
+    <td><%= @equiposregistrado.unidade_id %></td>
+  </tr>
+  <tr>
+    <td>Partida de Control</td>
+    <td><%= @equiposregistrado.partidasdecontrol.subfase.descripcion %></td>
+  </tr>
+  <tr>
+    <td>Inicio</td>
+    <td><%= @equiposregistrado.inicio %></td>
+  </tr>
+  <tr>
+    <td>Fin</td>
+    <td><%= @equiposregistrado.fin %></td>
+  </tr>
+  <tr>
+    <td>Cantidad</td>
+    <td><%= @equiposregistrado.cantidad %></td>
+  </tr>
+</table>
+</div>
+
+<div class="form-actions">
+  <%= link_to raw("<i class='icon-edit icon-white'></i> editar"), edit_partedeequipo_path(@equiposregistrado.partedeequipo_id), :class => 'btn btn-success' %>
+  <%= link_to raw("<i class='icon-arrow-left icon-white'></i> Regresar"), equiposregistrados_path, :class => 'btn btn-primary' %>  
+</div>

@@ -1,0 +1,163 @@
+<p id="notice"><%= notice %></p>
+
+<div class="page-header">
+  <h2>Detalle Subcontrato de Equipos</h2>
+</div>
+<div class="row">
+<table class="table table-bordered table-striped table-condensed span6">
+  <tr>
+    <td style="text-align: right;"><b>Proveedor : </b></td>
+    <td style="text-align: right;">
+      <%= @subcontractofequipment.supplier.entity.nombre %>
+      <%= @subcontractofequipment.supplier.entity.apellido %>
+      <%= @subcontractofequipment.supplier.entity.razon_social %>
+    </td>
+  </tr>
+  <tr>
+    <td style="text-align: right;"><b>Valorizacion : </b></td>
+    <td style="text-align: right;">
+      <%= @subcontractofequipment.valorizacion %>
+    </td>
+  </tr>  
+  <tr>
+    <td style="text-align: right;"><b>Condiciones de Pago : </b></td>
+    <td style="text-align: right;">
+      <%= @subcontractofequipment.condiciones_de_pago %>
+    </td>
+  </tr>
+  <tr>
+    <td style="text-align: right;"><b>Amortizacion Porcentaje : </b></td>
+    <td style="text-align: right;">
+      <%= @subcontractofequipment.amortizacion_inicial_porcentaje.blank? ? (number_to_currency 0, unit: '% '): (number_to_currency @subcontractofequipment.amortizacion_inicial_porcentaje, unit: '% ') %>      
+    </td>
+  </tr>
+  <tr>
+    <td style="text-align: right;"><b>Amortizacion Numero : </b></td>
+    <td style="text-align: right;">
+      <%= @subcontractofequipment.amortizacion_inicial_numero.blank? ? (number_to_currency 0, unit: 'S/ '): (number_to_currency @subcontractofequipment.amortizacion_inicial_numero, unit: 'S/ ') %>
+    </td>
+  </tr>
+  <tr>
+    <td style="text-align: right;"><b>Fondo de Garantia % : </b> </td>
+    <td style="text-align: right;">
+      <%= @subcontractofequipment.fondo_de_garantia_porcentaje.blank? ? (number_to_currency 0, unit: 'S/ '): (number_to_currency @subcontractofequipment.fondo_de_garantia_porcentaje, unit: 'S/ ') %>      
+    </td>
+  </tr>
+  <tr>
+    <td style="text-align: right;"><b>Detraccion Porcentaje : </b></td>
+    <td style="text-align: right;">
+      <%= @subcontractofequipment.detraccion_porcentaje.blank? ? (number_to_currency 0, unit: 'S/ '): (number_to_currency @subcontractofequipment.detraccion_porcentaje, unit: 'S/ ') %>
+    </td>
+  </tr>
+  <tr style="text-align: right;">
+    <td style="text-align: right;">
+      <b>Igv : </b>      
+    </td>
+    <td style="text-align: right;">
+      <%= @subcontractofequipment.igv.blank? ? (number_to_currency 0, unit: '% '): (number_to_currency @subcontractofequipment.igv, unit: '% ') %>      
+    </td>
+  </tr>
+
+
+  <tr>
+    <td style="text-align: right;"><b>Adelanto 1 : </b></td>
+    <td style="text-align: right;">
+      <%= @subcontractofequipment.adelanto_1_numero.blank? ? (number_to_currency 0, unit: 'S/ '): (number_to_currency @subcontractofequipment.adelanto_1_numero, unit: 'S/ ') %>      
+    </td>
+  </tr>
+  <tr>
+    <td style="text-align: right;"><b>Adelanto 2 : </b></td>
+    <td style="text-align: right;">
+      <%= @subcontractofequipment.adelanto_2_numero.blank? ? (number_to_currency 0, unit: 'S/ '): (number_to_currency @subcontractofequipment.adelanto_2_numero, unit: 'S/ ') %>      
+    </td>
+  </tr>  
+  <tr>
+    <td style="text-align: right;"><b>Adelanto 3 : </b></td>
+    <td style="text-align: right;">
+      <%= @subcontractofequipment.adelanto_3_numero.blank? ? (number_to_currency 0, unit: 'S/ '): (number_to_currency @subcontractofequipment.adelanto_3_numero, unit: 'S/ ') %>      
+    </td>
+  </tr>
+  <tr>
+    <td style="text-align: right;"><b>Adelanto 4 : </b></td>
+    <td style="text-align: right;">
+      <%= @subcontractofequipment.adelanto_4_numero.blank? ? (number_to_currency 0, unit: 'S/ '): (number_to_currency @subcontractofequipment.adelanto_4_numero, unit: 'S/ ') %>      
+    </td>
+  </tr>
+    <tr>
+    <td style="text-align: right;"><b>Adelanto Fecha 1 : </b></td>
+    <td style="text-align: right;">
+      <%= @subcontractofequipment.adelanto_1_fecha.blank? ? '-- -- --':@subcontractofequipment.adelanto_1_fecha.strftime("%d %b. %Y") %>      
+    </td>
+  </tr>
+  <tr>
+    <td style="text-align: right;"><b>Adelanto Fecha 2 : </b></td>
+    <td style="text-align: right;">
+      <%= @subcontractofequipment.adelanto_2_fecha.blank? ? '-- -- --':@subcontractofequipment.adelanto_2_fecha.strftime("%d %b. %Y") %>      
+    </td>
+  </tr>
+  <tr>
+    <td style="text-align: right;"><b>Adelanto Fecha 3 : </b></td>
+    <td style="text-align: right;">
+      <%= @subcontractofequipment.adelanto_3_fecha.blank? ? '-- -- --':@subcontractofequipment.adelanto_3_fecha.strftime("%d %b. %Y") %>      
+    </td>
+  </tr>
+  <tr>
+    <td style="text-align: right;"><b>Adelanto Fecha 4 : </b></td>
+    <td style="text-align: right;">
+      <%= @subcontractofequipment.adelanto_3_fecha.blank? ? '-- -- --':@subcontractofequipment.adelanto_3_fecha.strftime("%d %b. %Y") %>         
+    </td>
+  </tr>
+  <tr>
+    <td style="text-align: right;"><b>Monto : </b></td>
+    <td style="text-align: right;">
+      <%= @subcontractofequipment.monto_contratado_suma.blank? ? (number_to_currency 0, unit: 'S/ '): (number_to_currency @subcontractofequipment.monto_contratado_suma, unit: 'S/ ') %>
+    </td>
+  </tr>
+</table>
+</div>
+<div class="clearfix"></div>
+
+<h3>Equipos</h3>
+
+<table class="table table-bordered table-striped table-condensed table-hover">
+  <tr>
+    <th>#id</th>
+    <th>Codigo</th>
+    <th>Descripcion</th>
+    <th>Insumo y TOBY</th>
+    <th>Marca</th>
+    <th>Serie</th>
+    <th>Modelo</th>
+    <th>Año</th>
+    <th>UND</th>
+    <th>Precio sin IGV</th>
+    <th>Incluye</th>
+    <th>Hrs Min</th>
+    <th>Cantidad H.M.</th>
+  </tr>
+  <% @subcontractofequipment.equipmentsofsubcontracts.each do |equipmentsofsubcontract| %>
+  <tr>
+    <td><%= equipmentsofsubcontract.id %></td>
+    <td><%= equipmentsofsubcontract.codigo %></td>
+    <td><%= equipmentsofsubcontract.descripcion %></td>
+    <td><%= equipmentsofsubcontract.inputofequipment.nombre %></td>
+    <td><%= equipmentsofsubcontract.marca %></td>
+    <td><%= equipmentsofsubcontract.serie %></td>
+    <td><%= equipmentsofsubcontract.modelo %></td>
+    <td><%= equipmentsofsubcontract.anho %></td>
+    <td><%= equipmentsofsubcontract.unit.nombre %></td>
+    <td><%= equipmentsofsubcontract.precion_sin_igv %></td>
+    <td><%= equipmentsofsubcontract.equipmentincluded.nombre %></td>
+    <td><%= equipmentsofsubcontract.horas_minimas %></td>
+    <td><%= equipmentsofsubcontract.cantidad_h_m %></td>
+  </tr>
+  <% end %>
+</table>
+
+<div class="form-actions">
+  <%= link_to raw('<i class="icon-edit icon-white"></i> Editar'), edit_production_subcontractofequipment_path(@subcontractofequipment), :class => 'btn btn-success' %>
+  <%= link_to raw('<i class="icon-arrow-left icon-white"></i> Regresar'), production_subcontractofequipments_path, :class => 'btn btn-primary' %>  
+</div>
+
+
+

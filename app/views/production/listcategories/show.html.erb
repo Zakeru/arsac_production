@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<div class="page-header">
+	<h2>Detalle Categoria Preciario</h2>
+</div>
+
+<div class="row">
+<table class="table table-bordered table-striped table-condensed table-hover span6">
+	<tr>
+		<th>Nombre</th>
+		<th>Descripcion</th>
+	</tr>
+	<tr>
+		<td>#id</td>
+		<td><%= @listcategory.id %></td>
+	</tr>
+	<tr>
+		<td>Codigo</td>
+		<td><%= @listcategory.codigo %></td>
+	</tr>
+	<tr>
+		<td>Nombre</td>
+		<td><%= @listcategory.nombre %></td>
+	</tr>	
+</table>
+</div>
+<div class="clearfix"></div>
+
+<div class="form-actions">
+	<%= link_to raw("<i class='icon-edit icon-white'></i> Editar"), edit_production_listcategory_path(@listcategory), :class => 'btn btn-success' %>
+	<%= link_to raw("<i class='icon-arrow-left icon-white'></i> Regresar"), production_listcategories_path, :class => 'btn btn-primary' %>	
+</div>
+

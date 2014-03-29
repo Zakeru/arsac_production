@@ -1,0 +1,73 @@
+<%= form_for([:production,@sector], :html => {:class => "form-horizontal"}) do |f| %>
+  <% if @sector.errors.any? %>
+    <div id="error_explanation" class="well">
+      <h3><%= pluralize(@sector.errors.count, "errores") %> Cometidos</h3>
+
+      <ul>
+      <% @sector.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="control-group">
+    <div class="control-label">
+      <%= f.label :codigo %>  
+    </div>
+    <div class="controls">
+      <%= f.text_field :codigo, :class => "span1" %>  
+    </div>    
+  </div>
+
+  <div class="control-group">
+    <div class="control-label">
+      <%= f.label :descripcion %>  
+    </div>
+    <div class="controls">
+      <%= f.text_field :descripcion, :class => "span6" %>  
+    </div>
+  </div>
+
+  <div class="control-group">
+    <div class="controls">
+      <%= f.submit :class => "btn btn-success" %>  
+    </div>     
+  </div>
+
+<% end %>
+
+
+<script type="text/javascript">
+    $('form').validate({
+        rules: {
+            'sectore[codigo]': {
+                required: true, 
+                numero_punto: true               
+            },
+            'sectore[descripcion]': {
+                required: true,
+                letras_espacio: true
+            }
+        }, messages: {
+          'ente[nombre]': {
+            required: "Este Campo es Requerido",
+            minlength: jQuery.format("Minimo {0} caracteres.!"),
+          }
+    },
+        highlight: function(element) {
+            $(element).closest('.control-group').removeClass('success').addClass('error');            
+        },success: function (element) {
+            $(element).closest('.control-group').addClass('success');               
+        },
+        errorElement: 'span',
+        errorClass: 'help-block',
+        errorPlacement: function(error, element) {
+            if(element.parent('.input-group').length) {
+                error.insertAfter(element.parent());
+            } else {
+                error.insertAfter(element);
+            }
+        }
+    });
+</script>

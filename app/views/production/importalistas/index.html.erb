@@ -1,0 +1,23 @@
+<h1>Listing importalistas</h1>
+
+<table>
+  <tr>
+    <th>Nombre</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @importalistas.each do |importalista| %>
+  <tr>
+    <td><%= importalista.nombre %></td>
+    <td><%= link_to 'Show', importalista %></td>
+    <td><%= link_to 'Edit', edit_importalista_path(importalista) %></td>
+    <td><%= link_to 'Destroy', importalista, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Importalista', new_importalista_path %>

@@ -1,0 +1,16 @@
+<ul class="breadcrumb">
+  <li><i class="icon-home"></i> <%= link_to "Parte Obra", root_path %> <span>/</span></li>  
+  <li class="active">Editar</li>
+</ul>
+
+<div class="page-header">
+	<h1>Editar <%= link_to "partwork", production_partworks_path %></h1>
+</div>
+
+<%= render 'form' %>
+
+<div class="form-actions">
+	<%= link_to raw('<i class="icon-eye-open icon-white"></i> Ver'), production_partwork_path(@partwork), :class => "btn btn-info" %>
+	<%= link_to raw('<i class="icon-arrow-left icon-white"></i> Regresar'), production_partworks_path, :class => "btn btn-primary" %>	
+</div>
+

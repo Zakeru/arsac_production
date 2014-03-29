@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Nombre:</b>
+  <%= @vequipo.nombre %>
+</p>
+
+<p>
+  <b>Cantidad:</b>
+  <%= @vequipo.cantidad %>
+</p>
+
+<p>
+  <b>Unidad:</b>
+  <%= @vequipo.unidad %>
+</p>
+
+<p>
+  <b>Precio unitario:</b>
+  <%= @vequipo.precio_unitario %>
+</p>
+
+<p>
+  <b>Parcial:</b>
+  <%= @vequipo.parcial %>
+</p>
+
+<p>
+  <b>Valorizacione:</b>
+  <%= @vequipo.valorizacione_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_vequipo_path(@vequipo) %> |
+<%= link_to 'Back', vequipos_path %>

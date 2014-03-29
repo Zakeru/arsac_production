@@ -1,0 +1,52 @@
+<p id="notice"><%= notice %></p>
+<div class="page-header">
+  <h2>Detalle de Produccion</h2>
+</div>
+
+<div class="row">
+<table class="table table-striped table-bordered table-condensed table-hover span7">
+  <tr>
+    <th>Nombre</th>
+    <th>Descripcion</th>
+  </tr>
+  <tr>
+    <td>#id</td>
+    <td><%= @item.id %></td>
+  </tr>
+  <tr>
+    <td>Nombre</td>
+    <td><%= @item.list.nombre %></td>
+  </tr>
+  <tr>
+    <td>Serieclase</td>
+    <td><%= @item.serieclase %></td>
+  </tr>
+  <tr>
+    <td>Profundidad</td>
+    <td><%= @item.profundidad %></td>
+  </tr>
+  <tr>
+    <td>Unidad</td>
+    <td><%= @item.unit.nombre %></td>
+  </tr>
+  <tr>
+    <td>Metrado</td>
+    <td><%= @item.metrado %></td>
+  </tr>
+  <tr>
+    <td>Obsevacion</td>
+    <td><%= @item.observacion %></td>
+  </tr>
+  <tr>
+    <td>Parte de Obra</td>
+    <td><%= @item.partwork_id %></td>
+  </tr>
+</table>
+</div>
+<div class="clearfix"></div>
+
+<div class="form-actions">
+  <%= link_to raw('<i class="icon-edit icon-white icon-white"></i> Editar'), edit_partwork_path(@item.partwork_id), :class => "btn btn-success" %>
+  <%= link_to raw('<i class="icon-arrow-left icon-white"></i> Regresar'), items_path, :class => "btn btn-primary" %>  
+</div>
+

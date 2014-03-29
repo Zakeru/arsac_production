@@ -1,0 +1,2 @@
+module FrentesHelper
+end

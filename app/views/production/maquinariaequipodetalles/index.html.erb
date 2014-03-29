@@ -1,0 +1,41 @@
+<h1>Listing maquinariaequipodetalles</h1>
+
+<table>
+  <tr>
+    <th>Numero</th>
+    <th>Parte</th>
+    <th>Fecha</th>
+    <th>Horometro inicio</th>
+    <th>Horometro fin</th>
+    <th>Horometro horas</th>
+    <th>Horas efectivas</th>
+    <th>Suministro</th>
+    <th>Combustible</th>
+    <th>Maquinariaequipo</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @maquinariaequipodetalles.each do |maquinariaequipodetalle| %>
+  <tr>
+    <td><%= maquinariaequipodetalle.numero %></td>
+    <td><%= maquinariaequipodetalle.parte %></td>
+    <td><%= maquinariaequipodetalle.fecha %></td>
+    <td><%= maquinariaequipodetalle.horometro_inicio %></td>
+    <td><%= maquinariaequipodetalle.horometro_fin %></td>
+    <td><%= maquinariaequipodetalle.horometro_horas %></td>
+    <td><%= maquinariaequipodetalle.horas_efectivas %></td>
+    <td><%= maquinariaequipodetalle.suministro %></td>
+    <td><%= maquinariaequipodetalle.combustible %></td>
+    <td><%= maquinariaequipodetalle.maquinariaequipo_id %></td>
+    <td><%= link_to 'Show', maquinariaequipodetalle %></td>
+    <td><%= link_to 'Edit', edit_maquinariaequipodetalle_path(maquinariaequipodetalle) %></td>
+    <td><%= link_to 'Destroy', maquinariaequipodetalle, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Maquinariaequipodetalle', new_maquinariaequipodetalle_path %>

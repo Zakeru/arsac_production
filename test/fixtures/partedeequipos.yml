@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  subcontratodeequipo_id: 1
+  insumodeequipo_id: 1
+  numero: MyString
+  fecha: MyString
+
+two:
+  subcontratodeequipo_id: 1
+  insumodeequipo_id: 1
+  numero: MyString
+  fecha: MyString

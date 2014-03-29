@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  tareoscolumna_id: 1
+  item: MyString
+
+two:
+  tareoscolumna_id: 1
+  item: MyString

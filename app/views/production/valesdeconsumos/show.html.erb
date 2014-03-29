@@ -1,0 +1,57 @@
+<p id="notice"><%= notice %></p>
+
+<div class="page-header">
+  <h2>Detalle Vale de Consumo</h2>
+</div>
+
+
+<div class="row">
+	
+
+<table class="table table-bordered table-striped table-condensed span5">
+	<tr>
+		<th>Nombre</th>
+		<th>Descripcion</th>
+	</tr>	
+	<tr>
+		<td>#id</td>
+		<td><%= @valesdeconsumo.id %></td>		
+	</tr>
+	<tr>
+		<td>#Numero de vale</td>
+		<td><%= @valesdeconsumo.numero_vale %></td>
+	</tr>
+	<tr>
+		<td>Tipo de Vale</td>
+		<td><%= @valesdeconsumo.tipo_vale %></td>
+	</tr>
+	<tr>
+		<td>Proveedor</td>
+		<td>
+			<%= @valesdeconsumo.proveedore.ente.nombre %>
+			<%= @valesdeconsumo.proveedore.ente.apellido %>
+			<%= @valesdeconsumo.proveedore.ente.razon_social %>
+		</td>
+	</tr>
+	<tr>
+		<td>Tipo de Material</td>
+		<td><%= @valesdeconsumo.tipo_material %></td>
+	</tr>
+	<tr>
+		<td>Cantidad</td>
+		<td><%= @valesdeconsumo.cantidad %></td>
+	</tr>
+	<tr>
+		<td>Fecha de Ingreso</td>
+		<td><%= @valesdeconsumo.fecha_de_ingreso.strftime("%d %b. %Y") %></td>
+	</tr>
+</table>
+</div>
+
+<div class="clearfix"></div>
+
+<div class="form-actions">
+  <%= link_to raw('<i class="icon-edit icon-white"></i> Editar'), edit_valesdeconsumo_path(@valesdeconsumo), :class => "btn btn-success" %>
+  <%= link_to raw('<i class="icon-arrow-left icon-white"></i> Regresar'), valesdeconsumos_path, :class => "btn btn-primary" %>  
+</div>
+

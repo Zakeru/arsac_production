@@ -1,0 +1,35 @@
+<h1>Listing vpartidas</h1>
+
+<table>
+  <tr>
+    <th>Valorizacione</th>
+    <th>Codigo</th>
+    <th>Partida nombre</th>
+    <th>Unidad</th>
+    <th>Cantidad</th>
+    <th>Precio unitario</th>
+    <th>Parcial</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @vpartidas.each do |vpartida| %>
+  <tr>
+    <td><%= vpartida.valorizacione_id %></td>
+    <td><%= vpartida.codigo %></td>
+    <td><%= vpartida.partida_nombre %></td>
+    <td><%= vpartida.unidad %></td>
+    <td><%= vpartida.cantidad %></td>
+    <td><%= vpartida.precio_unitario %></td>
+    <td><%= vpartida.parcial %></td>
+    <td><%= link_to 'Show', vpartida %></td>
+    <td><%= link_to 'Edit', edit_vpartida_path(vpartida) %></td>
+    <td><%= link_to 'Destroy', vpartida, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Vpartida', new_vpartida_path %>

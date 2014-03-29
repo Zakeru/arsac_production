@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  frente_id: 1
+  sectore_id: 1
+  subsectore_id: 1
+  unidade_id: 1
+  partidasdecontrol_id: 1
+  subunidad: MyString
+  inicio: MyString
+  fin: MyString
+  cantidad: MyString
+
+two:
+  frente_id: 1
+  sectore_id: 1
+  subsectore_id: 1
+  unidade_id: 1
+  partidasdecontrol_id: 1
+  subunidad: MyString
+  inicio: MyString
+  fin: MyString
+  cantidad: MyString

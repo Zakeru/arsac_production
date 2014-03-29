@@ -1,0 +1,48 @@
+<%= form_for([:production, @project], :html => {:class=>'form-horizontal'}) do |f| %>
+  <% if @project.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@project.errors.count, "error") %> prohibited this project from being saved:</h2>
+
+      <ul>
+      <% @project.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="control-group">
+    <div class="control-label">
+      <%= f.label :name %>
+    </div>
+    <div class="controls">
+      <%= f.text_field :name %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <div class="control-label">
+      <%= f.label :fecha_inicial %>
+    </div>
+    <div class="controls">
+      <%= f.text_field :project_initial_date %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <div class="controls">
+      <%= f.submit class: 'btn' %>
+    </div>
+  </div>
+
+  
+<% end %>
+
+
+<script type="text/javascript">
+  $('#project_project_initial_date').datepicker({
+      format: 'yyyy-mm-dd',
+      language: 'es',
+      autoclose: true      
+  });
+</script>

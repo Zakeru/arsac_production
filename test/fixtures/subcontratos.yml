@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  valorizacion: MyString
+  adelanto: 9.99
+  condiciones_de_pago: 1
+  igv: 9.99
+  fondo_de_garantia: 9.99
+  adelanto_detalle: 9.99
+
+two:
+  valorizacion: MyString
+  adelanto: 9.99
+  condiciones_de_pago: 1
+  igv: 9.99
+  fondo_de_garantia: 9.99
+  adelanto_detalle: 9.99

@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+<div class="page-header">
+	<h2>Detalle Fase</h2>
+</div>
+
+<div class="row">
+<table class="table table-bordered table-striped table-condensed table-hover span8">
+	<tr>
+		<th>Nombre</th>
+		<th>Descripcion</th>
+	</tr>
+	<tr>
+		<td>#id</td>
+		<td>Codigo</td>
+	</tr>
+	<tr>
+		<td>Codigo</td>
+		<td><%= @phase.codigo %></td>
+	</tr>
+	<tr>
+		<td>Descripcion</td>
+		<td><%= @phase.descripcion %></td>
+	</tr>	
+</table>
+</div>
+<div class="clearfix"></div>
+<div class="form-actions">
+	<%= link_to raw('<i class="icon-edit icon-white"></i> Editar'), edit_production_phase_path(@phase), :class => "btn btn-success" %>
+	<%= link_to raw('<i class="icon-arrow-left icon-white"></i> Regresar'), production_phases_path, :class => "btn btn-primary" %>	
+</div>
+

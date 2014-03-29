@@ -1,0 +1,62 @@
+<%= form_for([:production,@catalogcategorywork], :html => {:class => "form-horizontal"}) do |f| %>
+
+  <% if @catalogcategorywork.errors.any? %>
+    <div class="well">
+      <h4><%= pluralize(@catalogcategorywork.errors.count, "errores") %> cometidos</h4>
+
+      <ol>
+      <% @catalogcategorywork.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ol>
+    </div>
+  <% end %>
+
+  <div class="control-group">
+    <div class="control-label">
+      <%= f.label :nombre %>
+    </div>
+    <div class="controls">
+      <%= f.text_field :nombre %>
+    </div>
+  </div>  
+  <div class='control-group'>
+    <div class='control-label'>
+      <%= f.label :unidad %>
+    </div>
+    <div class='controls'>
+      <%= f.select :unit_id, Unit.all.collect {|x| [x.nombre, x.id]},{:include_blank => 'Unidad'} %>
+    </div>
+  </div>
+  <div class='control-group'>
+    <div class='control-label'>
+      <%= f.label :precio_normal %>
+    </div>
+    <div class='controls'>
+      <%= f.text_field :precio_unitario_normal, :placeholder => '30.76', :class => 'input-mini' %>
+    </div>
+  </div>
+  <div class='control-group'>
+    <div class='control-label'>
+      <%= f.label :precio_60 %>
+    </div>
+    <div class='controls'>
+      <%= f.text_field :precio_unitario_60, :placeholder => '22.89', :class => 'input-mini' %>
+    </div>
+  </div>
+  <div class='control-group'>
+    <div class='control-label'>
+      <%= f.label :precio_100 %>
+    </div>
+    <div class='controls'>
+      <%= f.text_field :precio_unitario_100, :placeholder => '19.56', :class => 'input-mini' %>
+    </div>
+  </div>
+
+  <div class="control-group">    
+    <div class="controls">
+      <%= f.submit :class => "btn" %>
+    </div>
+  </div>
+
+<% end %>

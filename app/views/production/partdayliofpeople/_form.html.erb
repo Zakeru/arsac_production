@@ -1,0 +1,139 @@
+<%
+    30.times do
+      @partdayliofperson.workers.build
+    end
+ %>
+
+  <%= form_for([:production,@partdayliofperson], :html => {:class => 'form-horizontal'}) do |f| %>
+  <% if @partdayliofperson.errors.any? %>
+    <div class="well">
+      <h4><%= pluralize(@partdayliofperson.errors.count, "Errores") %> Cometidos al llenar el Parte Diario de Personal</h4>
+      <ol>
+      <% @partdayliofperson.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ol>
+    </div>
+  <% end %>
+
+  <div class="well">
+    <% if params[:action] == 'new' %>
+      <%= f.text_field :numero, :placeholder => "001", value: @partediariodepersonal_numero.to_s.rjust(4, '0'), :class => "span1" %>
+    <% else %>
+      <%= f.text_field :numero, :placeholder => "001", :class => "span1" %>
+    <% end %>   
+    <%= f.select :groupsofwork_id, Groupsofwork.where("activo = ?", 'Si').collect {|x| 
+            [ "#{x.id} - 
+              #{x.chiefoffront.entity.nombre} #{x.chiefoffront.entity.apellido} #{x.chiefoffront.entity.razon_social} - 
+              #{x.subcontract.supplier.entity.nombre} #{x.subcontract.supplier.entity.apellido} #{x.subcontract.supplier.entity.razon_social} - 
+              #{x.teacherofwork.entity.nombre} #{x.teacherofwork.entity.apellido} #{x.teacherofwork.entity.razon_social}", x.id]}, {:include_blank => 'SECTOR - SUBSECTOR - JEFEDEFRENTE - EJECUTOR - MAESTRODEOBRA'}, {:style => 'font-size: 11px;', :class => "span9"}%>
+
+    <%= f.text_field :fecha, :class => "span2", :placeholder => "Fecha" %>
+  </div>
+
+  <div class="row">
+    <div class="span6">
+      <h3>Registro de <%= link_to "Trabajadores", production_workers_path %>  <%= image_tag('glyphicons_409_sort-by-attributes-alt.png', height: '20', width: '20') %></h3>  
+    </div>
+    <div class="span6">
+      <br>
+      <%= f.submit :class => "btn pull-right" %> 
+    </div>
+  </div>
+  
+  
+
+  
+  <% i = 1 %>
+  <%= f.fields_for :workers do |ft| %>
+  <div class="controls-row" style="display: inline;">
+    <%= ft.select :catalogofwork_id, Catalogofwork.all.collect {|x| ["#{x.catalogcategorywork.nombre} - #{x.entity.nombre}, #{x.entity.apellido}", x.id]}, {:include_blank => "#{i}.- Operador - Trabajador"}, :class => "span3", :style => 'font-size: 11px;' %>
+    <%= ft.select :front_id, Front.all.collect{|x| [x.nombre, x.id]}, { include_blank: 'Frente'}, { :style => 'font-size: 11px;', :class => 'span2'} %>
+    <%= ft.select :itemsofcontrol_id, Itemsofcontrol.all.collect {|x| ["#{x.subphase.phase.codigo}#{x.subphase.codigo} #{x.subphase.descripcion}", x.id]}, {:include_blank => 'Partida de Control'}, {:style => 'font-size: 11px;', :class => 'span3'} %>
+    <%= ft.text_field :normal, :class => "span1", :style => 'font-size: 11px;' , :placeholder => "Normal" %>
+    <%= ft.text_field :normal_60, :class => "span1", :style => 'font-size: 11px;', :placeholder => "60%" %>
+    <%= ft.text_field :normal_100, :class => "span1", :style => 'font-size: 11px;', :placeholder => "100%" %>
+    <%= ft.text_field :total_horas, :class => "span1", :style => 'font-size: 11px;', :placeholder => "Total H" %>
+  </div>
+  <% i = i + 1 %>       
+  <% end %>
+  
+
+<script type="text/javascript">
+  $('#partdayliofperson_fecha').datepicker({
+      format: 'yyyy-mm-dd',
+      language: 'es',
+      autoclose: true      
+  });
+
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_0_frente_id").select2(); });
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_1_frente_id").select2(); });
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_2_frente_id").select2(); });
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_3_frente_id").select2(); });
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_4_frente_id").select2(); });
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_5_frente_id").select2(); });
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_6_frente_id").select2(); });
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_7_frente_id").select2(); });
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_8_frente_id").select2(); });
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_9_frente_id").select2(); });
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_10_frente_id").select2(); });
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_11_frente_id").select2(); });
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_12_frente_id").select2(); });
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_13_frente_id").select2(); });
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_14_frente_id").select2(); });
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_15_frente_id").select2(); });
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_16_frente_id").select2(); });
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_17_frente_id").select2(); });
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_18_frente_id").select2(); });
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_19_frente_id").select2(); });
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_20_frente_id").select2(); });
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_21_frente_id").select2(); });
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_22_frente_id").select2(); });
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_23_frente_id").select2(); });
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_24_frente_id").select2(); });
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_25_frente_id").select2(); });
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_26_frente_id").select2(); });
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_27_frente_id").select2(); });
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_28_frente_id").select2(); });
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_29_frente_id").select2(); });
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_30_frente_id").select2(); });  
+
+
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_0_catalogofwork_id").select2(); });  
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_1_catalogofwork_id").select2(); });  
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_2_catalogofwork_id").select2(); });  
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_3_catalogofwork_id").select2(); });  
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_4_catalogofwork_id").select2(); });  
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_5_catalogofwork_id").select2(); });  
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_6_catalogofwork_id").select2(); });  
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_7_catalogofwork_id").select2(); });  
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_8_catalogofwork_id").select2(); });  
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_9_catalogofwork_id").select2(); });  
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_10_catalogofwork_id").select2(); });  
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_11_catalogofwork_id").select2(); });  
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_12_catalogofwork_id").select2(); });  
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_13_catalogofwork_id").select2(); });  
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_14_catalogofwork_id").select2(); });  
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_15_catalogofwork_id").select2(); });  
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_16_catalogofwork_id").select2(); });  
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_17_catalogofwork_id").select2(); });  
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_18_catalogofwork_id").select2(); });  
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_19_catalogofwork_id").select2(); });  
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_20_catalogofwork_id").select2(); });  
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_21_catalogofwork_id").select2(); });  
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_22_catalogofwork_id").select2(); });  
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_23_catalogofwork_id").select2(); });  
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_24_catalogofwork_id").select2(); });  
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_25_catalogofwork_id").select2(); });  
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_26_catalogofwork_id").select2(); });  
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_27_catalogofwork_id").select2(); });  
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_28_catalogofwork_id").select2(); });  
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_29_catalogofwork_id").select2(); });  
+  $(document).ready(function() { $("#partediariodepersonal_workers_attributes_30_catalogofwork_id").select2(); });  
+
+</script>
+  <br>
+  <div class="actions">
+    <%= f.submit :class => "btn" %>
+  </div>
+<% end %>

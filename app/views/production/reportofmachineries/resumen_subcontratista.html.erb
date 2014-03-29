@@ -1,0 +1,67 @@
+<div class="page-header">
+	<h1 style="text-align: center;">Cuadro Resumen Ejecutor</h1>	
+</div>
+
+<table class="table table-condensed table-bordered table-hover">
+  <tr class="well">
+	<td colspan="11" style="text-align: center">
+		<h4><%= @nombre_proveedor %> <small>Ejecutor (<%= @inicio.to_date.strftime("%d %b") %> - <%= @fin.to_date.strftime("%d %b. %Y") %>)</small></h4>
+	</td>
+  </tr>
+  <tr class="well">
+    <th rowspan="2">#</th>
+    <th rowspan="2">Equipo</th>
+    <th rowspan="2" style="text-align: right;">Und</th>
+    <th rowspan="2" style="text-align: right;">Precio U.</th>
+    <th colspan="2" style="text-align: center;">Acumulado Anterior</th>
+    <th colspan="2" style="text-align: center;">Presente Valorizacion</th>
+    <th colspan="2" style="text-align: center;">Acumulado Actual</th>
+    <th rowspan="2" style="text-align: center">Accion</th>
+  </tr>
+  <tr class="well">
+    <th style="text-align: right;">Metrado</th>
+    <th style="text-align: right;">Monto</th>
+    <th style="text-align: right;">Metrado</th>
+    <th style="text-align: right;">Monto</th>
+    <th style="text-align: right;">Metrado</th>
+    <th style="text-align: right;">Monto</th>
+  </tr>
+  <% ri = 0 %>
+  <% sumariza_acumulado_anterior_monto = 0 %>
+  <% sumariza_presente_valorizacion_monto = 0 %>
+  <% sumariza_acumulado_actual_monto = 0 %>
+  <% @equiposdesubcontratos_seleccionados.last[0].each do |resumen| %>
+    <tr>
+      <% ri += 1 %>
+      <td><%= ri %></td>
+      <td><%= resumen[1] %></td>
+      <td style="text-align: right;"><%= resumen[2] %></td>
+      <td style="text-align: right;"><%= resumen[3] %></td>
+      <td style="text-align: right;"><%= resumen[4] %></td>
+      <td style="text-align: right;"><%= resumen[5] %></td>
+      <td style="text-align: right;"><%= resumen[6] %></td>
+      <td style="text-align: right;"><%= resumen[7] %></td>
+      <td style="text-align: right;"><%= resumen[8] %></td>
+      <td style="text-align: right;"><%= resumen[9] %></td>
+      <td style="text-align: center;">
+        <%= link_to raw("<i class='icon-eye-open'></i>"), "/production/reportofmachineries/resumen_equipodesubcontrato?equipodesubcontrato_id=#{resumen[0]}&inicio=#{@inicio}&fin=#{@fin}",:target => '_blank', class: 'btn btn-small' %>
+        </td>
+    </tr>                
+    <% sumariza_acumulado_anterior_monto += resumen[5].to_f %>
+    <% sumariza_presente_valorizacion_monto += resumen[7].to_f %>
+    <% sumariza_acumulado_actual_monto += resumen[9].to_f %>
+  <% end %>
+  <tr>
+    <td colspan="2" style="text-align: center;"><b>SUB TOTAL VALORIZACION</b></td>
+    <td></td>
+    <td></td>
+    <td colspan="2" style="text-align: right;"><b><%= number_to_currency sumariza_acumulado_anterior_monto, unit:' S/.  ' %></b></td>
+    <td colspan="2" style="text-align: right;"><b><%= number_to_currency sumariza_presente_valorizacion_monto, unit:' S/. ' %></b></td>
+    <td colspan="2" style="text-align: right;"><b><%= number_to_currency sumariza_acumulado_actual_monto, unit:' S/. ' %></b></td>
+    <td></td>
+  </tr>
+</table>
+
+
+<br><br>
+

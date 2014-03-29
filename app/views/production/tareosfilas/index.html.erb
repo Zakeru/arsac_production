@@ -1,0 +1,25 @@
+<h1>Listing tareosfilas</h1>
+
+<table>
+  <tr>
+    <th>Tareoscolumna</th>
+    <th>Item</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @tareosfilas.each do |tareosfila| %>
+  <tr>
+    <td><%= tareosfila.tareoscolumna_id %></td>
+    <td><%= tareosfila.item %></td>
+    <td><%= link_to 'Show', tareosfila %></td>
+    <td><%= link_to 'Edit', edit_tareosfila_path(tareosfila) %></td>
+    <td><%= link_to 'Destroy', tareosfila, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Tareosfila', new_tareosfila_path %>

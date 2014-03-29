@@ -1,0 +1,75 @@
+<%= form_for([:production,@entity], :html => { :class => "form-horizontal" } )  do |f| %>
+  <% if @entity.errors.any? %>
+    <div id="error_explanation">
+      <h3>Errores Cometidos</h3>
+      <ul>
+      <% @entity.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <!-- Row-->
+        
+      <!-- Control-Group -->
+      <div class="control-group">
+        <div class="control-label">
+          <%= f.label :nombre %>
+        </div>
+        <div class="controls">
+          <%= f.text_field :nombre, :placeholder => "Abraham Moises" %>
+        </div>
+      </div>
+      <!-- End Control Group -->
+      <!-- Control-Group -->
+      <div class="control-group">
+        <div class="control-label">
+          <%= f.label :apellido %>
+        </div>
+        <div class="controls">
+          <%= f.text_field :apellido, :placeholder => "Linares Oscco" %>
+        </div>
+      </div>
+      <!-- End Control Group -->
+      <!-- Control-Group -->
+      <div class="control-group">
+        <div class="control-label">
+          <%= f.label :dni %>
+        </div>
+        <div class="controls">
+          <%= f.text_field :dni, :placeholder => "42516253", :class => "input-small" %>
+        </div>
+      </div>
+      <div class="control-group">
+        <div class="control-label">
+          <%= f.label :ruc %>
+        </div>
+        <div class="controls">
+          <%= f.text_field :ruc, :placeholder => "46852485", :class => "input-medium" %>
+        </div>
+      </div>
+
+      <!-- End Control Group -->      
+      <!-- Control-Group -->
+      <div class="control-group">
+        <div class="control-label">
+          <%= f.label :razon_social %>
+        </div>
+        <div class="controls">
+          <%= f.text_field :razon_social, :placeholder => "Car Peru", :class => "input-large" %>
+        </div>
+      </div>
+      <!-- End Control Group -->
+      <!-- Control-Group -->
+      
+      <!-- End Control Group -->  
+  <!-- End Row -->
+
+  <div class="control-group">
+    <div class="controls">
+      <%= f.submit :class => "btn" %>
+    </div>
+  </div>
+
+<% end %>

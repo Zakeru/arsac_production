@@ -1,0 +1,57 @@
+<div class="row">
+	<table class="table table-bordered table-hover table-condensed span10" style="margin: 0 auto; float: none;">
+		<tr class="well">
+			<td colspan="9">
+				<h2 style="text-align: center;">Cuadro Resumen de Equipo</h2>
+				<h4 style="text-align: center;"><%= @equipodesubcontrato_nombre %> 
+					<small><%= l(params[:inicio].to_date, format: :fecha) %> - <%= l(params[:fin].to_date, format: :fecha) %></small>
+				</h4>
+				<h5 style="text-align: center;"><%= @insumodeequipo_nombre %></h5>
+			</td>
+		</tr>
+		<tr class="well">
+			<th>#</th>
+			<th>N. Parte</th>
+			<th>Fecha</th>
+			<th style="text-align: right;">H. Inicio</th>
+			<th style="text-align: right;">H. fin</th>
+			<th style="text-align: right;">H. horas</th>
+			<th style="text-align: right;">H. efectivas</th>
+			<th>Suministro</th>
+			<th style="text-align: right;">Combustible</th>
+		</tr>
+		<% sumariza_horas = 0 %>
+		<% sumariza_horas_efectivas = 0 %>
+		<% sumariza_combustible = 0 %>
+		<% i = 0 %>
+		<% @vequipodays.each do |vequipoday| %>
+			<tr>
+				<td><%= i %> .-</td>
+				<td><%= vequipoday.numero_parte %></td>
+				<td><%= vequipoday.fecha %></td>
+				<td style="text-align: right;"><%= number_to_currency vequipoday.hora_inicio, unit: '' %></td>
+				<td style="text-align: right;"><%= number_to_currency vequipoday.hora_fin, unit: '' %></td>
+				<td style="text-align: right;"><%= number_to_currency vequipoday.horas_horas, unit: '' %></td>
+				<td style="text-align: right;"><%= number_to_currency vequipoday.horas_efectivas, unit: '' %></td>
+				<td><%= vequipoday.suministro %></td>
+				<td style="text-align: right;"><%= number_to_currency vequipoday.combustible, unit: '' %></td>
+				<% sumariza_horas += vequipoday.horas_horas.to_f %>
+				<% sumariza_horas_efectivas += vequipoday.horas_efectivas.to_f %>
+				<% sumariza_combustible += vequipoday.combustible.to_f %>
+			</tr>
+			<% i += 1 %>
+		<% end %>
+		<tr class="well">
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td style="text-align: right;"><b><%= number_to_currency sumariza_horas, unit: '' %></b> </td>
+			<td style="text-align: right;"><b><%= number_to_currency sumariza_horas_efectivas, unit: '' %></b></td>
+			<td></td>
+			<td style="text-align: right;"><b><%= number_to_currency sumariza_combustible, unit: '' %></b></td>
+		</tr>
+
+	</table>
+</div>

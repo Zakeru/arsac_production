@@ -1,0 +1,11 @@
+<div class="page-header">
+	<h1>Editing equiposdesubcontrato</h1>	
+</div>
+
+<%= render 'form' %>
+
+<div class="form-actions">
+	<%= link_to raw("<i class='icon-eye-open icon-white'></i> Ver"), @equipmentofsubcontract, class: 'btn btn-info' %>
+	<%= link_to raw("<i class='icon-arrow-left icon-white'></i> Regresar"), "/subcontractofequipments/ver_equipos/#{@equipmentsofsubcontract.subcontractofequipment_id}", class: 'btn btn-primary' %>	
+</div>
+

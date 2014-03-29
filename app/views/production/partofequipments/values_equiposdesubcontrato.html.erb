@@ -1,0 +1,9 @@
+<%= debug @equiposdesubcontratos %>
+<% if @equiposdesubcontratos == 0 %>
+	<option value="" >Selec SubcontratodeEquipo</option>
+<% else %>
+	<option value="" >Selec SubcontratodeEquipo</option>
+	<% @equiposdesubcontratos.each do |equiposdesubcontrato| %>	
+		<option value="<%= equiposdesubcontrato.id %>"><%= "#{equiposdesubcontrato.codigo}  #{equiposdesubcontrato.inputofequipment.nombre}" %></option>
+	<% end %>
+<% end %>

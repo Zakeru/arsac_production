@@ -1,0 +1,90 @@
+<p id="notice"><%= notice %></p>
+<div class="page-header">
+	<h2>Detalle Parte de Equipo</h2>
+</div>
+<div class="row">
+<table class="table table-striped table-bordered table-condensed span12">
+	<tr>		
+		<td class="span3"><b>Horometro</b></td>
+		<td class="span6"><%= @partofequipment.inicio %> - <%= @partofequipment.fin %> = <%= @partofequipment.diferencia %></td>
+		<td><b>Fecha</b></td>
+		<td><%= @partofequipment.fecha.to_date.strftime("%d-%m-%y") %></td>
+	</tr>
+	<tr>
+		<td><b>Numero Parte</b></td>
+		<td><%= @partofequipment.numero %></td>
+		<td><b>Combustible Tipo</b></td>
+		<td><%= @partofequipment.fueltype.tipo %> <%= @partofequipment.fueltype.combustible %></td>
+	</tr>
+	<tr>
+		<td><b>Subcontrato de Equipo</b></td>
+		<td>
+			<%= @partofequipment.subcontractofequipment.supplier.entity.nombre %>
+			<%= @partofequipment.subcontractofequipment.supplier.entity.apellido %>
+			<%= @partofequipment.subcontractofequipment.supplier.entity.razon_social %>
+		</td>
+		<td><b>Combustible Cantidad</b></td>
+		<td><%= @partofequipment.combustible_cantidad %></td>
+	</tr>
+	<tr>
+		<td><b>Equipo de Subcontrato</b></td>
+		<td>
+			<%= @partofequipment.equipmentsofsubcontract.codigo %> <%= @partofequipment.equipmentsofsubcontract.inputofequipment.nombre %> 
+		</td>
+		<td><b>Mantenimiento</b></td>
+		<td><%= @partofequipment.mantenimiento %></td>
+	</tr>
+	<tr>
+		<td><b>Operador</b></td>
+		<td>
+			<%= @partofequipment.catalogofwork.entity.nombre %> 
+			<%= @partofequipment.catalogofwork.entity.apellido %> 
+			<%= @partofequipment.catalogofwork.entity.razon_social %>
+		</td>
+		<td><b>H. Stand By</b></td>
+		<td><%= @partofequipment.stand_by %></td>
+	</tr>
+	<tr>
+		<td><b>Unidad</b></td>
+		<td><%= @partofequipment.equipmentsofsubcontract.unit.nombre %></td>
+		<td colspan="2"></td>
+	</tr>
+</table>
+</div>
+<div class="clearfix"></div>
+
+<legend>Equipos Registrados</legend>
+<table class="table table-striped table-bordered table-condensed table-hover">
+	<tr>
+		<th>#id</th>		
+		<th>Grupo de Trabajo</th>
+		<th>WBS Nivel 2</th>
+		<th>Frente</th>		
+		<th>Partida Control</th>
+		<th>Cantidad</th>
+	</tr>	
+	<% @partofequipment.equipmentregisters.each do |equipmentregister| %>
+		<tr style="font-size: 12px;">
+			<td><%= equipmentregister.id %></td>
+			<td>
+				<%= equipmentregister.groupsofwork.teacherofwork.entity.nombre %>
+				<%= equipmentregister.groupsofwork.teacherofwork.entity.apellido %>
+				<%= equipmentregister.groupsofwork.teacherofwork.entity.razon_social %> - 
+
+				<%= equipmentregister.groupsofwork.subcontract.supplier.entity.nombre %>
+				<%= equipmentregister.groupsofwork.subcontract.supplier.entity.apellido %>
+				<%= equipmentregister.groupsofwork.subcontract.supplier.entity.razon_social %>
+
+			</td>
+			<td><%= equipmentregister.groupsofwork.subsector.descripcion %></td>
+			<td><%= equipmentregister.front.nombre %></td>
+			<td><%= equipmentregister.itemsofcontrol.subphase.descripcion %></td>
+			<td><%= equipmentregister.cantidad %></td>
+		</tr>
+	<% end  %>
+</table>
+
+<div class="form-actions">	
+	<%= link_to raw("<i class='icon-arrow-left icon-white'></i> Regresar"), production_partofequipments_path, :class => 'btn btn-primary' %>	
+</div>
+

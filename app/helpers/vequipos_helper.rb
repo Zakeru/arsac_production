@@ -1,0 +1,2 @@
+module VequiposHelper
+end

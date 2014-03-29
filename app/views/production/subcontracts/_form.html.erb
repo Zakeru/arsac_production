@@ -1,0 +1,161 @@
+<% 
+    15.times do 
+      @subcontract.inputs.build         
+    end
+ %>
+
+<%= form_for([:production,@subcontract], :html => {:class => "form-horizontal"}) do |f| %>
+
+  <% if @subcontract.errors.any? %>
+    <div id="error_explanation" class="well">
+      <h4><%= pluralize(@subcontract.errors.count, "errores") %> de subcontrato:</h4>
+      <ul>
+      <% @subcontract.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+
+<!-- Condiciones
+  ===================================================     -->
+  <div class="row">
+    <div class="span5">
+      <div class="control-group">
+        <div class="control-label">
+              <%= f.label :proveedor_id %>
+          </div>
+          <div class="controls">
+            <%= f.select :supplier_id, Supplier.all.collect { |x| ["#{x.entity.razon_social} #{x.entity.nombre} #{x.entity.apellido}", x.id]}, :include_blank => 'Seleccionar' %>
+        </div>
+      </div>
+      <div class="control-group">
+        <div class="control-label">
+              <%= f.label :valorizaciones %>
+          </div>
+          <div class="controls">
+            <%= f.select :valorizacion,[['Semanales'],['Quincenales'],['Mensuales']], :class => "span2", :placeholder => "Semanales", :include_blank => 'seleccionar' %>
+        </div>
+      </div>
+      <div class="control-group">
+        <div class="control-label">
+              <%= f.label :condiciones_de_pago %>
+          </div>
+          <div class="controls">
+            <%= f.select :condiciones_de_pago,[['Al Contado'],['Credito a 3 dias'],['Credito a 5 dias'],['Credito a 7 dias'],['Credito a 10 dias'],['Credito a 15 dias'],['Credito a 30 dias'],['Credito a 40 dias'],['Credito a 50 dias'],['Credito a 60 dias']], :class => "input-large", :placeholder => "Credito a 10 Dias", :include_blank => 'Seleccionar' %>
+        </div>
+      </div>  
+      <div class='control-group'>
+        <div class='control-label'>
+          <%= f.label :amortizacion_inicial %>
+        </div>
+        <div class='controls'>
+          <%= f.text_field :amortizacion_numero, :class => 'input-small', :placeholder => '6500.00' %> o 
+          <%= f.text_field :amortizacion_porcentaje, :class => 'input-mini', :placeholder => '5' %> %
+        </div>
+      </div>    
+      <div class="control-group">
+        <div class="control-label">
+            <%= f.label :fondo_de_garantia %>
+          </div>
+          <div class="controls">            
+            <%= f.text_field :fondo_garantia_porcentaje, :class => "input-mini", :placeholder => "5" %> %
+        </div>
+      </div>
+      <div class='control-group'>
+        <div class='control-label'>
+          <%= f.label :detraccion %>
+        </div>
+        <div class='controls'>
+          <%= f.text_field :detraccion_total_inicial_porcentaje, :class => 'input-mini', :placeholder => '10' %> %
+        </div>
+      </div>     
+    </div>
+    <div class="span6">
+      <div class="control-group">
+        <div class="control-label">
+              <%= f.label :igv %>
+          </div>
+          <div class="controls">
+            <%= f.text_field :igv, :class => "input-mini", :placeholder => "5" %> %
+        </div>
+      </div>     
+      <div class="control-group">
+        <div class="control-label">
+              <%= f.label :adelanto1 %>
+          </div>
+          <div class="controls">
+            <%= f.text_field :adelanto1, :class => "input-small", :placeholder => "2600.00" %>  
+            <%= f.text_field :fecha1, :class => "input-small", :placeholder => "2013-07-09" %>
+        </div>
+      </div>
+      <div class="control-group">
+        <div class="control-label">
+              <%= f.label :adelanto2 %>
+          </div>
+          <div class="controls">
+            <%= f.text_field :adelanto2, :class => "input-small", :placeholder => "4500.00" %>  
+            <%= f.text_field :fecha2, :class => "input-small", :placeholder => "2013-08-01" %>
+        </div>
+      </div>
+      <div class="control-group">
+        <div class="control-label">
+              <%= f.label :adelanto3 %>
+          </div>
+          <div class="controls">
+            <%= f.text_field :adelanto3, :class => "input-small", :placeholder => "7800.00" %>  
+            <%= f.text_field :fecha3, :class => "input-small", :placeholder => "2013-09-10" %>
+        </div>
+      </div>
+      <div class="control-group">
+        <div class="control-label">
+              <%= f.label :adelanto4 %>
+          </div>
+          <div class="controls">
+            <%= f.text_field :adelanto4, :class => "input-small", :placeholder => "2300.00" %>  
+            <%= f.text_field :fecha4, :class => "input-small", :placeholder => "2013-10-19" %>
+        </div>
+      </div>
+      <div class='control-group'>
+        <div class='control-label'>
+          <%= f.label :monto_contratado %>
+        </div>
+        <div class='controls'>
+          <%= f.text_field :monto_contratado, :class => 'input-small', :placeholder => '14000.00' %>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- End Row -->
+
+
+
+  <legend><h2>Insumos</h2></legend>
+  <% i = 1 %>
+  <%= f.fields_for :inputs do |fi| %>
+    <p>
+      <%= fi.select :list_id, List.all.collect { |x| [x.nombre, x.id]}, {:include_blank => "#{i}.- Seleccione Insumo"}, {:class => "span5"} %>
+      <%= fi.select :unit_id, Unit.all.collect {|x| [x.nombre, x.id]}, {:include_blank => ' unidad'},  :class => "span1" %>
+      <%= fi.text_field :cantidad, :placeholder => "Cantidad", :class => "input-mini" %>
+      <%= fi.text_field :pu_sin_igv, :placeholder => "P.U.", :class => "span1" %>
+      <%= fi.text_field :parcial, :placeholder => "Parcial", :class => "input-medium" %>
+      <%= fi.text_field :descripcion, :placeholder => "Descripcion", :class => "span3" %>
+      <% i = i + 1 %>
+    </p>
+  <% end %> 
+
+  <div class="actions">
+    <%= f.submit :class => "btn btn-success" %>
+  </div>
+
+<% end %>
+
+<script type="text/javascript">
+  $('#subcontrato_fecha1,#subcontrato_fecha2,#subcontrato_fecha3,#subcontrato_fecha4').datepicker({
+      format: 'yyyy-mm-dd',
+      language: 'es',
+      autoclose: true      
+  });
+</script>

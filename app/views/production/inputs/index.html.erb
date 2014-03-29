@@ -1,0 +1,42 @@
+<div class="page-header">
+    <h1>Lista de Insumos</h1>    
+</div>
+
+
+<table class="table table-bordered table-striped table-condensed">
+  <tr>
+    <th>#id</th>
+    <th># Subcontrato</th>
+    <th>Unidad</th>
+    <th>Cantidad</th>
+    <th>Pu sin igv</th>
+    <th>Parcial</th>
+    <th>Descripcion</th>
+    <th>Catalogodeinsumo</th>
+    <th>Acciones</th>
+  </tr>
+
+<% @inputs.each do |input| %>
+  <tr style="font-size:12px;">
+    <td><%= input.id %></td>
+    <td><%= input.subcontract_id %></td>
+    <td><%= input.unit.nombre %></td>
+    <td><%= input.cantidad %></td>
+    <td><%= input.pu_sin_igv %></td>
+    <td><%= input.parcial %></td>
+    <td><%= input.descripcion %></td>
+    <td><%= input.list.nombre %></td>    
+    <td>
+        <%= link_to raw('<i class="icon-eye-open icon-white"></i>'), [:production,input], :class => "btn btn-small btn-info" %>
+        <%= link_to raw('<i class="icon-edit icon-white"></i>'), edit_production_subcontract_path(input.subcontract_id), :class => "btn btn-small btn-success" %>
+        <%= link_to raw('<i class="icon-trash icon-white"></i>'), [:production,input], method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-small btn-danger" %>
+    </td>
+  </tr>
+<% end %>
+</table>
+
+<div class="form-actions">
+    <%= link_to raw('<i class="icon-arrow-left icon-white"></i> Regresar'), production_subcontracts_path, :class => "btn btn-primary" %>    
+</div>
+
+

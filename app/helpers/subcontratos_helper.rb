@@ -1,0 +1,2 @@
+module SubcontratosHelper
+end

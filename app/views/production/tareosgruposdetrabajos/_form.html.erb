@@ -1,0 +1,25 @@
+<%= form_for(@tareosgruposdetrabajo) do |f| %>
+  <% if @tareosgruposdetrabajo.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@tareosgruposdetrabajo.errors.count, "error") %> prohibited this tareosgruposdetrabajo from being saved:</h2>
+
+      <ul>
+      <% @tareosgruposdetrabajo.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :tareo_id %><br />
+    <%= f.number_field :tareo_id %>
+  </div>
+  <div class="field">
+    <%= f.label :nombre %><br />
+    <%= f.text_field :nombre %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

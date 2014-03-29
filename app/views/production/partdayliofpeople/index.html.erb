@@ -1,0 +1,106 @@
+<div class="row">
+    <div class="span7">
+        <h1>Personal <small>Parte Diario</small > <%= image_tag('glyphicons_045_calendar.png') %></h1>    
+    </div>
+    <div class="span5">
+        <br>
+        <%= link_to raw('Nuevo <i class="icon-plus icon-white"></i>'), new_production_partdayliofperson_path, :class => "btn btn-primary pull-right" %>
+    </div>
+</div>
+<br>
+
+
+<div class="row">
+  <div class="span6">
+    <!-- Paginacion-->
+    <div class="pull-left">
+      <%= puts will_paginate @partdayliofpersons, renderer: BootstrapPagination::Rails %>  
+    </div>    
+    <!-- End Paginacion -->    
+  </div>
+  <div class="span6">
+        <!-- Search-->
+        <%= form_tag "/production/partdayliofpeople", :method => 'get', :class => "form-search pull-right well", :style => "padding:4px;" do %>         
+
+          <% if !params[:partediariodepersonal_campo].nil? and !params[:partediariodepersonal_opcion].nil? %>
+            <% partediariodepersonal_campo = params[:partediariodepersonal_campo] %>
+            <% partediariodepersonal_opcion = params[:partediariodepersonal_opcion] %>
+            <% preselect_opcion = partediariodepersonal_opcion %>
+            <% if partediariodepersonal_campo.to_i == 1 %>
+              <% preselect_campo = 1 %>              
+            <% elsif partediariodepersonal_campo.to_i == 2 %>
+              <% preselect_campo = 2 %>
+            <% elsif partediariodepersonal_campo.to_i == 3 %>
+              <% preselect_campo = 3 %>
+            <% elsif partediariodepersonal_campo.to_i == 4 %>
+              <% preselect_campo = 4 %>
+            <% elsif partediariodepersonal_campo.to_i == 5 %>
+              <% preselect_campo = 5 %>
+            <% elsif partediariodepersonal_campo.to_i == 6 %>
+              <% preselect_campo = 6 %>
+            <% end %>
+          <% else %>
+            <% preselect_opcion = 0 %>
+            <% preselect_campo = 0 %>    
+          <% end %>
+
+        <%= select_tag :partediariodepersonal_campo, options_for_select([['Numero', 1], ['Grupo de Trabajo', 2], ['Ejecutor', 3], ['Jefe de Frente', 4], ['Maestro de Obra', 5], ['Fecha', 6]],preselect_campo), :prompt => "Seleccione",  :class => 'input-medium' %>
+        <%= select_tag :partediariodepersonal_opcion, options_for_select(@combo_opcions,preselect_opcion), :prompt => "Seleccione",  :class => 'input-xlarge' %>        
+        <%= button_tag(type: "submit", class: "btn ") do %>
+          <i class="icon-search"></i> Buscar 
+        <% end %>       
+        <% end %>
+        <!-- End Search -->   
+  </div>
+</div><!-- End Row -->
+
+<table class="table table-bordered table-condensed table-hover">
+  <tr class="well">
+    <th>Numero</th>
+    <th>Ejecutor</th>
+    <th>Jefe de frente</th>
+    <th>Maestro de obra</th>
+    <th>Fecha</th>
+    <th>Acciones</th>
+  </tr>
+
+<% @partdayliofpeople.each do |partdayliofperson| %>
+  <tr>    
+    <td><%= partdayliofperson.numero  %></td>    
+    <td>
+      <%= partdayliofperson.groupsofwork.subcontract.supplier.entity.nombre %>
+      <%= partdayliofperson.groupsofwork.subcontract.supplier.entity.apellido %>
+      <%= partdayliofperson.groupsofwork.subcontract.supplier.entity.razon_social %>
+    </td>
+    <td><%= partdayliofperson.groupsofwork.chiefoffront.entity.nombre %></td>    
+    <td>
+      <%= partdayliofperson.groupsofwork.teacherofwork.entity.nombre %>
+      <%= partdayliofperson.groupsofwork.teacherofwork.entity.apellido %>
+      <%= partdayliofperson.groupsofwork.teacherofwork.entity.razon_social %>
+    </td>
+    <td><%= l(partdayliofperson.fecha, format: :fecha) %></td>
+    <td style="text-align: center;">
+        <%= link_to raw('<i class="icon-eye-open icon-white"></i>'), [:production,partdayliofperson], :class => "btn btn-small btn-info" %>
+        <% if partdayliofperson.aprobado.blank? %>
+          <%= link_to raw('<i class="icon-edit icon-white"></i>'), edit_production_partdayliofperson_path(partdayliofperson), :class => "btn btn-small btn-success" %>
+          <%= link_to raw('<i class="icon-trash icon-white"></i>'), [:production,partdayliofperson], method: :delete, data: { confirm: 'Esta Seguro que desea Eliminar?' }, :class => "btn btn-small btn-danger" %>
+
+        <% else %>
+          <%= link_to raw('<i class="icon-edit icon-white"></i>'), '#', :class => "btn btn-small btn-success disabled" %>
+          <%= link_to raw('<i class="icon-trash icon-white"></i>'), '#', :class => "btn btn-small btn-danger disabled" %>
+        <% end %>        
+    </td>
+  </tr>
+<% end %>
+</table>
+
+<!-- Paginacion -->
+<div class="pull-right">
+  <%= will_paginate @partediariodepersonals, renderer: BootstrapPagination::Rails %>  
+</div>
+<div class="clearfix"></div>
+<!-- End Paginacion -->
+
+<script type="text/javascript">
+  $(document).ready(function() { $("#partediariodepersonal_opcion").select2(); });
+</script>

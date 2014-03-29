@@ -1,0 +1,51 @@
+<p id="notice"><%= notice %></p>
+<div class="page-header">
+  <h2>Detalle Insumo de Subcontrato</h2>
+</div>
+
+<div class="row">
+<table class="table table-bordered table-striped table-condensed table-hover span6">
+  <tr>
+    <th>Nombre</th>
+    <th>Descripcion</th>
+  </tr>
+  <tr>
+    <td>#Id</td>
+    <td><%= @insumo.id %></td>
+  </tr>
+  <tr>
+    <td>Subcontrato</td>
+    <td><%= @insumo.subcontrato_id %></td>    
+  </tr>
+  <tr>
+    <td>Cantidad</td>
+    <td><%= @insumo.cantidad %></td>
+  </tr>
+  <tr>
+    <td>Pu sin IGV</td>
+    <td><%= @insumo.pu_sin_igv %></td>
+  </tr>
+  <tr>
+    <td>Parcial</td>
+    <td><%= @insumo.parcial %></td>
+  </tr>
+  <tr>
+    <td>Descripcion</td>
+    <td><%= @insumo.descripcion %></td>
+  </tr>
+  <tr>
+    <td>Catalogo de Insumo</td>
+    <td><%= @insumo.lista.nombre %></td>
+  </tr>
+  <tr>
+    <td>Unidad</td>
+    <td><%= @insumo.unidade_id %></td>
+  </tr>
+</table>
+</div>
+
+<div class="form-actions">
+  <%= link_to raw('<i class="icon-edit icon-white icon-white"></i> Editar'), edit_subcontrato_path(@insumo.subcontrato_id), :class => "btn btn-success" %>
+  <%= link_to raw('<i class="icon-arrow-left icon-white"></i> Regresar'), insumos_path, :class => "btn btn-primary" %>  
+</div>
+

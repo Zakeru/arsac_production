@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  numero_parte: MyString
+  fecha: MyString
+  hora_inicio: MyString
+  hora_fin: MyString
+  horas_horas: MyString
+  horas_efectivas: MyString
+  suministro: MyString
+  combustible: MyString
+
+two:
+  numero_parte: MyString
+  fecha: MyString
+  hora_inicio: MyString
+  hora_fin: MyString
+  horas_horas: MyString
+  horas_efectivas: MyString
+  suministro: MyString
+  combustible: MyString

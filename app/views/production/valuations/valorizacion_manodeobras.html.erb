@@ -1,0 +1,46 @@
+<% if @manodeobras.present? %>
+<div class="page-header">
+  <h1 style="text-align: center;">Cuadro Resumen de Mano de Obra</h1>
+</div>  
+  <div class="row">
+  <table class="table table-striped table-bordered table-condensed table-hover span7" style="margin: 0 auto; float: none;">
+    <tr>
+      <td colspan="5">
+        <h3 style="text-align: center;"><%= @subcontrato_nombre %> <small><%= @inicio.to_date.strftime("%d %b") %> - <%= @fin.to_date.strftime("%d %b. %Y") %></small></h3>        
+      </td>
+    </tr>
+    <% manodeobra_sumariza = 0 %>
+    <% @manodeobras.each do |manodeobra| %>
+      <tr style="font-size:12px;">
+        <td><%= manodeobra[2] %></td>
+        <td style="text-align: right;">
+          <b></b>
+          <%= number_with_precision manodeobra[3], :precision => 2 %>
+          </td>
+        <td style="text-align: right;"><%= manodeobra[12] %></td>
+        <td style="text-align: right;"><%= number_with_precision manodeobra[6], :precision => 2 %></td>
+        <td style="text-align: right;"><%= number_with_precision manodeobra[9], :precision => 2 %></td>
+      </tr>
+      <tr style="font-size:12px;">
+        <td><%= manodeobra[2] %> HE 60%</td>
+        <td style="text-align: right;"><%= number_with_precision manodeobra[4], :precision => 2 %></td>
+        <td style="text-align: right;"><%= manodeobra[12] %></td>
+        <td style="text-align: right;"><%= number_with_precision manodeobra[7], :precision => 2 %></td>
+        <td style="text-align: right;"><%= number_with_precision manodeobra[10], :precision => 2 %></td>
+      </tr>
+      <tr style="font-size:12px;">
+        <td><%= manodeobra[2] %> HE 100%</td>
+        <td style="text-align: right;"><%= number_with_precision manodeobra[5], :precision => 2 %></td>
+        <td style="text-align: right;"><%= manodeobra[12] %></td>
+        <td style="text-align: right;"><%= number_with_precision manodeobra[8], :precision => 2 %></td>
+        <td style="text-align: right;"><%= number_with_precision manodeobra[11], :precision => 2 %></td>
+      </tr>
+      <% manodeobra_sumariza += manodeobra[9] + manodeobra[10] + manodeobra[11] %>
+    <% end %>
+    <tr>
+      <td colspan="4"><b>Total</b></td>
+      <td style="text-align: right;"><b><%= number_to_currency manodeobra_sumariza, unit: '' %></b></td>
+    </tr>
+  </table>
+  </div>  
+<% end %>

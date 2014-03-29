@@ -1,0 +1,36 @@
+<div class="row">
+  <div class="span3">
+    <h2>WBS Nivel 1</h2>
+  </div>
+  <div class="span2">
+    <br>
+    <%= link_to raw('Nuevo <i class="icon-plus icon-white"></i>'), new_production_sector_path, :class => "btn btn-primary pull-right" %>
+  </div>
+</div>
+<br>
+<div class="row">
+  
+
+<table class="table table-striped table-bordered table-condensed span5">
+  <tr>
+    <th>#id</th>
+    <th>Codigo</th>
+    <th>Descripcion</th>
+    <th>Acciones</th>
+  </tr>
+
+<% @sectors.each do |sector| %>
+  <tr>
+    <td><%= sector.id %></td>
+    <td><%= sector.codigo %></td>
+    <td><%= sector.descripcion %></td>
+    <td>
+      <%= link_to raw('<i class="icon-eye-open icon-white"></i>'), [:production,sector], :class => "btn btn-small btn-info" %>
+      <%= link_to raw('<i class="icon-edit icon-white"></i>'), edit_production_sector_path(sector), :class => "btn btn-small btn-success" %>
+      <%= link_to raw('<i class="icon-trash icon-white"></i>'), [:production,sector], method: :delete, data: { confirm: 'Esta Seguro que desea Eliminar?' }, :class => "btn btn-small btn-danger" %>
+    </td>
+  </tr>
+<% end %>
+</table>
+</div>
+<div class="clearfix"></div>

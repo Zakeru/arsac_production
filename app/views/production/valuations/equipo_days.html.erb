@@ -1,0 +1,51 @@
+<div class="row">
+	<table class="table table-bordered table-condensed span9" style="margin: 0 auto; float: none;">
+		<tr class="well">
+			<td colspan="9">
+				<h2 style="text-align: center;">Reporte de Maquinaria Trabajo</h2>
+				<h4 style="text-align: center;"><%= @subcontratodeequipo_nombre %>  
+				<small><%= l(params[:inicio].to_date, format: :fecha) %> - <%= l(params[:fin].to_date, format: :fecha) %></small></h4>
+				<h5 style="text-align: center;"><%= @insumodeequipo %></h5> 
+
+			</td>
+		</tr>
+		<tr class="well">
+			<th>#</th>
+			<th>N. Parte</th>
+			<th>Fecha</th>
+			<th>H.Inicio</th>
+			<th>H. Fin</th>
+			<th>H.horas</th>
+			<th>H.efectivas</th>
+			<th>Suministro</th>
+			<th>Combustible</th>
+		</tr>
+		<% i = 1 %>
+			<% @equipodesubcontrato_partes[0][4].each do |equipodesubcontrato_parte| %>
+				<tr>
+					<td><%= i %></td>
+					<td><%= equipodesubcontrato_parte[3].present? ? equipodesubcontrato_parte[3] : '-' %></td>
+					<td><%= equipodesubcontrato_parte[0] %></td>
+					<td style="text-align: right;"><%= equipodesubcontrato_parte[1].present? ? (number_to_currency equipodesubcontrato_parte[1], unit: '') : '-'  %></td>
+					<td style="text-align: right;"><%= equipodesubcontrato_parte[2].present? ? (number_to_currency equipodesubcontrato_parte[2], unit: '') : '-'  %></td>
+					<td style="text-align: right;"><%= equipodesubcontrato_parte[4].present? ? (number_to_currency equipodesubcontrato_parte[4], unit: '') : '-' %></td>
+					<td style="text-align: right;"><%= equipodesubcontrato_parte[5].present? ? (number_to_currency equipodesubcontrato_parte[5], unit: '') : '-' %></td>
+					<td style="text-align: right;"><%= equipodesubcontrato_parte[6].present? ?  equipodesubcontrato_parte[6] : '-' %></td>
+					<td style="text-align: right;"><%= equipodesubcontrato_parte[7].present? ? (number_to_currency equipodesubcontrato_parte[7], unit: ''): '-' %></td>
+				</tr>
+				<% i += 1 %>
+			<% end %>
+			<tr class="well">
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td style="text-align: right;"><b><%= @equipodesubcontrato_partes[0][1] != 0 ? (number_to_currency @equipodesubcontrato_partes[0][1], unit: ''): '-' %> <%=  %></b></td>
+				<td style="text-align: right;"><b><%= @equipodesubcontrato_partes[0][2] != 0 ? (number_to_currency @equipodesubcontrato_partes[0][2], unit: ''): '-' %></b></td>
+				<td></td>
+				<td style="text-align: right;"><b><%= @equipodesubcontrato_partes[0][3] != 0 ? (number_to_currency @equipodesubcontrato_partes[0][3], unit: ''): '-' %></b></td>			
+			</tr>
+	</table>
+</div>
+<%= @matriz_maquinaria %>

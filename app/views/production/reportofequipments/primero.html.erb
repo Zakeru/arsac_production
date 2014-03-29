@@ -1,0 +1,127 @@
+<div class="page-header">
+	<h1>Reporte de Equipos</h1>	
+</div>
+
+<div class="row">
+	<%= form_tag 'primero', {:method => :post, class: 'form-inline well span8'} do %>
+		<%= select_tag :combo1, options_for_select([['Equipo Especifico', 1], ['Operador',2], ['Frente', 3], ['Equipos General',4]], !@combo1.nil? ? @combo1 : ''), :prompt => 'Seleccione', class: 'input-medium' %>
+		<%= select_tag :combo2, !@combo2_array.nil? ? options_for_select(@combo2_array, !@combo2.nil? ? @combo2 : '' ) : nil  , prompt: 'Seleccione', class: 'span3' %>
+		<%= text_field_tag :inicio, nil, class: 'input-small', placeholder: '2013-10-28', value: !@inicio.nil? ? "#{@inicio}" : '' %>
+		<%= text_field_tag :fin, nil, class: 'input-small', placeholder: '2013-10-29', value: !@fin.nil? ? "#{@fin}" : '' %>
+		<%= button_tag(type: "submit", class: "btn btn-primary") do %>
+    		<i class="icon-search icon-white"></i> Buscar 
+		<% end %>
+	<% end %>
+</div>
+<script type="text/javascript">
+  $('#inicio').datepicker({
+      format: 'yyyy-mm-dd',
+      language: 'es',
+      autoclose: true
+  });
+    $('#fin').datepicker({
+      format: 'yyyy-mm-dd',
+      language: 'es',
+      autoclose: true
+  });
+</script>
+<div class="clearfix"></div>
+
+<% if @pase == 1 %>
+  <% if @combo1 == '1' %>
+    <% if @array_operadores.count != 0 %>
+      <div class="row">
+      <div class="span8">
+        
+        <% @array_operadores.each do |array_operadore| %>
+          <h5>Operador: <%= array_operadore[0][5] %></h5> 
+          <div class="clearfix"></div>
+          <table class="table table-condensed table-bordered table-hover">
+            <tr style="font-size: 11px;" class="well">      
+              <th>#</th>
+              <th class="span6">Nombre</th>
+              <th style="text-align: right;">H. Efectivas</th>
+              <th style="text-align: right;">Combustible (gln)</th>
+              <th style="text-align: right;">Ratio real (gln/hr)</th>
+            </tr>
+            <% suma_efectivas = 0 %>
+            <% suma_combustibles = 0 %>
+            <% suma_ratios = 0 %>
+            <% array_operadore.each do |item| %>
+              <% suma_efectivas += item[2].to_f %>
+              <% suma_combustibles += item[3].to_f %>
+              <% suma_ratios += item[4].to_f %>
+              <tr>
+                <td><%= item[0] %></td>
+                <td style="font-size: 12px;"><%= item[1] %></td>
+                <td style="text-align: right;"><%= item[2] %></td>
+                <td style="text-align: right;"><%= number_to_currency item[3], unit: '' %></td>
+                <td style="text-align: right;"><%= number_to_currency (item[3]/item[2]), unit: '' %></td>
+              </tr>
+            <% end %>
+            <tr class="well">
+              <td></td>
+              <td><b>Total</b></td>
+              <td style="text-align: right;"><b><%= number_to_currency suma_efectivas, unit: '' %></b></td>
+              <td style="text-align: right;"><b><%= number_to_currency suma_combustibles, unit: '' %></b></td>
+              <td style="text-align: right;"><b><%= number_to_currency suma_ratios, unit: '' %></b></td>            
+            </tr>
+          </table>
+        <% end %>      
+      </div>
+    </div>    
+      <hr>
+      <h4>Total: <%= @matriz_uno[0][5] %></h4>
+      <div class="row">      
+        <table class="table table-condensed table-bordered table-hover span8">
+          <tr style="font-size: 11px;" class="well">      
+            <th>#</th>
+            <th class="span6">Nombre</th>
+            <th style="text-align: right;">H. Efectivas</th>
+            <th style="text-align: right;">Combustible</th>
+            <th style="text-align: right;">Ratio real</th>
+          </tr>
+          <% suma_efectivas = 0 %>
+          <% suma_combustibles = 0 %>
+          <% suma_ratios = 0 %>
+          <% @matriz_uno.each do |item| %>
+            <% suma_efectivas += item[2].to_f %>
+            <% suma_combustibles += item[3].to_f %>
+            <% suma_ratios += item[4].to_f %>
+            <tr>
+              <td><%= item[0] %></td>
+              <td style="font-size: 12px;"><%= item[1] %></td>
+              <td  style="text-align: right;"><%= item[2] %></td>
+              <td  style="text-align: right;"><%= number_to_currency item[3], unit: '' %></td>
+              <td  style="text-align: right;"><%= number_to_currency item[4], unit: '' %></td>
+            </tr>
+          <% end %>
+          <tr>
+            <td></td>
+            <td><b>Total</b></td>
+            <td style="text-align: right;">
+              <b><%= number_to_currency suma_efectivas, unit: '' %></b>              
+            </td>
+            <td style="text-align: right;">
+              <b><%= number_to_currency suma_combustibles, unit: '' %></b>              
+            </td>
+            <td style="text-align: right;">
+              <b><%= number_to_currency suma_ratios, unit: '' %></b>
+            </td>
+          </tr>
+        </table>
+      </div>
+    <% else %>
+      <h4>No hay datos para este item..</h4>
+    <% end %>
+  <% elsif @combo1 == '2' %>
+    <h4><%= @titulo_operador %></h4>
+    <%= debug @matriz_operador %>
+  <% elsif @combo1 == '3' %>
+  <% elsif @combo1 == '4' %>
+  <% end %>  
+<% elsif @pase == 2 %>
+  <h4>Error ingresando datos..</h4>
+<% elsif @pase == 0 %>
+  <h4>Esperando Datos..</h4>
+<% end %>

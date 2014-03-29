@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  tareosgruposdetrabajo_id: 1
+  item: MyString
+
+two:
+  tareosgruposdetrabajo_id: 1
+  item: MyString

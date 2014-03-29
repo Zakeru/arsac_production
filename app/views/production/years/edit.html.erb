@@ -1,0 +1,11 @@
+<div class="page-header">
+	<h1>Editar año</h1>	
+</div>
+
+<%= render 'form' %>
+
+<div class="form-actions">
+	<%= link_to raw("<i class='icon-eye-open icon-white'></i> Ver"), production_year_path(@year), class: 'btn btn-small btn-info' %>
+	<%= link_to raw("<i class='icon-arrow-left icon-white'></i> Regresar"), production_years_path, class: 'btn btn-small btn-primary' %>
+</div>
+

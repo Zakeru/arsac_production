@@ -1,0 +1,3 @@
+<% @subfases.each do |subfase| %>	
+<option value="<%= subfase.id %>"><%= "#{subfase.phase.codigo}#{subfase.codigo} #{subfase.descripcion}" %></option>
+<% end %>

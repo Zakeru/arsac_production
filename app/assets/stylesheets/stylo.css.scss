@@ -1,0 +1,26 @@
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  background-color: #ccc;
+}
+@import "bootstrap";
+body {
+        padding-top: 60px;
+      }
+@import "bootstrap-responsive";
+.pagination {
+	margin: 0px;
+}
+
+/* .dropdown:hover > .dropdown-menu{
+	display: block; 
+}
+*/
+.thumbnail:hover {
+  border-color: #08c;
+  @include box-shadow(#{0 1px 4px rgba(0,105,214,.25)});
+}
+
+
+
+
+
+

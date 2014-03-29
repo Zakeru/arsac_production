@@ -1,0 +1,59 @@
+<p id="notice"><%= notice %></p>
+<div class="page-header">
+  <h1>
+    Detalle # <%= @trabajadore.id %>
+  </h1>
+</div>
+<div class="row">
+<table class="table table-bordered table-striped span9">       
+  <tr>
+    <th>Nombre</th>
+    <th>Descripcion</th>
+  </tr>
+  <tr>
+    <td>#id</td>
+    <td>  <%= @trabajadore.id %></td>
+  </tr>
+  <tr>
+    <td># Numero de Parte</td>
+    <td>  <%= @trabajadore.partediariodepersonal.numero %></td>
+  </tr>
+  <tr>
+    <td>Nombre</td>
+    <td>  <%= @trabajadore.catalogodetrabajadore.apellido %>, <%= @trabajadore.catalogodetrabajadore.nombre %></td>
+  </tr>
+  <tr>
+    <td>Tipo de Trabajador</td>
+    <td>  <%= @trabajadore.catalogocategoriatrabajadore.nombre %></td>
+  </tr> 
+  <tr>
+    <td>Partida de Control</td>
+    <td>  <%= @trabajadore.partidasdecontrol.subfase.descripcion %></td>
+  </tr>
+  <tr>
+    <td>Normal</td>
+    <td>  <%= @trabajadore.normal %></td>
+  </tr>
+  <tr>
+    <td>60 % </td>
+    <td>  <%= @trabajadore.normal_60 %></td>
+  </tr>
+  <tr>
+    <td>100 %</td>
+    <td>  <%= @trabajadore.normal_100 %></td>
+  </tr>
+  <tr>
+    <td>Total de Horas</td>
+    <td>  <%= @trabajadore.total_horas %></td>
+  </tr>
+
+</table>
+<div class="clearfix"></div>
+
+</div>
+
+<div class="form-actions">
+  <%= link_to raw('<i class="icon-edit icon-white"></i> Editar'), edit_partediariodepersonal_path(@trabajadore.partediariodepersonal_id), :class => "btn btn-primary" %>
+  <%= link_to raw('<i class="icon-arrow-left icon-white"></i> Regresar'), trabajadores_path, :class => "btn btn-primary" %>  
+</div>
+

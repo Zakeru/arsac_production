@@ -1,0 +1,104 @@
+<%= form_for([:production,@teacherofwork], :html => {:class => "form-horizontal"}) do |f| %>
+  <% if @teacherofwork.errors.any? %>
+    <div id="error_explanation" class="well">
+      <h2><%= pluralize(@teacherofwork.errors.count, "errores") %> cometidos</h2>
+
+      <ul>
+      <% @teacherofwork.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <!-- Control Group 
+    ==============================================================================  -->
+    <div class="control-group">
+      <div class="control-label">
+        <%= f.label :entity_id %>
+      </div>
+      <div class="controls">
+        <%= f.select :entity_id, Entity.all.collect {|x| ["#{x.nombre} #{x.apellido} #{x.razon_social}", x.id]}, {:include_blank => "Seleccione Trabajador"} %>
+      </div>
+    </div>
+  <!-- Control Group 
+    ==============================================================================  -->
+    <div class="control-group">
+      <div class="control-label">
+        <%= f.label :movil %>
+      </div>
+      <div class="controls">
+        <%= f.text_field :movil, :placeholder => "12345678" %>
+      </div>
+    </div>
+  <!-- Control Group 
+      ==============================================================================  -->
+      <div class="control-group">
+        <div class="control-label">
+          <%= f.label :telefono %>
+        </div>
+        <div class="controls">
+          <%= f.text_field :telefono, :placeholder => "123456" %>
+        </div>
+      </div>
+  <!-- Control Group 
+    ==============================================================================  -->
+    <div class="control-group">
+      <div class="control-label">
+        <%= f.label :nacimiento %>
+      </div>
+      <div class="controls">
+        <%= f.text_field :nacimiento, :placeholder => "2013-08-13" %>
+      </div>
+    </div>
+  <!-- Control Group 
+    ==============================================================================  -->
+    <div class="control-group">
+      <div class="control-label">
+        <%= f.label :correo %>
+      </div>
+      <div class="controls">
+        <%= f.text_field :correo, :placeholder => "anonimous@hotmail.com" %>
+      </div>
+    </div>
+
+  <!-- Control Group 
+    ==============================================================================  -->
+    <div class="control-group">
+      <div class="control-label">
+        <%= f.label :foto %>
+      </div>
+      <div class="controls">
+        <%= f.text_field :foto %>
+      </div>
+    </div>
+
+  <!-- Control Group 
+    ==============================================================================  -->
+    <div class="control-group">
+      <div class="control-label">
+        <%= f.label :ruc %>
+      </div>
+      <div class="controls">
+        <%= f.text_field :ruc, :placeholder => "1234567894323" %>
+      </div>
+    </div>
+  <!-- Control Group 
+    ==============================================================================  -->
+    <div class="control-group">
+      <div class="control-label">
+        <%= f.label :banco_1 %>
+      </div>
+      <div class="controls">
+        <%= f.text_field :banco_1 %>
+      </div>
+    </div>
+  <!-- Control Group 
+    ==============================================================================  -->
+    <div class="control-group">
+      <div class="controls">
+        <%= f.submit :class => "btn btn-success" %>
+      </div>
+    </div>
+
+<% end %>

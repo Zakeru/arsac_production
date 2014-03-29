@@ -1,0 +1,182 @@
+<% 
+    10.times do 
+      @subcontractofequipment.equipmentsofsubcontracts.build
+    end
+ %>
+
+<%= form_for([:production,@subcontractofequipment], :html => { :class => 'form-horizontal'}) do |f| %>
+
+  <% if @subcontractofequipment.errors.any? %>
+    <div id="error_explanation" class="well">
+      <h4><%= @subcontractofequipment.errors.count %> error cometido</h4>
+      <ul>
+      <% @subcontractofequipment.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>    
+  <% end %>
+
+
+  <div class="row">
+
+    <div class="span5">
+      <div class="control-group">
+        <div class="control-label">
+          <%= f.label :proveedore_id %>
+        </div>
+        <div class="controls">
+          <%= f.select :supplier_id, Supplier.all.collect {|x| ["#{x.entity.nombre} #{x.entity.apellido} #{x.entity.razon_social}", x.id]}, {:include_blank => 'Seleccione'} %>
+        </div>
+      </div>
+      <div class="control-group">
+        <div class="control-label">
+          <%= f.label :valorizacion %>
+        </div>
+        <div class="controls">
+          <%= f.select :valorizacion,[['Semanales'],['Quincenales'],['Mensuales']], :class => "span2", :placeholder => "Semanales", :include_blank => 'seleccionar' %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <div class="control-label">
+          <%= f.label :condiciones_de_pago %>
+        </div>
+        <div class="controls">
+          <%= f.select :condiciones_de_pago,[['Al Contado'],['Credito a 3 dias'],['Credito a 5 dias'],['Credito a 7 dias'],['Credito a 10 dias'],['Credito a 15 dias'],['Credito a 30 dias'],['Credito a 40 dias'],['Credito a 50 dias'],['Credito a 60 dias']], :class => "input-large", :placeholder => "Credito a 10 Dias", :include_blank => 'Seleccionar' %>
+        </div>
+      </div>
+    
+      <div class='control-group'>
+        <div class='control-label'>
+          <%= f.label :amortizacion %>
+        </div>
+        <div class='controls'>
+          <%= f.text_field :amortizacion_inicial_numero, class: 'input-small', placeholder: '65000' %> o 
+          <%= f.text_field :amortizacion_inicial_porcentaje, class: 'input-mini', placeholder: '5' %> %
+        </div>
+      </div>
+      
+      <div class='control-group'>
+        <div class='control-label'>
+          <%= f.label :fondo_de_garantia %>
+        </div>
+        <div class='controls'>
+          <%= f.text_field :fondo_de_garantia_porcentaje, class: 'input-mini', placeholder: '5' %> %
+        </div>
+      </div>
+
+      <div class='control-group'>
+        <div class='control-label'>
+          <%= f.label :detraccion %>
+        </div>
+        <div class='controls'>
+          <%= f.text_field :detraccion_porcentaje, class: 'input-mini', placeholder: '10' %> %
+        </div>
+      </div>
+        
+    </div>
+
+    <div class="span6">
+
+      
+
+      <div class="control-group">
+        <div class="control-label">
+          <%= f.label :igv %>
+        </div>
+        <div class="controls">
+          <%= f.text_field :igv, :placeholder => '18', :class => 'input-mini' %>
+        </div>
+      </div>
+
+      <div class='control-group'>
+        <div class='control-label'>
+          <%= f.label :adelanto_1 %>
+        </div>
+        <div class='controls'>
+          <%= f.text_field :adelanto_1_numero, class: 'input-small', placeholder: '45000.00' %>
+          <%= f.text_field :adelanto_1_fecha, class: 'input-small', placeholder: '2013-03-11' %>
+        </div>
+      </div>
+
+      <div class='control-group'>
+        <div class='control-label'>
+          <%= f.label :adelanto_2 %>
+        </div>
+        <div class='controls'>
+          <%= f.text_field :adelanto_2_numero, class: 'input-small', placeholder: '34000.00' %>
+          <%= f.text_field :adelanto_2_fecha, class: 'input-small', placeholder: '2013-07-23' %>
+        </div>
+      </div>
+
+      <div class='control-group'>
+        <div class='control-label'>
+          <%= f.label :adelanto_3 %>
+        </div>
+        <div class='controls'>
+          <%= f.text_field :adelanto_3_numero, class: 'input-small', placeholder: '46000.00' %>
+          <%= f.text_field :adelanto_3_fecha, class: 'input-small', placeholder: '2013-06-25' %>
+        </div>
+      </div>
+
+      <div class='control-group'>
+        <div class='control-label'>
+          <%= f.label :adelanto_4 %>
+        </div>
+        <div class='controls'>
+          <%= f.text_field :adelanto_4_numero, class: 'input-small', placeholder: '21000.00' %>
+          <%= f.text_field :adelanto_4_fecha, class: 'input-small', placeholder: '2013-09-30' %>
+        </div>
+      </div>
+
+      <div class='control-group'>
+        <div class='control-label'>
+          <%= f.label :monto_contratado %>
+        </div>
+        <div class='controls'>
+          <%= f.text_field :monto_contratado_suma, class: 'input-small', placeholder: '2300.00' %>
+        </div>
+      </div>
+
+       
+    </div>
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  $('#subcontractofequipment_adelanto_1_fecha').datepicker({
+      format: 'yyyy-mm-dd',
+      language: 'es',
+      autoclose: true      
+  });
+  $('#subcontractofequipment_adelanto_2_fecha').datepicker({
+      format: 'yyyy-mm-dd',
+      language: 'es',
+      autoclose: true      
+  });
+  $('#subcontractofequipment_adelanto_3_fecha').datepicker({
+      format: 'yyyy-mm-dd',
+      language: 'es',
+      autoclose: true      
+  });
+  $('#subcontractofequipment_adelanto_4_fecha').datepicker({
+      format: 'yyyy-mm-dd',
+      language: 'es',
+      autoclose: true      
+  });
+</script>  
+  
+
+
+
+
+
+<br>
+<%= f.submit :class => 'btn btn-success' %>
+
+
+
+<% end %>

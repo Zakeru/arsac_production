@@ -1,0 +1,96 @@
+<%= form_for([:production,@subsector], :html => {:class => "form-horizontal"}) do |f| %>
+  <% if @subsector.errors.any? %>
+    <div id="error_explanation" class="well">
+      <h3><%= pluralize(@subsector.errors.count, "errores") %> Cometidos</h3>
+      <ul>
+      <% @subsector.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="control-group">
+    <div class="control-label">
+      <%= f.label :WBS_Nivel_2 %>
+    </div>
+    <div class="controls">
+      <%= f.select :sector_id, Sector.all.collect { |x| [x.descripcion, x.id] }, {include_blank: 'Sector'}, :class => "span5" %>
+    </div>
+  </div>  
+
+  <div class="control-group">
+    <div class="control-label">
+      <%= f.label :codigo %>
+    </div>
+    <div class="controls">
+      <%= f.text_field :codigo, :class => "span2" %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <div class="control-label">
+      <%= f.label :descripcion %>
+    </div>
+    <div class="controls">
+      <%= f.text_field :descripcion, :class => "span5" %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <div class="controls">
+      <%= f.submit :class => "btn btn-success" %>
+    </div>
+  </div>
+<% end %>
+
+
+
+<script type="text/javascript">
+    $('form').validate({
+        rules: {
+            'subsectore[sectore_id]': {
+                required: true,                
+            },
+            'subsectore[codigo]': {
+                required: true,
+                numero_punto: true
+            },
+            'subsectore[descripcion]': {
+                required: true,
+                letras_espacio: true,
+                minlength: 4,
+                maxlength: 60
+            }
+        }, messages: {
+          'ente[nombre]': {
+            required: "Este Campo es Requerido",
+            minlength: jQuery.format("Minimo {0} caracteres.!"),
+          },
+          'ente[apellido]': {
+            required: "Este Campo es Requerido",
+            minlength: jQuery.format("Minimo {0} caracteres.!"),
+            maxlength: jQuery.format("Maximo {0} caracteres.!"),          
+          },
+          'ente[dni]': {
+            minlength: jQuery.format("solo {0} numeros.!"),
+            maxlength: jQuery.format("solo {0} numeros.!"),
+          }
+    },
+        highlight: function(element) {
+            $(element).closest('.control-group').removeClass('success').addClass('error');            
+        },success: function (element) {
+            $(element).closest('.control-group').addClass('success');               
+        },
+        errorElement: 'span',
+        errorClass: 'help-block',
+        errorPlacement: function(error, element) {
+            if(element.parent('.input-group').length) {
+                error.insertAfter(element.parent());
+            } else {
+                error.insertAfter(element);
+            }
+        }
+    });
+
+</script>

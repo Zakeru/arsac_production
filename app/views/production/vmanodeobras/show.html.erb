@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Nombre:</b>
+  <%= @vmanodeobra.nombre %>
+</p>
+
+<p>
+  <b>Cantidad:</b>
+  <%= @vmanodeobra.cantidad %>
+</p>
+
+<p>
+  <b>Unidad:</b>
+  <%= @vmanodeobra.unidad %>
+</p>
+
+<p>
+  <b>Precio unitario:</b>
+  <%= @vmanodeobra.precio_unitario %>
+</p>
+
+<p>
+  <b>Parcial:</b>
+  <%= @vmanodeobra.parcial %>
+</p>
+
+<p>
+  <b>Valorizacione:</b>
+  <%= @vmanodeobra.valorizacione_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_vmanodeobra_path(@vmanodeobra) %> |
+<%= link_to 'Back', vmanodeobras_path %>

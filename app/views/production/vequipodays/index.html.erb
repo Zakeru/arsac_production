@@ -1,0 +1,37 @@
+<h1>Listing vequipodays</h1>
+
+<table>
+  <tr>
+    <th>Numero parte</th>
+    <th>Fecha</th>
+    <th>Hora inicio</th>
+    <th>Hora fin</th>
+    <th>Horas horas</th>
+    <th>Horas efectivas</th>
+    <th>Suministro</th>
+    <th>Combustible</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @vequipodays.each do |vequipoday| %>
+  <tr>
+    <td><%= vequipoday.numero_parte %></td>
+    <td><%= vequipoday.fecha %></td>
+    <td><%= vequipoday.hora_inicio %></td>
+    <td><%= vequipoday.hora_fin %></td>
+    <td><%= vequipoday.horas_horas %></td>
+    <td><%= vequipoday.horas_efectivas %></td>
+    <td><%= vequipoday.suministro %></td>
+    <td><%= vequipoday.combustible %></td>
+    <td><%= link_to 'Show', vequipoday %></td>
+    <td><%= link_to 'Edit', edit_vequipoday_path(vequipoday) %></td>
+    <td><%= link_to 'Destroy', vequipoday, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Vequipoday', new_vequipoday_path %>

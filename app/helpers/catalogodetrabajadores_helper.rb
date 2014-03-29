@@ -1,0 +1,2 @@
+module CatalogodetrabajadoresHelper
+end

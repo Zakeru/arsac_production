@@ -1,0 +1,57 @@
+<%= form_for(@maquinariaequipodetalle) do |f| %>
+  <% if @maquinariaequipodetalle.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@maquinariaequipodetalle.errors.count, "error") %> prohibited this maquinariaequipodetalle from being saved:</h2>
+
+      <ul>
+      <% @maquinariaequipodetalle.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :numero %><br />
+    <%= f.text_field :numero %>
+  </div>
+  <div class="field">
+    <%= f.label :parte %><br />
+    <%= f.text_field :parte %>
+  </div>
+  <div class="field">
+    <%= f.label :fecha %><br />
+    <%= f.text_field :fecha %>
+  </div>
+  <div class="field">
+    <%= f.label :horometro_inicio %><br />
+    <%= f.text_field :horometro_inicio %>
+  </div>
+  <div class="field">
+    <%= f.label :horometro_fin %><br />
+    <%= f.text_field :horometro_fin %>
+  </div>
+  <div class="field">
+    <%= f.label :horometro_horas %><br />
+    <%= f.text_field :horometro_horas %>
+  </div>
+  <div class="field">
+    <%= f.label :horas_efectivas %><br />
+    <%= f.text_field :horas_efectivas %>
+  </div>
+  <div class="field">
+    <%= f.label :suministro %><br />
+    <%= f.text_field :suministro %>
+  </div>
+  <div class="field">
+    <%= f.label :combustible %><br />
+    <%= f.text_field :combustible %>
+  </div>
+  <div class="field">
+    <%= f.label :maquinariaequipo_id %><br />
+    <%= f.number_field :maquinariaequipo_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

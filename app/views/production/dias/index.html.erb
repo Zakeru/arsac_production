@@ -1,0 +1,27 @@
+<h1>Listing dias</h1>
+
+<table>
+  <tr>
+    <th>Numero</th>
+    <th>Tipodedia</th>
+    <th>Nombre</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @dias.each do |dia| %>
+  <tr>
+    <td><%= dia.numero %></td>
+    <td><%= dia.tipodedia_id %></td>
+    <td><%= dia.nombre %></td>
+    <td><%= link_to 'Show', dia %></td>
+    <td><%= link_to 'Edit', edit_dia_path(dia) %></td>
+    <td><%= link_to 'Destroy', dia, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Dia', new_dia_path %>

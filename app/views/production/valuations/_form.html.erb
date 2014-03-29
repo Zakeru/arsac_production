@@ -1,0 +1,34 @@
+<%= form_for(@valorizacione, :url => new_valorizacione_path ) do |f| %>
+
+  <% if @valorizacione.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@valorizacione.errors.count, "error") %> prohibited this valorizacione from being saved:</h2>
+
+      <ul>
+      <% @valorizacione.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="controls">
+    <%= f.select :subcontrato_id, Subcontrato.all.collect{ |x| ["#{x.proveedore.ente.nombre} #{x.proveedore.ente.apellido} #{x.proveedore.ente.razon_social}", x.id]}, {:include_blank => "Seleccion Ejecutor"} %>
+    <%= f.select :frente_id, Frente.all.collect {|x| [x.nombre, x.id]}, {:include_blank => "Seleccione Frente"} %>
+    <%= f.text_field :fecha_1, :placeholder => "Inicio 2013-08-27", :class => "span2" %>
+    <%= f.text_field :fecha_2, :placeholder => "Inicio 2013-08-30", :class => "span2" %><br>
+    <%= f.submit :class => "btn" %>    
+  </div>
+<script type="text/javascript">
+  $('#valorizacione_fecha_1').datepicker({
+      format: 'yyyy-mm-dd',
+      language: 'es',
+      autoclose: true      
+  });
+  $('#valorizacione_fecha_2').datepicker({
+      format: 'yyyy-mm-dd',
+      language: 'es',
+      autoclose: true      
+  });
+</script>
+<% end %>

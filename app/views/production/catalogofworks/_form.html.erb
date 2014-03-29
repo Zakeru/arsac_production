@@ -1,0 +1,108 @@
+<%= form_for([:production,@catalogofwork], :html => {:class => "form-horizontal"}) do |f| %>
+
+  <% if @catalogofwork.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@catalogofwork.errors.count, "error") %> prohibited this catalogofwork from being saved:</h2>
+
+      <ul>
+      <% @catalogofwork.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="control-group">
+    <div class="control-label">
+      <%= f.label :ente_id %>
+    </div>
+    <div class="controls">
+      <%= f.select :entity_id, Entity.all.collect {|x| ["#{x.nombre} #{x.apellido} #{x.razon_social}", x.id]}, {:include_blank => "Seleccione Ente"} %>
+    </div>
+  </div>
+  <div class='control-group'>
+    <div class='control-label'>
+      <%= f.label :categoria %>
+    </div>
+    <div class='controls'>
+      <%= f.select :catalogcategorywork_id, Catalogcategorywork.all.collect{|x| [x.nombre, x.id]}, {include_blank: 'Categoria'} %>
+    </div>
+  </div>
+  <!-- Control Group 
+    ==============================================================================  -->
+    <div class="control-group">
+      <div class="control-label">
+        <%= f.label :telefono %>
+      </div>
+      <div class="controls">
+        <%= f.text_field :telefono, :placeholder => "654321" %>
+      </div>
+    </div>
+  <!-- Control Group 
+    ==============================================================================  -->
+    <div class="control-group">
+      <div class="control-label">
+        <%= f.label :movil %>
+      </div>
+      <div class="controls">
+        <%= f.text_field :movil, :placeholder => "87654321" %>
+      </div>
+    </div>
+  <!-- Control Group 
+    ==============================================================================  -->
+    <div class="control-group">
+      <div class="control-label">
+        <%= f.label :direccion %>
+      </div>
+      <div class="controls">
+        <%= f.text_field :direccion, :placeholder => "Av. Las Garzas # 494" %>
+      </div>
+    </div>
+  <!-- Control Group 
+    ==============================================================================  -->
+    <div class="control-group">
+      <div class="control-label">
+        <%= f.label :mail %>
+      </div>
+      <div class="controls">
+        <%= f.text_field :mail, :placeholder => "anonimo@hotmail.com" %>
+      </div>
+    </div>
+  <!-- Control Group 
+    ==============================================================================  -->
+    <div class="control-group">
+      <div class="control-label">
+        <%= f.label :banco %>
+      </div>
+      <div class="controls">
+        <%= f.text_field :banco, :placeholder => "Banco Nacion" %>        
+      </div>
+    </div>
+  <!-- Control Group 
+    ==============================================================================  -->
+    <div class="control-group">
+      <div class="control-label">
+        <%= f.label :numero_cuenta %>
+      </div>
+      <div class="controls">
+        <%= f.text_field :numero_cuenta, :placeholder => "1234566787890" %>        
+      </div>
+    </div>
+  <!-- Control Group 
+    ==============================================================================  -->
+    <div class="control-group">
+      <div class="control-label">
+        <%= f.label :fecha_nacimiento %>
+      </div>
+      <div class="controls">
+        <%= f.text_field :fecha_nacimiento, :placeholder => "1998-08-12" %>
+      </div>
+    </div>
+
+  <div class="control-group">
+    <div class="controls">
+      <%= f.submit :class => "btn btn-success" %>
+    </div>
+  </div>
+
+<% end %>

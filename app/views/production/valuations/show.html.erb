@@ -1,0 +1,394 @@
+
+	<div class="row">
+		<table class="table table-bordered table-condensed span12">
+			<tr class="well">
+				<td colspan="6">
+					<h3 style="text-align: center;">
+						<%= @valorizacione.subcontratista_nombre %> ( Val <%= @valorizacione.valorizacione_contador.to_s.rjust(3, '0') %> )
+						<small>
+							<%= l(@valorizacione.fecha_inicial, format: :fecha) %> - 
+							<%= l(@valorizacione.fecha_fin, format: :fecha) %>
+						</small>
+					</h3>
+				</td>
+			</tr>
+			<tr class="well">
+				<td colspan="6">
+					<table cellspacing="0" cellpadding="0" style="border: none; padding: 0; margin: 0; border-collapse: collapse;" width="100%">
+						<tr>
+							<th style="text-align: center;">Monto Contratado</th>
+							<th style="text-align: center;">Adelanto</th>
+							<th style="text-align: center;">Amortizacion Acumulada</th>
+							<th style="text-align: center;">Saldo</th>
+						</tr>
+						<tr>
+							<td style="text-align: center;">
+								<b><%= number_to_currency @valorizacione.monto_contratado, unit: 'S/ ' %></b>
+							</td>
+							<td style="text-align: center;">
+								<b><%= number_to_currency @valorizacione.adelantos, unit: 'S/ ' %></b>
+							</td>
+							<td style="text-align: center;">
+								<b>
+									<%= number_to_currency @valorizacione.amortizacion_acumulada, unit: 'S/ ' %>
+								</b>
+							</td>
+							<td style="text-align: center;">
+								<b>
+									<%= number_to_currency @valorizacione.saldo_por_amortizar, unit: 's/ ' %>
+								</b>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr class="well">
+				<th>Item</th>
+				<th>Descripcion</th>
+				<th colspan="2" style="text-align:center">Actual</th>
+				<th style="text-align: right;">Acumulado Anterior</th>
+				<th style="text-align: right;">Acumulado Actual</th>
+			</tr>
+			<tr>
+				<td><b>01</b></td>
+				<td>
+					<b>VALORIZACION ACTUAL</b>					
+				</td>
+				<td style="text-align: right;">
+					<%= link_to raw("<i class='icon-th-list'></i>"), "/valorizaciones/ver_valorizacion_partidas?valorizacione_id=#{@valorizacione.id}&subcontrato_id=#{@valorizacione.subcontrato_id}", class: 'btn btn-mini', target: '_blank', id: 'valorizacion_actual_detalle', title: 'Partidas Detalle' %>
+				</td>
+				<td style="text-align:right;">
+					<!-- 9.- Actual_valorizacion_actual  -->
+					<span class="label label-info">
+						<%= @valorizacione.actual_valorizacion_actual.to_f == 0 ? ' -- ' : (number_to_currency @valorizacione.actual_valorizacion_actual.to_f, unit: '') %>						
+					</span>
+				</td>
+				<td style="text-align:right;">					
+						<!-- 10.- Acumulado_anterior_valorizacion_actual  -->
+						<%= @valorizacione.acumulado_anterior_valorizacion_actual.to_f == 0 ? ' -- ' : (number_to_currency @valorizacione.acumulado_anterior_valorizacion_actual.to_f, unit: '') %>					
+				</td>
+				<td style="text-align:right;">					
+						<!-- 11.- Acumulado_actual_valorizacion_actual -->
+						<%= @acumulado_actual_descuento_otros.to_f == 0 ? ' -- ' : (number_to_currency @acumulado_actual_descuento_otros.to_f, unit: '') %>				
+				</td>
+			</tr>
+			<tr>
+				<td><b>02</b></td>
+				<td><b>AMORTIZACION</b></td>
+				<!-- 12.- Actual_amortizacion_porcentaje  -->
+				<td style="text-align:right;"><%= number_to_currency @valorizacione.actual_amortizacion_porcentaje, :precision => 0, unit: '' %>%</td>
+				<td style="text-align:right;">
+					<!-- 13.- Actual_amortizacion_numero  -->
+					<span class="label label-info">
+						<%= @valorizacione.actual_amortizacion_numero.to_f == 0 ? ' -- ' : (number_to_currency @valorizacione.actual_amortizacion_numero.to_f, unit: '') %>						
+					</span>
+				</td>
+				<td style="text-align:right;">					
+						<!-- 14.- Acumulado_anterior_amortizacion_numero -->
+						<%= @valorizacione.acumulado_anterior_amortizacion_numero.to_f == 0 ? ' -- ' : (number_to_currency @valorizacione.acumulado_anterior_amortizacion_numero.to_f, unit: '') %>					
+				</td>
+				<td style="text-align:right;">					
+						<!-- 15.- Acumulado_actual_amortizacion_numero  -->
+						<%= @valorizacione.acumulado_actual_amortizacion_numero.to_f == 0 ? ' -- ' : (number_to_currency @valorizacione.acumulado_actual_amortizacion_numero.to_f, unit: '') %>					
+				</td>
+			</tr>
+			<tr>
+				<td><b>03</b></td>
+				<td><b>TOTAL</b></td>
+				<td></td>
+				<td style="text-align:right;">
+					<!-- 16.- Actual_total -->
+					<span class="label label-info">
+						<%= @valorizacione.actual_total.to_f == 0 ? ' -- ' : (number_to_currency @valorizacione.actual_total.to_f, unit: '') %>
+					</span>
+				</td>
+				<td style="text-align:right">					
+						<!-- 17.- Acumulado_anterior_total -->
+						<%= @valorizacione.acumulado_anterior_total.to_f == 0 ? ' -- ' : (number_to_currency @valorizacione.acumulado_anterior_total.to_f, unit: '') %>					
+				</td>
+				<td style="text-align:right">					
+						<!-- 18.- Acumulado_actual_total  -->
+						<%= @valorizacione.acumulado_actual_total.to_f == 0 ? ' -- ' : (number_to_currency @valorizacione.acumulado_actual_total.to_f, unit: '') %>					
+				</td>
+			</tr>
+			<tr>
+				<td><b>04</b></td>
+				<td><b>IGV</b></td>
+				<!-- 19.- Actual_igv_porcentaje -->
+				<td style="text-align:right">
+					<%= number_to_currency @valorizacione.actual_igv_porcentaje, unit: '' %>%
+				</td>
+				<td style="text-align:right">
+					<!--  20.- Actual_igv_numero   -->
+					<span class="label label-info">
+						<%= @valorizacione.actual_igv_numero.to_f == 0 ? ' -- ' : (number_to_currency @valorizacione.actual_igv_numero.to_f, unit: '') %>						
+					</span>
+				</td>
+				<td style="text-align:right;">					
+						<!-- 21.- Acumulado_anterior_igv_numero  -->
+						<%= @valorizacione.acumulado_anterior_igv_numero.to_f == 0 ? ' -- ' : (number_to_currency @valorizacione.acumulado_anterior_igv_numero.to_f, unit: '') %>					
+				</td>
+				<td style="text-align:right;">					
+						<!-- 22.- Acumulado_actual_igv_numero -->
+						<%= @valorizacione.acumulado_actual_igv_numero.to_f == 0 ? ' -- ' : (number_to_currency @valorizacione.acumulado_actual_igv_numero.to_f, unit: '') %>					
+				</td>
+			</tr>
+			<tr>
+				<td><b>05</b></td>
+				<td><b>TOTAL INCLUIDO IGV</b></td>
+				<td></td>
+				<td style="text-align:right">
+					<!-- 23.- Actual_total_incluido_igv -->
+					<span class="label label-info">
+						<%= @valorizacione.actual_total_incluido_igv.to_f == 0 ? ' -- ' : (number_to_currency @valorizacione.actual_total_incluido_igv.to_f, unit: '') %>
+					</span>
+				</td>
+				<td style="text-align:right;">					
+						<!-- 24.- Acumulado_anterior_total_incluido_igv  -->
+						<%= @valorizacione.acumulado_anterior_total_incluido_igv.to_f == 0 ? ' -- ' : (number_to_currency @valorizacione.acumulado_anterior_total_incluido_igv.to_f, unit: '') %>					
+				</td>
+				<td style="text-align:right;">					
+						<!--  25.- Acumulado_actual_total_incluido_igv  -->
+						<%= @valorizacione.acumulado_actual_total_incluido_igv.to_f == 0 ? ' -- ' : (number_to_currency @valorizacione.acumulado_actual_total_incluido_igv.to_f, unit: '') %>					
+				</td>
+			</tr>
+			<tr>
+				<td><b>06</b></td>
+				<td><b>RETENCIONES</b></td>
+				<td></td>
+				<td style="text-align:right;">
+					<!-- 26.- Actual_retenciones -->
+					<span class="label label-info">
+						<%= @valorizacione.actual_retenciones.to_f == 0 ? ' -- ' : (number_to_currency @valorizacione.actual_retenciones.to_f, unit: '') %>						
+					</span>
+				</td>
+				<td style="text-align:right;">					
+						<!--  27.- Acumulado_anterior_retenciones -->
+						<%= @valorizacione.acumulado_anterior_retenciones.to_f == 0 ? ' -- ' : (number_to_currency @valorizacione.acumulado_anterior_retenciones.to_f, unit: '') %>					
+				</td>
+				<td style="text-align:right;">					
+						<!-- 28.- Acumulado_actual_retenciones -->
+						<%= @valorizacione.acumulado_actual_retenciones.to_f == 0 ? ' -- ' : (number_to_currency @valorizacione.acumulado_actual_retenciones.to_f, unit: '') %>					
+				</td>
+			</tr>
+			<tr>
+				<td>06.01</td>
+				<td>DETRACCION DEL TOTAL</td>
+				<!-- 29.- Actual_detraccion_del_total_porcentaje -->
+				<td style="text-align:right;">					
+					<%= number_to_currency @valorizacione.actual_detraccion_del_total_porcentaje, unit: '' %>%
+				</td>		
+				<td style="text-align:right;">
+					<span class="label label-info">
+						<!-- 30.- Actual_destraccion_del_total_numero -->
+						<%= @valorizacione.actual_detraccion_del_total_numero.to_f == 0 ? ' -- ' : (number_to_currency @valorizacione.actual_detraccion_del_total_numero.to_f, unit: '') %>						
+					</span>
+				</td>
+				<td style="text-align:right;">					
+						<!-- 31.- Acumulado_anterior_detraccion_del_total_numero  -->
+						<%= @valorizacione.acumulado_anterior_detraccion_del_total_numero.to_f == 0 ? ' -- ' : (number_to_currency @valorizacione.acumulado_anterior_detraccion_del_total_numero.to_f, unit: '') %>					
+				</td>
+				<td style="text-align:right">					
+						<!-- 32.- Acumulado_actual_detraccion_del_total_numero -->
+						<%= @valorizacione.acumulado_actual_detraccion_del_total_numero.to_f == 0 ? ' -- ' : (number_to_currency @valorizacione.acumulado_actual_detraccion_del_total_numero.to_f, unit: '') %>
+				</td>
+			</tr>
+			<tr>
+				<td>06.02</td>
+				<td>FONDO DE GARANTIA N°01</td>
+				<td style="text-align:right;">
+					<!-- 33.- Actual_fondo_garantia_uno_porcentaje -->						
+					<%= number_with_precision @valorizacione.actual_fondo_garantia_uno_porcentaje, :precision => 0 %>%
+				</td>
+				<td style="text-align:right;">
+					<span class="label label-info">
+						<!-- 34.- Actual_fondo_garantia_uno_numero -->
+						<%= @valorizacione.actual_fondo_garantia_uno_numero.to_f == 0 ? ' -- ' : (number_to_currency @valorizacione.actual_fondo_garantia_uno_numero.to_f, unit: '') %>						
+					</span>
+				</td>
+				<td style="text-align:right;">					
+						<!-- 35.- Acumulado_anterior_fondo_garantia_uno_numero -->
+						<%= @valorizacione.acumulado_anterior_fondo_garantia_uno_numero.to_f == 0 ? ' -- ' : (number_to_currency @valorizacione.acumulado_anterior_fondo_garantia_uno_numero.to_f, unit: '') %>					
+				</td>
+				<td style="text-align:right;">					
+						<!-- 36.- Acumulado_actual_fondo_garantia_uno_numero -->
+						<%= @valorizacione.acumulado_actual_fondo_garantia_uno_numero.to_f == 0 ? ' -- ' : (number_to_currency @valorizacione.acumulado_actual_fondo_garantia_uno_numero.to_f, unit: '') %>					
+				</td>	
+			</tr>
+			<tr>
+				<td>06.03</td>
+				<td>FONDO DE GARANTIA N°02</td>
+				<td style="text-align: right;">
+					<%= link_to raw("<i class='icon-th-list'></i>"), "/valorizaciones/ver_valorizacion_manodeobra?valorizacione_id=#{@valorizacione.id}&subcontrato_id=#{@valorizacione.subcontrato_id}&inicio=#{@valorizacione.fecha_inicial}&fin=#{@valorizacione.fecha_fin}", class: 'btn btn-mini', target: '_blank', id: 'valorizacion_manodeobra_detalle', title: 'Mano de Obra Detalles' %>
+				</td>
+				<td style="text-align:right;">
+					<span class="label label-info">
+						<!-- 37.- Actual_fondo_garantia_dos -->
+						<%= @valorizacione.actual_fondo_garantia_dos.to_f == 0 ? ' -- ' : (number_to_currency @valorizacione.actual_fondo_garantia_dos.to_f, unit: '') %>						
+					</span>
+				</td>
+				<td style="text-align:right;">					
+						<!--  38.- Acumulado_anterior_fondo_garantia_dos -->
+						<%= @valorizacione.acumulado_anterior_fondo_garantia_dos.to_f == 0 ? ' -- ' : (number_to_currency @valorizacione.acumulado_anterior_fondo_garantia_dos.to_f, unit: '') %>					
+				</td>
+				<td style="text-align:right">					
+						<!--  39.- Acumulado_actual_fondo_garantia_dos  -->
+						<%= @valorizacione.acumulado_actual_fondo_garantia_dos.to_f == 0 ? ' -- ' : (number_to_currency @valorizacione.acumulado_actual_fondo_garantia_dos.to_f, unit: '') %>					
+				</td>
+			</tr>			
+			<tr>
+				<td>06.04</td>
+				<td>DESCUENTO DE EQUIPOS</td>
+				<td style="text-align: right;">
+					<%= link_to raw("<i class='icon-th-list'></i>"), "/valorizaciones/ver_valorizacion_equipos?valorizacione_id=#{@valorizacione.id}&subcontrato_id=#{@valorizacione.subcontrato_id}&inicio=#{@valorizacione.fecha_inicial}&fin=#{@valorizacione.fecha_fin}", class: 'btn btn-mini', target: '_blank', id: 'valorizacion_equipo_detalle', title: 'Equipo Detalles' %>
+				</td>
+				<td style="text-align:right;">
+					<span class="label label-info">
+						<!-- 40.- Actual_descuento_de_equipos -->
+						<%= @valorizacione.actual_descuento_de_equipos.to_f == 0 ? ' -- ' : (number_to_currency @valorizacione.actual_descuento_de_equipos.to_f, unit: '') %>						
+					</span>
+				</td>
+				<td style="text-align:right;">					
+						<!-- 41.- Acumulado_anterior_descuento_de_equipos -->
+						<%= @valorizacione.acumulado_anterior_descuento_de_equipos.to_f == 0 ? ' -- ' : (number_to_currency @valorizacione.acumulado_anterior_descuento_de_equipos.to_f, unit: '') %>
+				</td>
+				<td style="text-align:right;">					
+						<!-- 42.- Acumulado_actual_descuento_de_equipos -->
+						<%= @valorizacione.acumulado_actual_descuento_de_equipos.to_f == 0 ? ' -- ' : (number_to_currency @valorizacione.acumulado_actual_descuento_de_equipos.to_f, unit: '') %>
+				</td>
+			</tr>
+			<script type="text/javascript">
+			    $('#valorizacion_actual_detalle').tooltip()				    
+			    $('#valorizacion_manodeobra_detalle').tooltip()				    
+			    $('#valorizacion_equipo_detalle').tooltip()				    
+			</script>
+			<tr>
+				<td>06.05</td>
+				<td>DESCUENTO DE MATERIALES</td>
+				<td></td>
+				<td style="text-align:right;">
+					<span class="label label-info">
+						<!-- 43.- Actual_descuento_de_materiales  -->
+						<%= @valorizacione.actual_descuento_de_materiales.to_f == 0 ? ' -- ' : (number_to_currency @valorizacione.actual_descuento_de_materiales.to_f, unit: '') %>						
+					</span>
+				</td>
+				<td style="text-align:right;">					
+						<!-- 44.- Acumulado_anterior_descuento_de_materiales  -->
+						<%= @valorizacione.acumulado_anterior_descuento_de_materiales.to_f == 0 ? ' -- ' : (number_to_currency @valorizacione.acumulado_anterior_descuento_de_materiales.to_f, unit: '') %>					
+				</td>
+				<td style="text-align:right;">					
+						<!-- 45.- Acumulado_actual_descuento_de_materiales -->
+						<%= @valorizacione.acumulado_actual_descuento_de_materiales.to_f == 0 ? ' -- ' : (number_to_currency @valorizacione.acumulado_actual_descuento_de_materiales.to_f, unit: '') %>					
+				</td>	
+			</tr>
+
+			<tr>
+				<td>06.06</td>
+				<td>DESCUENTO OTROS</td>
+				<td></td>
+				<td style="text-align:right;">
+					<span class="label label-info">
+						<!-- 43.- Actual_descuento_de_materiales  -->
+						<%= @valorizacione.actual_descuento_otros.to_f == 0 ? ' -- ' : (number_to_currency @valorizacione.actual_descuento_otros.to_f, unit: '') %>						
+					</span>
+				</td>
+				<td style="text-align:right;">					
+						<!-- 44.- Acumulado_anterior_descuento_de_materiales  -->
+						<%= @valorizacione.acumulado_anterior_descuento_otros.to_f == 0 ? ' -- ' : (number_to_currency @valorizacione.acumulado_anterior_descuento_otros.to_f, unit: '') %>					
+				</td>
+				<td style="text-align:right;">					
+						<!-- 45.- Acumulado_actual_descuento_de_materiales -->
+						<%= @valorizacione.acumulado_actual_descuento_otros.to_f == 0 ? ' -- ' : (number_to_currency @valorizacione.acumulado_actual_descuento_otros.to_f, unit: '') %>					
+				</td>	
+			</tr>
+
+			<tr class="well">
+				<td><b>07</b></td>
+				<td><b>NETO A PAGAR</b></td>
+				<td></td>
+				<td style="text-align:right;">
+					<span class="label label-info">
+						<!-- 46.- Actual_neto_pagar  -->
+						<%= @valorizacione.actual_neto_pagar.to_f == 0 ? ' -- ' : (number_to_currency @valorizacione.actual_neto_pagar.to_f, unit: '') %>						
+					</span>
+				</td>
+				<td style="text-align:right;">					
+						<!-- 47.- Acumulado_anterior_neto_pagar -->
+						<%= @valorizacione.acumulado_anterior_neto_pagar.to_f == 0 ? ' -- ' : (number_to_currency @valorizacione.acumulado_anterior_neto_pagar.to_f, unit: '') %>					
+				</td>
+				<td style="text-align:right;">					
+						<!-- 48.- Acumulado_actual_neto_pagar -->
+						<%= @valorizacione.acumulado_actual_neto_pagar.to_f == 0 ? ' -- ' : (number_to_currency @valorizacione.acumulado_actual_neto_pagar.to_f, unit: '') %>					
+				</td>
+			</tr>	
+		</table>
+	</div>
+
+<div class="form-actions">	
+	<%= form_tag('valorizacion_aprobar',{:method => :post}) do %>    
+		<%= hidden_field_tag 'valorizacione[fecha_inicial]', "#{@valorizacione.fecha_inicial}" %>
+		<%= hidden_field_tag 'valorizacione[fecha_fin]', "#{@valorizacione.fecha_fin}" %>
+		<%= hidden_field_tag 'valorizacione[subcontratista_nombre]', "#{@valorizacione.subcontratista_nombre}" %>
+		<%= hidden_field_tag 'valorizacione[monto_contratado]', @valorizacione.monto_contratado %>
+		<%= hidden_field_tag 'valorizacione[adelantos]', @valorizacione.adelantos %>
+		<%= hidden_field_tag 'valorizacione[amortizacion_acumulada]', @valorizacione.amortizacion_acumulada %>
+		<%= hidden_field_tag 'valorizacione[saldo_por_amortizar]', @valorizacione.saldo_por_amortizar %>
+		<%= hidden_field_tag 'valorizacione[fondo_de_garantia_acumulada]', @valorizacione.fondo_de_garantia_acumulada %>
+		<%= hidden_field_tag 'valorizacione[actual_valorizacion_actual]', @valorizacione.actual_valorizacion_actual %>
+		<%= hidden_field_tag 'valorizacione[acumulado_anterior_valorizacion_actual]', @valorizacione.acumulado_anterior_valorizacion_actual %>
+		<%= hidden_field_tag 'valorizacione[acumulado_actual_valorizacion_actual]', @valorizacione.acumulado_actual_valorizacion_actual %>
+		<%= hidden_field_tag 'valorizacione[actual_amortizacion_porcentaje]', @valorizacione.actual_amortizacion_porcentaje %>
+		<%= hidden_field_tag 'valorizacione[actual_amortizacion_numero]', @valorizacione.actual_amortizacion_numero %>
+		<%= hidden_field_tag 'valorizacione[acumulado_anterior_amortizacion_numero]', @valorizacione.acumulado_anterior_amortizacion_numero %>
+		<%= hidden_field_tag 'valorizacione[acumulado_actual_amortizacion_numero]', @valorizacione.acumulado_actual_amortizacion_numero %>
+		<%= hidden_field_tag 'valorizacione[actual_total]', @valorizacione.actual_total %>
+		<%= hidden_field_tag 'valorizacione[acumulado_anterior_total]', @valorizacione.acumulado_anterior_total %>
+		<%= hidden_field_tag 'valorizacione[acumulado_actual_total]', @valorizacione.acumulado_actual_total %>
+		<%= hidden_field_tag 'valorizacione[actual_igv_porcentaje]', @valorizacione.actual_igv_porcentaje %>
+		<%= hidden_field_tag 'valorizacione[actual_igv_numero]', @valorizacione.actual_igv_numero %>
+		<%= hidden_field_tag 'valorizacione[acumulado_anterior_igv_numero]', @valorizacione.acumulado_anterior_igv_numero %>
+		<%= hidden_field_tag 'valorizacione[acumulado_actual_igv_numero]', @valorizacione.acumulado_actual_igv_numero %>
+		<%= hidden_field_tag 'valorizacione[actual_total_incluido_igv]', @valorizacione.actual_total_incluido_igv %>
+		<%= hidden_field_tag 'valorizacione[acumulado_anterior_total_incluido_igv]', @valorizacione.acumulado_anterior_total_incluido_igv %>
+		<%= hidden_field_tag 'valorizacione[acumulado_actual_total_incluido_igv]', @valorizacione.acumulado_actual_total_incluido_igv %>
+		<%= hidden_field_tag 'valorizacione[actual_retenciones]', @valorizacione.actual_retenciones %>
+		<%= hidden_field_tag 'valorizacione[acumulado_anterior_retenciones]', @valorizacione.acumulado_anterior_retenciones %>
+		<%= hidden_field_tag 'valorizacione[acumulado_actual_retenciones]', @valorizacione.acumulado_actual_retenciones %>
+		<%= hidden_field_tag 'valorizacione[actual_detraccion_del_total_porcentaje]', @valorizacione.actual_detraccion_del_total_porcentaje %>
+		<%= hidden_field_tag 'valorizacione[actual_detraccion_del_total_numero]', @valorizacione.actual_detraccion_del_total_numero %>
+		<%= hidden_field_tag 'valorizacione[acumulado_anterior_detraccion_del_total_numero]', @valorizacione.acumulado_anterior_detraccion_del_total_numero %>
+		<%= hidden_field_tag 'valorizacione[acumulado_actual_detraccion_del_total_numero]', @valorizacione.acumulado_actual_detraccion_del_total_numero %>
+		<%= hidden_field_tag 'valorizacione[actual_fondo_garantia_uno_porcentaje]', @valorizacione.actual_fondo_garantia_uno_porcentaje %>
+		<%= hidden_field_tag 'valorizacione[actual_fondo_garantia_uno_numero]', @valorizacione.actual_fondo_garantia_uno_numero %>
+		<%= hidden_field_tag 'valorizacione[acumulado_anterior_fondo_garantia_uno_numero]', @valorizacione.acumulado_anterior_fondo_garantia_uno_numero %>
+		<%= hidden_field_tag 'valorizacione[acumulado_actual_fondo_garantia_uno_numero]', @valorizacione.acumulado_actual_fondo_garantia_uno_numero %>
+		<%= hidden_field_tag 'valorizacione[actual_fondo_garantia_dos]', @valorizacione.actual_fondo_garantia_dos %>
+		<%= hidden_field_tag 'valorizacione[acumulado_anterior_fondo_garantia_dos]', @valorizacione.acumulado_anterior_fondo_garantia_dos %>
+		<%= hidden_field_tag 'valorizacione[acumulado_actual_fondo_garantia_dos]', @valorizacione.acumulado_actual_fondo_garantia_dos %>
+		<%= hidden_field_tag 'valorizacione[actual_descuento_de_equipos]', @valorizacione.actual_descuento_de_equipos %>
+		<%= hidden_field_tag 'valorizacione[acumulado_anterior_descuento_de_equipos]', @valorizacione.acumulado_anterior_descuento_de_equipos %>
+		<%= hidden_field_tag 'valorizacione[acumulado_actual_descuento_de_equipos]', "#{@valorizacione.acumulado_actual_descuento_de_equipos}" %>
+		<%= hidden_field_tag 'valorizacione[actual_descuento_de_materiales]', @valorizacione.actual_descuento_de_materiales %>
+		<%= hidden_field_tag 'valorizacione[acumulado_anterior_descuento_de_materiales]', @valorizacione.acumulado_anterior_descuento_de_materiales %>
+		<%= hidden_field_tag 'valorizacione[acumulado_actual_descuento_de_materiales]', @valorizacione.acumulado_actual_descuento_de_materiales %>
+		<%= hidden_field_tag 'valorizacione[actual_neto_pagar]', @valorizacione.actual_neto_pagar %>
+		<%= hidden_field_tag 'valorizacione[acumulado_anterior_neto_pagar]', @valorizacione.acumulado_anterior_neto_pagar %>
+		<%= hidden_field_tag 'valorizacione[acumulado_actual_neto_pagar]', @valorizacione.acumulado_actual_neto_pagar %>
+		<%= hidden_field_tag 'valorizacione[valorizacione_subcontrato_id]', @valorizacione.valorizacione_subcontrato_id %>
+		<%= hidden_field_tag 'valorizacione[valorizacione_contador]', @valorizacione.valorizacione_contador %>
+		<%= hidden_field_tag 'valorizacione[valorizacione_aprobado]', 1 %>
+		<%= hidden_field_tag 'valorizacione[id]', @valorizacione.id %>
+		<%= hidden_field_tag 'id', @valorizacione.id %>
+		<%= link_to raw("<i class='icon-arrow-left icon-white'></i> Regresar"), valorizaciones_path, class: 'btn btn-primary' %> 	
+		<% if @valorizacione.valorizacione_aprobado == 0 %>
+				<%= button_tag(type: "submit", class: "btn btn-success") do %>
+		    		<i class="icon-ok icon-white"></i> Aprobar Valorizacion
+				<% end %>	
+		<% end %>
+
+	<% end %>	
+	
+	
+	
+</div>
+

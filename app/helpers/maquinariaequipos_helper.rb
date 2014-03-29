@@ -1,0 +1,2 @@
+module MaquinariaequiposHelper
+end

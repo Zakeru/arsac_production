@@ -1,0 +1,2 @@
+module TipodediasHelper
+end

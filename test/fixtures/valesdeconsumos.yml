@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  numero_vale: MyString
+  tipo_vale: MyString
+  proveedor: MyString
+  tipo_material: MyString
+  cantidad: MyString
+
+two:
+  numero_vale: MyString
+  tipo_vale: MyString
+  proveedor: MyString
+  tipo_material: MyString
+  cantidad: MyString

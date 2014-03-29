@@ -1,0 +1,34 @@
+
+<div class="row">
+  <table class="table table-bordered table-condensed table-hover span10" style="margin: 0 auto; float: none;">
+    <tr class="well">
+      <td colspan="7">
+        <h2 style="text-align: center;">Cuadro Resumen de Equipo</h2>
+        <h4 style="text-align: center;">
+        	<%= @subcontrato_nombre %> <small><%= l(params[:inicio].to_date, format: :fecha) %> - <%= l(params[:fin].to_date, format: :fecha) %></small>
+        </h4>
+      </td>
+    </tr>
+    <% equipo_sumariza = 0 %>
+    <% i = 1 %>
+    <% @vequipos.each do |equipo| %>
+    <tr style="font-size:12px;">
+      <td><%= i %> .- </td>
+      <td><%= equipo.nombre %></td>
+      <td style="text-align: right;"><%= number_with_precision equipo.cantidad, :precision => 2 %></td>
+      <td style="text-align: right;"><%= equipo.unidad %></td>
+      <td style="text-align: right;"><%= number_with_precision equipo.precio_unitario, :precision => 2 %></td>
+      <td style="text-align: right;"><%= number_with_precision equipo.parcial, :precision => 2 %></td>
+      <td><%= link_to raw("<i class='icon-th-list'></i>"), "/valorizaciones/ver_equipodays?vequipo_id=#{equipo.id}&inicio=#{params[:inicio]}&fin=#{params[:fin]}", class: 'btn btn-mini', target: '_blank' %></td>
+    </tr>
+    <% equipo_sumariza += equipo.parcial.to_f %>
+    <% i += 1 %>
+    <% end %>
+    <tr class="well">
+      <td></td>
+      <td colspan="4"><b>Total</b></td>
+      <td style="text-align: right;"><b><%= number_to_currency equipo_sumariza, unit: '' %></b></td>
+      <td></td>
+    </tr>
+  </table>
+</div>

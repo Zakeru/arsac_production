@@ -1,0 +1,37 @@
+<% if @equipos.present? %>
+
+<div class="row">
+  <table class="table table-bordered table-condensed table-hover span10" style="margin: 0 auto; float: none;">
+    <tr class="well">
+      <td colspan="7">
+        <h2 style="text-align: center;">Cuadro Resumen de Equipo</h2>  
+        <h4 style="text-align: center;"><%= @subcontrato_nombre %> : <small><%= l(@inicio.to_date, format: :fecha) %> - <%= l(@fin.to_date, format: :fecha) %></small></h4>
+      </td>
+    </tr>
+    <% equipo_sumariza = 0 %>
+    <% i = 1 %>
+    <% @equipos.each do |equipo| %>
+    <tr style="font-size:12px;">
+      <td><%= i %></td>
+      <td><%= equipo[1] %> (<%= equipo[2] %>)</td>
+      <td style="text-align: right;"><%= number_with_precision equipo[3], :precision => 2 %></td>
+      <td style="text-align: right;"><%= equipo[4] %></td>
+      <td style="text-align: right;"><%= number_with_precision equipo[5], :precision => 2 %></td>
+      <td style="text-align: right;"><%= number_with_precision equipo[6], :precision => 2 %></td>
+      <td><%= link_to raw('<i class="icon-th-list"></i>'), "/valorizaciones/equipo_days?equiposdesubcontrato_id=#{equipo[0]}&inicio=#{@inicio}&fin=#{@fin}", target: '_blank', class: 'btn btn-mini' %></td>
+    </tr>
+    <% equipo_sumariza += equipo[6] %>
+    <% i += 1 %>
+    <% end %>
+    <tr class="well">
+      <td></td>
+      <td colspan="4"><b>Total</b></td>
+      <td style="text-align: right;"><b><%= number_to_currency equipo_sumariza, unit: '' %></b></td>
+      <td></td>
+    </tr>
+  </table>
+</div>
+<% else %>
+  <br>  
+  <h3 style="text-align: center;">No existen Equipos...!</h3>
+<% end %>

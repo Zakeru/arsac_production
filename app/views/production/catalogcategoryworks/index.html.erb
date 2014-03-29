@@ -1,0 +1,43 @@
+<div class="page-header">
+  <h2>Tipos de Trabajadores</h2>  
+</div>
+
+<div class="row">
+  <div class="span9">
+    <table class="table table-bordered table-condensed table-hover">
+      <tr class="well">
+        <th>#id</th>
+        <th>Tipo</th>    
+        <th>Unidad</th>
+        <th>Precio Normal</th>
+        <th>Precio 60 %</th>
+        <th>Precio 100 %</th>
+        <th>Fecha Creado</th>
+        <th>Acciones</th>
+      </tr>
+
+    <% @catalogcategoryworks.each do |catalogcategorywork| %>
+      <tr>
+        <td><%= catalogcategorywork.id %></td>
+        <td><%= catalogcategorywork.nombre %></td>    
+        <td><%= catalogcategorywork.unit.nombre %></td>
+
+        <td><%= number_with_precision catalogcategorywork.precio_unitario_normal, :precision => 2 %></td>
+        <td><%= number_with_precision catalogcategorywork.precio_unitario_60, :precision => 2 %></td>
+        <td><%= number_with_precision catalogcategorywork.precio_unitario_100, :precision => 2 %></td>
+
+        <td><%= l(catalogcategorywork.created_at.to_date, format: :fecha) %></td>
+        <td>
+          <%= link_to raw('<i class="icon-eye-open icon-white"></i>'), [:production,catalogcategorywork], :class => "btn btn-small btn-info" %>
+          <%= link_to raw('<i class="icon-edit icon-white"></i>'), edit_production_catalogcategorywork_path(catalogcategorywork), :class => "btn btn-small btn-success" %>
+          <%= link_to raw('<i class="icon-trash icon-white"></i>'), [:production,catalogcategorywork], method: :delete, data: { confirm: 'Esta Seguro que desea Eliminar?' }, :class => "btn btn-small btn-danger" %>
+        </td>
+      </tr>
+    <% end %>
+    </table>
+  </div>
+</div>
+
+<div class="form-actions">
+  <%= link_to raw('<i class="icon-user icon-white"></i> Nuevo'), new_production_catalogcategorywork_path, :class => "btn btn-primary" %>
+</div>

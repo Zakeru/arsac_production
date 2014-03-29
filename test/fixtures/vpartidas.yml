@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  valorizacione_id: 1
+  codigo: MyString
+  partida_nombre: MyString
+  unidad: MyString
+  cantidad: MyString
+  precio_unitario: MyString
+  parcial: MyString
+
+two:
+  valorizacione_id: 1
+  codigo: MyString
+  partida_nombre: MyString
+  unidad: MyString
+  cantidad: MyString
+  precio_unitario: MyString
+  parcial: MyString

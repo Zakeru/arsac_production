@@ -1,0 +1,40 @@
+<div class="page-header">
+    <h1>Equipos Registrados</h1>    
+</div>
+
+<table class="table table-bordered table-condensed table-striped table-hover">
+  <tr>
+    <th>#id</th>
+    <th>Subcontrato</th>
+    <th>Codigo</th>
+    <th>Insumo de equipos</th>
+    <th>Und</th>
+    <th>P. sin igv</th>
+    <th>Hrs Min</th>
+    <th>Acciones</th>
+  </tr>
+
+<% @equipmentsofsubcontracts.each do |equipmentsofsubcontract| %>
+  <tr style="font-size: 11px;">
+    <td><%= equipmentsofsubcontract.id %></td>
+    <td>
+        <%= equipmentsofsubcontract.subcontractofequipment.supplier.entity.nombre %>
+        <%= equipmentsofsubcontract.subcontractofequipment.supplier.entity.apellido %>
+        <%= equipmentsofsubcontract.subcontractofequipment.supplier.entity.razon_social %>
+    </td>
+    <td><%= equipmentsofsubcontract.codigo %></td>
+    <td><%= equipmentsofsubcontract.inputofequipment.nombre %></td>
+    <td><%= equipmentsofsubcontract.unit.nombre %></td>
+    <td><%= equipmentsofsubcontract.precion_sin_igv %></td>
+    <td><%= equipmentsofsubcontract.cantidad_h_m %></td>
+    <td>
+        <%= link_to raw('<i class="icon-eye-open icon-white"></i>'), [:production,equipmentsofsubcontract], :class => 'btn btn-small btn-info' %>
+        <%= link_to raw('<i class="icon-edit icon-white"></i>'), edit_production_subcontractofequipment_path(equipmentsofsubcontract.subcontractofequipment_id), :class => 'btn btn-small btn-success' %>
+    </td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to raw('<i class="icon-arrow-left icon-white"></i> regresar'), production_subcontractofequipments_path, :class => 'btn btn-primary' %>

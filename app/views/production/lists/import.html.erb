@@ -1,0 +1,61 @@
+<h2>Importar partidas</h2>
+<%= form_tag import_production_lists_path,{multipart: true} do %>
+	<%= file_field_tag :file %> <%= submit_tag "Importar" %>
+<% end %>
+
+  	<% if !params[:file].nil? %>
+  		<%= form_tag('/importalistas/import',{:method => :post, :style => 'margin: 0; padding: 0; display:inline;'}) do %>  	
+		  	<% s = Roo::Excelx.new(params[:file].path,nil, :ignore) %>
+		  	<table class="table table-bordered table-condensed">
+		  		<tr class="well">
+		  			<th style="text-align: center;">#</th>
+		  			<th style="text-align: center;">ITEM</th>
+		  			<th style="text-align: center;">PARTIDA</th>
+		  			<th style="text-align: center;">UND</th>
+		  			<th style="text-align: center;">PRECIO UNITARIO</th>
+		  		</tr>
+		  		<% p = 1 %>
+		  		<% i = -1 %>
+				<% k = 0 %>
+		  		<% (1..86).each do |fila| %>
+		  			<% codigo = s.cell('A',fila).to_s %>
+		  			<% nombre = s.cell('B',fila) %>
+		  			<% unidad = s.cell('C',fila).to_s %>
+		  			<% unidad_id = Unit.where("lower(nombre) = ?", unidad.downcase).first  %>		  			
+		  			<% precio_unitario = s.cell('D',fila).to_f.round(2) %>
+		  			<tr>
+			  			<% if codigo != ''  and codigo.length == 8 %>
+			  				<% if codigo[6,7] == '00'  %>
+			  					<% i += 1 %>
+			  					<%= hidden_field_tag "importalista[listacategorias_attributes][#{i}][codigo]",nil, value: "#{codigo}" %>
+			  					<%= hidden_field_tag "importalista[listacategorias_attributes][#{i}][nombre]",nil, value: "#{nombre}" %>				  				
+				  				<% k = 0 %>
+			  					<td style="text-align: center;"><%= p %></td>
+			  					<td style="text-align: center;"><b><%= codigo %></b></td>
+			  					<td><b><%= nombre %></b></td>
+			  					<td style="text-align: center;"><b><%= unidad %></b></td>
+			  					<td><b></b></td>
+			  				<% else %>
+			  					<%= hidden_field_tag "importalista[listacategorias_attributes][#{i}][listas_attributes][#{k}][codigo]",nil, value: "#{codigo}" %>
+			  					<%= hidden_field_tag "importalista[listacategorias_attributes][#{i}][listas_attributes][#{k}][nombre]",nil, value: "#{nombre}" %>
+			  					<%= hidden_field_tag "importalista[listacategorias_attributes][#{i}][listas_attributes][#{k}][unidade_id]",nil, value: "#{unidad_id.id}" %>
+			  					<%= hidden_field_tag "importalista[listacategorias_attributes][#{i}][listas_attributes][#{k}][precio_unitario]",nil, value: "#{precio_unitario}" %>
+								<% k += 1 %>
+			  					<td style="text-align: center;"><%= p %></td>
+			  					<td style="text-align: center;"><%= codigo %></td>
+			  					<td><%= nombre %></td>
+			  					<td style="text-align: center;"><%= unidad_id.nombre %></td>
+			  					<td style="text-align: center;"><%= precio_unitario %></td>
+			  				<% end %>
+			  				<% p += 1 %>
+			    		<% end %>  				
+		  			</tr>  
+		  						
+		    	<% end %> 
+		  	</table>
+		  	<%= button_tag(type: "submit", class: "btn btn-success") do %>
+				<i class="icon-lock icon-white"></i> Guardar Partidas
+			<% end %>
+		<% end %>
+	  	
+	<% end %>

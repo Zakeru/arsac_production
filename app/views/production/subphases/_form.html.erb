@@ -1,0 +1,50 @@
+<%= form_for([:production,@subphase], :html => {:class => "form-horizontal"}) do |f| %>
+
+  <% if @subphase.errors.any? %>
+    <div id="error_explanation" class="well">
+      <h2><%= pluralize(@subphase.errors.count, "errores") %> cometidos</h2>
+
+      <ul>
+      <% @subphase.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="control-group">
+    <div class="control-label">
+      <%= f.label :fase_id %>  
+    </div>
+    <div class="controls">
+      <%= f.select :phase_id, Phase.all.collect { |x| [x.descripcion, x.id] }, {}, :class => "span5" %>      
+    </div>    
+  </div>  
+
+  <div class="control-group">
+    <div class="control-label">
+      <%= f.label :codigo %>  
+    </div>
+    <div class="controls">
+      <%= f.text_field :codigo, :class => "span1" %>  
+    </div>   
+  </div>
+
+  <div class="control-group">
+    <div class="control-label">
+      <%= f.label :descripcion %>  
+    </div>
+    <div class="controls">
+      <%= f.text_field :descripcion, :class => "span5" %>  
+    </div>        
+  </div>
+
+
+
+  <div class="control-group">
+    <div class="controls">
+      <%= f.submit :class => "btn btn-success" %>  
+    </div>    
+  </div>
+
+<% end %>

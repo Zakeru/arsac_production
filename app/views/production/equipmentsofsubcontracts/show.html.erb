@@ -1,0 +1,94 @@
+<p id="notice"><%= notice %></p>
+
+<div class="page-header">
+  <h2>
+    Equipo: 
+    <%= @equipmentsofsubcontract.codigo %>    
+    <small>
+      <%= @equipmentsofsubcontract.subcontractofequipment.supplier.entity.nombre %> 
+      <%= @equipmentsofsubcontract.subcontractofequipment.supplier.entity.apellido %> 
+      <%= @equipmentsofsubcontract.subcontractofequipment.supplier.entity.razon_social %> 
+    </small>
+  </h2>
+</div>
+
+<div class="row">
+
+<table class="table table-bordered table-condensed table-striped span7">
+  <tr>
+    <th>Nombre</th>
+    <th>Descripcion</th>
+  </tr>
+  <tr>
+    <td>#id</td>
+    <td><%= @equipmentsofsubcontract.id %></td>
+  </tr>
+  <tr>
+    <td>Sub Contrato de Equipo</td>
+    <td>
+      <%= @equipmentsofsubcontract.subcontractofequipment.supplier.entity.nombre %>
+      <%= @equipmentsofsubcontract.subcontractofequipment.supplier.entity.apellido %>
+      <%= @equipmentsofsubcontract.subcontractofequipment.supplier.entity.razon_social %>
+    </td>
+  </tr>
+  <tr>
+    <td>Codigo</td>
+    <td><%= @equipmentsofsubcontract.codigo %></td>
+  </tr>
+  <tr>
+    <td>Descripcion</td>
+    <td><%= @equipmentsofsubcontract.descripcion %></td>
+  </tr>
+  <tr>
+    <td>Insumos10</td>
+    <td><%= @equipmentsofsubcontract.inputofequipment.nombre %></td>
+  </tr>
+  <tr>
+    <td>Marca</td>
+    <td><%= @equipmentsofsubcontract.marca %></td>
+  </tr>
+  <tr>
+    <td>Serie</td>
+    <td><%= @equipmentsofsubcontract.serie %></td>
+  </tr>
+  <tr>
+    <td>Modelo</td>
+    <td><%= @equipmentsofsubcontract.modelo %></td>
+  </tr>
+  <tr>
+    <td>Año</td>
+    <td><%= @equipmentsofsubcontract.anho %></td>
+  </tr>
+  <tr>
+    <td>Unidad</td>
+    <td><%= @equipmentsofsubcontract.unit.nombre %></td>
+  </tr>
+  <tr>
+    <td>Precio sin IGV</td>
+    <td><%= @equipmentsofsubcontract.precion_sin_igv %></td>
+  </tr>
+  <tr>
+    <td>Equipo Incluye</td>
+    <td><%= @equipmentsofsubcontract.equipmentincluded.nombre %></td>
+  </tr>
+  <tr>
+    <td>Horas Minimas</td>
+    <td><%= @equipmentsofsubcontract.horas_minimas %></td>
+  </tr>
+  <tr>
+    <td>Cantidad de Horas Minimas</td>
+    <td><%= @equipmentsofsubcontract.cantidad_h_m %></td>
+  </tr>
+  <tr>
+    <td>Fecha</td>
+    <td><%= @equipmentsofsubcontract.fecha %></td>
+  </tr>
+</table>
+
+</div>
+
+<div class="form-actions">
+  <%= link_to raw('<i class="icon-edit icon-white"></i> Editar'), edit_production_equipmentsofsubcontract_path(@equipmentsofsubcontract), :class => 'btn btn-success' %>
+  <%= link_to raw('<i class="icon-arrow-left icon-white"></i> Regresar'), "/production/subcontractofequipments/ver_equipos/#{@equipmentsofsubcontract.subcontractofequipment_id}", :class => 'btn btn-primary' %> 
+</div>
+

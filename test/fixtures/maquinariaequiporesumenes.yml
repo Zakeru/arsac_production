@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  numero: MyString
+  equipo: MyString
+  fecha: MyString
+  horometro_horas: MyString
+  horas_efectivas: MyString
+  combustible: MyString
+  maquinariaequipo_id: 1
+
+two:
+  numero: MyString
+  equipo: MyString
+  fecha: MyString
+  horometro_horas: MyString
+  horas_efectivas: MyString
+  combustible: MyString
+  maquinariaequipo_id: 1

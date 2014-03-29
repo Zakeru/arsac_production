@@ -1,0 +1,61 @@
+<div class="row">
+  <div class="span6">
+    <h2>Equipos Registrados</h2>
+  </div>
+  <div class="span6">
+    <br>
+  </div>
+</div>
+<br>
+<div class="row">
+  <div class="span7">
+    <!-- Paginacion-->
+    <div class="pull-left">
+      <%= will_paginate @equipmentregisters, renderer: BootstrapPagination::Rails %>  
+    </div>    
+    <!-- End Paginacion -->    
+  </div>
+  <div class="span5">
+
+  </div>
+</div>
+
+
+
+
+<br>
+
+<table class="table table-striped table-bordered table-condensed table-hover">
+  <tr style="font-size:12px;">
+    <th>#id</th>
+    <th>Frente</th>
+    <th>Sectore</th>
+    <th>Subsectore</th>
+    
+    <th>Partidasdecontrol</th>    
+    <th>Cantidad</th>
+    <th>Acciones</th>
+  </tr>
+
+<% @equipmentregisters.each do |equipmentregister| %>
+  <tr style="font-size:12px;">
+    <td><%= equipmentregister.id %></td>
+    <td><%= equipmentregister.front.nombre %></td>
+    <td><%= equipmentregister.groupsofwork.sector.descripcion %></td>
+    <td><%= equipmentregister.groupsofwork.subsector.descripcion %></td>
+    
+    <td><%= equipmentregister.itemsofcontrol.subphase.descripcion %></td>    
+    <td style="text-align: center;"><%= number_to_currency equipmentregister.cantidad, unit: '' %></td>
+    <td>
+        <%= link_to raw("<i class='icon-eye-open icon-white'></i>"), production_partofequipment_path(equipmentregister.partofequipment_id), :class => 'btn btn-info btn-small' %>
+        <%= link_to raw("<i class='icon-edit icon-white'></i>"), edit_production_partofequipment_path(equipmentregister.partofequipment_id), :class => 'btn btn-success btn-small' %>
+        <%= link_to raw("<i class='icon-trash icon-white'></i>"), [:production,equipmentregister], method: :delete, data: { confirm: 'Estas Seguro que desea Eliminar?' }, :class => 'btn btn-danger btn-small' %>
+    </td>
+  </tr>
+<% end %>
+</table>
+
+<div class="pull-right">
+  <%= will_paginate @equipmentregisters, renderer: BootstrapPagination::Rails %>  
+</div>
+<div class="clearfix"></div>

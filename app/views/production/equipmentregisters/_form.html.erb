@@ -1,0 +1,53 @@
+<%= form_for(@equiposregistrado) do |f| %>
+  <% if @equiposregistrado.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@equiposregistrado.errors.count, "error") %> prohibited this equiposregistrado from being saved:</h2>
+
+      <ul>
+      <% @equiposregistrado.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :frente_id %><br />
+    <%= f.number_field :frente_id %>
+  </div>
+  <div class="field">
+    <%= f.label :sectore_id %><br />
+    <%= f.number_field :sectore_id %>
+  </div>
+  <div class="field">
+    <%= f.label :subsectore_id %><br />
+    <%= f.number_field :subsectore_id %>
+  </div>
+  <div class="field">
+    <%= f.label :unidade_id %><br />
+    <%= f.number_field :unidade_id %>
+  </div>
+  <div class="field">
+    <%= f.label :partidasdecontrol_id %><br />
+    <%= f.number_field :partidasdecontrol_id %>
+  </div>
+  <div class="field">
+    <%= f.label :subunidad %><br />
+    <%= f.text_field :subunidad %>
+  </div>
+  <div class="field">
+    <%= f.label :inicio %><br />
+    <%= f.text_field :inicio %>
+  </div>
+  <div class="field">
+    <%= f.label :fin %><br />
+    <%= f.text_field :fin %>
+  </div>
+  <div class="field">
+    <%= f.label :cantidad %><br />
+    <%= f.text_field :cantidad %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,59 @@
+<div class="page-header">
+	<h1 style="text-align: center;">Cuadro Resumen Equipodesubcontrato</h1>
+</div>
+
+
+
+<div class="row">
+	<table class="table table-condensed table-bordered table-hover">
+		<tr class="well">
+			<td colspan="9">
+				<h3 style="text-align: center;"><%= @equipodesubcontrato.codigo %> <%= @equipodesubcontrato.insumodeequipo.nombre %> <small>Ejecutor (<%= params[:inicio].to_date.strftime("%d %b") %> - <%= params[:fin].to_date.strftime("%d %b. %Y") %>)</small></h3>
+			</td>
+		</tr>
+	    <tr class="well">
+	      <th>#</th>
+	      <th style="text-align: right;"># Parte</th>
+	      <th style="text-align: right;">Fecha</th>
+	      <th style="text-align: right;">H. inicio</th>
+	      <th style="text-align: right;">H. fin</th>
+	      <th style="text-align: right;">H. horas</th>
+	      <th style="text-align: right;">H. Efectivas</th>
+	      <th style="text-align: right;">Suministro</th>
+	      <th style="text-align: right;">Combustible</th>
+	    </tr>	  
+	    <% k = 0 %>
+	    <% sumariza_horas = 0 %>
+	    <% sumariza_efectivas = 0 %>
+	    <% sumariza_combustible = 0 %>
+	    <% @maquinariaequipodetalles.each do |maquinariaequipodetalle| %>	      
+	      <% k += 1 %>
+	      <tr>
+	        <td style="text-align: right;"><%= k %></td>
+	        <td style="text-align: right;"><%= maquinariaequipodetalle.parte %></td>
+	        <td style="text-align: right;"><%= maquinariaequipodetalle.fecha %></td>
+	        <td style="text-align: right;"><%= maquinariaequipodetalle.horometro_inicio %></td>
+	        <td style="text-align: right;"><%= maquinariaequipodetalle.horometro_fin %></td>
+	        <td style="text-align: right;"><%= maquinariaequipodetalle.horometro_horas %></td>
+	        <td style="text-align: right;"><%= maquinariaequipodetalle.horas_efectivas %></td>
+	        <td style="text-align: right;"><%= maquinariaequipodetalle.suministro %></td>
+	        <td style="text-align: right;"><%= maquinariaequipodetalle.combustible %></td>
+	      </tr>	
+	      <% sumariza_horas += maquinariaequipodetalle.horometro_horas.to_f %>
+	      <% sumariza_efectivas += maquinariaequipodetalle.horas_efectivas.to_f %>
+	      <% sumariza_combustible += maquinariaequipodetalle.combustible.to_f %>
+	    <% end %>
+	    <tr class="well">
+        <td></td>
+        <td></td>
+        <td></t3>
+        <td></td>
+        <td></td>
+        <td style="text-align: right;"><b><%= number_to_currency sumariza_horas, unit: 'Hrs. ' %></b></td>
+        <td style="text-align: right;"><b><%= number_to_currency sumariza_efectivas, unit: 'Hrs. ' %></b></td>
+        <td></td>
+        <td style="text-align: right;"><b><%= number_to_currency sumariza_combustible, unit: '' %></b></td>    
+      </tr>
+	</table>
+</div>
+<div class="clearfix"></div>

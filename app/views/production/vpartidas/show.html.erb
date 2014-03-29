@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Valorizacione:</b>
+  <%= @vpartida.valorizacione_id %>
+</p>
+
+<p>
+  <b>Codigo:</b>
+  <%= @vpartida.codigo %>
+</p>
+
+<p>
+  <b>Partida nombre:</b>
+  <%= @vpartida.partida_nombre %>
+</p>
+
+<p>
+  <b>Unidad:</b>
+  <%= @vpartida.unidad %>
+</p>
+
+<p>
+  <b>Cantidad:</b>
+  <%= @vpartida.cantidad %>
+</p>
+
+<p>
+  <b>Precio unitario:</b>
+  <%= @vpartida.precio_unitario %>
+</p>
+
+<p>
+  <b>Parcial:</b>
+  <%= @vpartida.parcial %>
+</p>
+
+
+<%= link_to 'Edit', edit_vpartida_path(@vpartida) %> |
+<%= link_to 'Back', vpartidas_path %>

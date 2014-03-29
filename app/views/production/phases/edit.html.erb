@@ -1,0 +1,12 @@
+<div class="page-header">
+	<h2>Editar Fase</h2>	
+</div>
+
+
+<%= render 'form' %>
+
+<div class="form-actions">
+	<%= link_to raw('<i class="icon-eye-open icon-white"></i> Ver'), production_phase_path(@phase), :class => "btn btn-info" %>
+	<%= link_to raw('<i class="icon-arrow-left icon-white"></i> Regresar'), production_phases_path, :class => "btn btn-primary" %>	
+</div>
+

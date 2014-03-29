@@ -1,0 +1,35 @@
+<h1>Listing maquinariaequiporesumenes</h1>
+
+<table>
+  <tr>
+    <th>Numero</th>
+    <th>Equipo</th>
+    <th>Fecha</th>
+    <th>Horometro horas</th>
+    <th>Horas efectivas</th>
+    <th>Combustible</th>
+    <th>Maquinariaequipo</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @maquinariaequiporesumenes.each do |maquinariaequiporesumene| %>
+  <tr>
+    <td><%= maquinariaequiporesumene.numero %></td>
+    <td><%= maquinariaequiporesumene.equipo %></td>
+    <td><%= maquinariaequiporesumene.fecha %></td>
+    <td><%= maquinariaequiporesumene.horometro_horas %></td>
+    <td><%= maquinariaequiporesumene.horas_efectivas %></td>
+    <td><%= maquinariaequiporesumene.combustible %></td>
+    <td><%= maquinariaequiporesumene.maquinariaequipo_id %></td>
+    <td><%= link_to 'Show', maquinariaequiporesumene %></td>
+    <td><%= link_to 'Edit', edit_maquinariaequiporesumene_path(maquinariaequiporesumene) %></td>
+    <td><%= link_to 'Destroy', maquinariaequiporesumene, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Maquinariaequiporesumene', new_maquinariaequiporesumene_path %>

@@ -1,0 +1,68 @@
+<%= form_for([:production,@list], :html => {:class => "form-horizontal"}) do |f| %>
+  <% if @list.errors.any? %>
+    <div id="error_explanation" class="well">
+      <h3><%= pluralize(@list.errors.count, "errores") %> Cometidos</h3>
+
+      <ul>
+      <% @list.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+  <div class="control-group">
+    <div class="control-label">    
+      <%= f.label :Tipo %>
+    </div>    
+    <div class="controls">
+            <%= f.select :listcategory_id, Listcategory.all.collect { |x| ["#{x.codigo} #{x.nombre}", x.id] }, {:include_blank => "Seleccion Categoria"}, :class => "span3" %>  
+    </div>
+
+  </div>
+    <div class="control-group">
+    <div class="control-label">
+      <%= f.label :unidad %>
+    </div>
+    <div class="controls">
+      <%= f.select :unit_id, Unit.all.collect{|x| [x.nombre, x.id]} %>
+    </div>
+  </div>
+
+
+  <div class="control-group">
+    <div class="control-label">
+      <%= f.label :nombre %>  
+    </div>
+    <div class="controls">
+      <%= f.text_field :nombre, :class => "span6", :placeholder => "Nombre de la Partida" %>  
+    </div>    
+  </div>
+
+  <div class="control-group">
+    <div class="control-label">
+      <%= f.label :precio_unitario %>  
+    </div>
+    <div class="controls">
+      <%= f.text_field :precio_unitario, :class => "span6", :placeholder => "12.45", :class => 'input-mini' %>  
+    </div>    
+  </div>
+
+  <div class='control-group'>
+    <div class='control-label'>
+      <%= f.label :codigo %>
+    </div>
+    <div class='controls'>
+      <%= f.text_field :codigo, class: 'input-medium' %>
+    </div>
+  </div>
+
+
+
+  <div class="control-group">
+    <div class="controls">
+      <%= f.submit :class => "btn btn-success" %>  
+    </div>    
+  </div>
+<% end %>

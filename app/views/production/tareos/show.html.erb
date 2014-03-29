@@ -1,0 +1,66 @@
+<p id="notice"><%= notice %></p>
+<div class="page-header">
+	<h1><%= link_to "Tareo", tareos_path %><small> <%= l(@tareo.inicio, format: :fecha) %> - <%= l(@tareo.fin, format: :fecha) %></small></h1>
+</div>
+
+<% @tareo.tareosgruposdetrabajos.each do |tareosgruposdetrabajo| %>
+	<h5><%= tareosgruposdetrabajo.nombre %></h5>	
+
+	<table class="table table-bordered table-condensed table-hover">
+		<tr class="well">
+			<% tareosgruposdetrabajo.tareoscolumnas.each do |tareoscolumna| %>
+				<th><%= tareoscolumna.item %></th>
+			<% end %>
+		</tr>
+
+		<% @count_column = tareosgruposdetrabajo.tareoscolumnas.count - 1 %>
+		<% @array_filas = tareosgruposdetrabajo.tareoscolumnas[0].tareosfilas.count - 1 %>
+		<% @array_rango = @count_column.to_i %>
+		<% @array_suma = Array.new(@count_column,0.00) %>
+		<% for i in 0..@array_filas  %>
+			<tr>
+				<% for j in 0..@count_column %>
+					<% @array_suma[j] = @array_suma[j].to_f + tareosgruposdetrabajo.tareoscolumnas[j].tareosfilas[i].item.to_f %>
+					<% if j > 2 %>
+						<td style="text-align: right;">
+							<%= tareosgruposdetrabajo.tareoscolumnas[j].tareosfilas[i].item.to_f == 0 ? ' -- ' : (number_to_currency tareosgruposdetrabajo.tareoscolumnas[j].tareosfilas[i].item.to_f, unit: '') %>							
+						</td>
+					<% elsif j == 0 %>
+						<td style="text-align: right;">
+							<%= tareosgruposdetrabajo.tareoscolumnas[j].tareosfilas[i].item %>					
+						</td>
+					<% else %>
+						<td><%= tareosgruposdetrabajo.tareoscolumnas[j].tareosfilas[i].item %></td>
+					<% end %>
+					
+				<% end %>			
+			</tr>
+		<% end %>
+		
+			<tr class="well">
+				<% indice = 1 %>
+				<% @array_suma.each do |array_suma| %>
+					<% if indice > 3 %>
+						<td style="text-align: right;">
+							<b>							
+							<%= array_suma.to_f == 0 ? ' -- ' : (number_to_currency array_suma, unit: '') %>
+							</b>
+						</td>
+					<% elsif indice == 2 %>
+						<td><b>Total</b></td>
+					<% else %>
+						<td></td>
+					<% end %>
+					<% indice += 1 %>
+				<% end %>
+			</tr>
+		
+	</table>
+<% end %>
+
+
+
+<div class="form-actions">	
+	<%= link_to raw('<i class="icon-arrow-left icon-white"></i> Regresar'), tareos_path, class: 'btn btn-primary' %>
+</div>
+

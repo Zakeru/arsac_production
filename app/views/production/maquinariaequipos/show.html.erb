@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Nombre:</b>
+  <%= @maquinariaequipo.nombre %>
+</p>
+
+<p>
+  <b>Reportedemaquinaria:</b>
+  <%= @maquinariaequipo.reportedemaquinaria_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_maquinariaequipo_path(@maquinariaequipo) %> |
+<%= link_to 'Back', maquinariaequipos_path %>

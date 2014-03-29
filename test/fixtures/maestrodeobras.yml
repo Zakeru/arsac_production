@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  jefedefrente_id: 1
+  ente_id: 1
+  movil: MyString
+  telefono: MyString
+  nacimiento: MyString
+  correo: MyString
+  foto: MyString
+  ruc: MyString
+  banco_1: MyString
+
+two:
+  jefedefrente_id: 1
+  ente_id: 1
+  movil: MyString
+  telefono: MyString
+  nacimiento: MyString
+  correo: MyString
+  foto: MyString
+  ruc: MyString
+  banco_1: MyString

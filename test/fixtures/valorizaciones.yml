@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  subcontrato_id: 1
+  frente_id: 1
+  fecha_1: 2013-08-27
+  fecha_2: 2013-08-27
+
+two:
+  subcontrato_id: 1
+  frente_id: 1
+  fecha_1: 2013-08-27
+  fecha_2: 2013-08-27

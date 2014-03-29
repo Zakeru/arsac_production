@@ -1,0 +1,49 @@
+<%= form_for(@trabajadore) do |f| %>
+  <% if @trabajadore.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@trabajadore.errors.count, "error") %> prohibited this trabajadore from being saved:</h2>
+
+      <ul>
+      <% @trabajadore.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :partediariodepersonal_id %><br />
+    <%= f.number_field :partediariodepersonal_id %>
+  </div>
+  <div class="field">
+    <%= f.label :catalogodetrabajadore_id %><br />
+    <%= f.number_field :catalogodetrabajadore_id %>
+  </div>
+  <div class="field">
+    <%= f.label :catalogocategoriatrabajadore_id %><br />
+    <%= f.number_field :catalogocategoriatrabajadore_id %>
+  </div>
+  <div class="field">
+    <%= f.label :partidasdecontrol_id %><br />
+    <%= f.number_field :partidasdecontrol_id %>
+  </div>
+  <div class="field">
+    <%= f.label :normal %><br />
+    <%= f.text_field :normal %>
+  </div>
+  <div class="field">
+    <%= f.label :normal_60 %><br />
+    <%= f.text_field :normal_60 %>
+  </div>
+  <div class="field">
+    <%= f.label :normal_100 %><br />
+    <%= f.text_field :normal_100 %>
+  </div>
+  <div class="field">
+    <%= f.label :total_horas %><br />
+    <%= f.text_field :total_horas %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

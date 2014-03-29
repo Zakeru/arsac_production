@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  subfase_id: 1
+  subsectore_id: 1
+
+two:
+  subfase_id: 1
+  subsectore_id: 1

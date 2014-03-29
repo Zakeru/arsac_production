@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  numero: MyString
+  parte: MyString
+  fecha: MyString
+  horometro_inicio: MyString
+  horometro_fin: MyString
+  horometro_horas: MyString
+  horas_efectivas: MyString
+  suministro: MyString
+  combustible: MyString
+  maquinariaequipo_id: 1
+
+two:
+  numero: MyString
+  parte: MyString
+  fecha: MyString
+  horometro_inicio: MyString
+  horometro_fin: MyString
+  horometro_horas: MyString
+  horas_efectivas: MyString
+  suministro: MyString
+  combustible: MyString
+  maquinariaequipo_id: 1

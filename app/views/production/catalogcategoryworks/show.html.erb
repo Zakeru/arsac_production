@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+<div class="page-header">
+	<h1>Detalle Tipo de Trabajador</h1>
+</div>
+<table class="table table-condensed table-bordered table-striped span5">
+	<tr>
+		<th>Nombre</th>
+		<th>Descripcion</th>
+	</tr>
+	<tr>
+		<td>#id</td>
+		<td><%= @catalogcategorywork.id %></td>
+	</tr>
+	<tr>
+		<td>Tipo</td>
+		<td><%= @catalogcategorywork.nombre %></td>
+	</tr>
+	<tr>
+		<td>Fecha Creacion</td>
+		<td><%= @catalogcategorywork.created_at.strftime("%d %b. %Y") %></td>
+	</tr>
+</table>
+<div class="clearfix"></div>
+
+<div class="form-actions">
+	<%= link_to raw('<i class="icon-edit icon-white"></i> Editar'), edit_production_catalogcategorywork_path(@catalogcategorywork), :class => "btn btn-success" %>
+	<%= link_to raw('<i class="icon-arrow-left icon-white"></i> Regresar'), production_catalogcategoryworks_path, :class => "btn btn-primary" %>	
+</div>
+

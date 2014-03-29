@@ -1,0 +1,71 @@
+<% 
+      15.times { @partwork.items.build }
+ %>
+
+  <%= form_for([:production,@partwork], :html => {:class => 'form-horizontal'}) do |f| %>
+
+  <!-- Seccion Errores -->
+    <% if @partwork.errors.any? %>
+      <div class="well">
+        <h4><%= pluralize(@partwork.errors.count, "Errores") %> cometidos</h4>
+        <ol>
+          <% @partwork.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ol>
+        </div>
+    <% end %>
+    
+  
+  <!-- Formulario parte obras Principal -->
+  <div class="well">
+    <div>
+    <% if params[:action] == 'new' %>
+      <%= f.text_field :numero, :placeholder => "001", value: @partwork_numero.to_s.rjust(4, '0'), :class => "span1" %>
+    <% else %>
+      <%= f.text_field :numero, :placeholder => "001", :class => "span1" %>
+    <% end %>
+      <%= f.select :groupsofwork_id, Groupsofwork.where("activo = ?", 'Si').collect {|x| [ "#{x.id} - #{x.chiefoffront.entity.nombre} #{x.chiefoffront.entity.apellido} #{x.chiefoffront.entity.razon_social} - #{x.subcontract.supplier.entity.nombre} #{x.subcontract.supplier.entity.apellido} #{x.subcontract.supplier.entity.razon_social} - #{x.teacherofwork.entity.nombre} #{x.teacherofwork.entity.apellido} #{x.teacherofwork.entity.razon_social}", x.id]}, {:include_blank => 'SECTOR - SUBSECTOR - JEFEDEFRENTE - EJECUTOR - MAESTRODEOBRA'}, {:style => 'font-size: 11px;', :class => "span7"}%>
+      <%= f.select :front_id, Front.all.collect{|x| [x.nombre, x.id]}, include_blank: 'Seleccione' %>             
+      <%= f.text_field :fecha, :class => "input-small", :placeholder => '2013-09-11' %>      
+    </div>
+  </div>
+  <!-- End Formulario Principal -->    
+
+
+  <div class="row">
+    <div class="span6">
+      <h3>Registro de <%= link_to "Partidas", production_partworks_path %> <%= image_tag('glyphicons_409_sort-by-attributes-alt.png', height: '20', width: '20') %></h3>  
+    </div>
+    <div class="span6">
+      <br>
+      <%= f.submit :class => 'btn pull-right' %>       
+    </div>
+  </div>
+
+  
+  <% i = 1 %>  
+    <%= f.fields_for :items do |fp| %> 
+      <div class="controls-row" style="display: inline;">
+        <%= fp.grouped_collection_select(:list_id, Listcategory.all, :lists, :nombre, :id, :nombre, { :include_blank => "#{"%02d" % i}.- Seleccione Partida"}, {:class => "span4"}) %>
+        <%= fp.select :unit_id, Unit.all.collect { |x| [x.nombre, x.id] }, {:include_blank => 'unidad'}, { :class => 'span2' } %>
+        <%= fp.text_field :metrado, :class => "span2", :placeholder => "Metrado" %>
+        <%= fp.text_field :observacion, :class => "span4", :placeholder => "Observacion" %>
+        <% i += 1 %>
+      </div>
+    <% end %>
+
+    <br>
+  <%= f.submit :class => 'btn' %> 
+         
+
+
+<% end %>
+
+<script type="text/javascript">
+  $('#partwork_fecha').datepicker({
+      format: 'yyyy-mm-dd',
+      language: 'es',
+      autoclose: true      
+  });
+</script>

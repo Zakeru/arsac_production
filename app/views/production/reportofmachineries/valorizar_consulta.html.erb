@@ -1,0 +1,595 @@
+<div class="page-header">
+  <h1>Valorizaciones <%= image_tag('glyphicons_323_calculator.png') %> <small><%= link_to "Equipos", production_reportofmachineries_path %>  </small> </h1>
+</div>
+
+<div class="row">
+  <div class="span12">
+  	<%= form_tag 'valorizar_consulta', method: 'post', class: 'form-inline well' do  %>
+      <%= select_tag :subcontratodeequipos_id, options_for_select(@proveedores_array, @subcontratodeequipos_id.present? ? @subcontratodeequipos_id : ''), prompt: 'Seleccione', class: 'span5' %>
+      <%= text_field_tag :inicio, nil, class: 'input-small', placeholder: '2013-10-28', value: !@inicio.nil? ? "#{@inicio}" : '' %>
+      <%= text_field_tag :fin, nil, class: 'input-small', placeholder: '2013-10-29', value: !@fin.nil? ? "#{@fin}" : '' %>		
+  		<%= button_tag type: 'submit', class: 'btn btn-primary' do %>
+  			<i class="icon-search icon-white"></i> Valorizar
+  		<% end %>
+  	<% end %>
+  </div>
+</div>
+<div class="clearfix"></div>
+<script type="text/javascript">
+  $('#inicio').datepicker({
+      format: 'yyyy-mm-dd',
+      language: 'es',
+      autoclose: true
+  });
+    $('#fin').datepicker({
+      format: 'yyyy-mm-dd',
+      language: 'es',
+      autoclose: true
+  });
+</script>
+
+<% if @pase == 0 %>
+  <h3>Esperando Datos..</h3>
+<% elsif @pase == 1 %>
+  <% ultima_valorizacion = Reportofmachinery.where('subcontractofequipment_id = ?',@subcontratodeequipo.id).order('id desc') %>   
+    <% if ultima_valorizacion.count != 0 %>
+      <% @numero_de_valoriacion = ultima_valorizacion[0].numero_de_valoriacion.to_i + 1 %>
+  <% else %>
+      <% @numero_de_valoriacion = 1 %>
+  <% end %>
+  
+  <%= form_tag('valorizar_consulta',{:method => :post, :style => 'margin: 0; padding: 0; display:inline;'}) do %>
+    <%= hidden_field_tag :subcontratodeequipos_id, @subcontratodeequipos_id %>
+    <%= hidden_field_tag :inicio, @inicio %>
+    <%= hidden_field_tag :fin, @fin %>
+    <div class="row">
+    <div class="span12">
+
+    <table class="table table-bordered table-condensed table-hover">
+      <tr class="well">
+        <td colspan="4">
+          <h3 style="text-align: center;"><%= @nombre_proveedor %> (Val. <%= @numero_de_valoriacion.to_s.rjust(3, '0') %>) <small> <%= l(@inicio.to_date, format: :fecha) %> - <%= l(@fin.to_date, format: :fecha) %></small></h3>
+        </td>
+      </tr>
+      <tr>
+        <th style="text-align: center;">Monto Contratado</th>
+        <th style="text-align: center;">Adelanto</th>
+        <th style="text-align: center;">Amortizacion Acumulada</th>
+        <th style="text-align: center;">Saldo</th>
+      </tr>
+      <tr>
+        <td style="text-align: center;">          
+          <b>
+            <%= @subcontratodeequipo.monto_contratado_suma.to_f == 0 ? '-' : (number_to_currency @subcontratodeequipo.monto_contratado_suma, unit: 'S/. ') %>            
+          </b>
+        </td>
+        <% @adelanto_sumariza = @subcontratodeequipo.adelanto_1_numero.to_f + @subcontratodeequipo.adelanto_2_numero.to_f + @subcontratodeequipo.adelanto_3_numero.to_f + @subcontratodeequipo.adelanto_4_numero.to_f %>
+        <td style="text-align: center;">
+          <b>
+            <%= @adelanto_sumariza.to_f == 0 ? '-' : (number_to_currency @adelanto_sumariza, unit: 'S/. ') %>            
+          </b>
+        </td>
+        <!-- 1.00 -->
+        <% @valorizacion_cantidad = @valorizacion_matriz[0][0].to_f %>
+        <% @valorizacion_acumulado_anterior = @valoriza_acumulado_anterior.to_f %>
+        <% @valorizacion_acumulado_actual = @valorizacion_cantidad + @valorizacion_acumulado_anterior %>
+        <% @valorizacion_combustible_precio = @valorizacion_matriz[0][3].to_f %>
+
+        <!-- 2.00 -->
+
+        <% if !params[:f_amortizacion_inicial_porcentaje].nil? %>
+            <% @amortizacion_inicial_porcentaje = params[:f_amortizacion_inicial_porcentaje].to_f %>
+          <% else %>
+            <% @amortizacion_inicial_porcentaje = @subcontratodeequipo.amortizacion_inicial_porcentaje.to_f %>
+        <% end %>
+
+        <% if !params[:f_amortizacion_inicial_cantidad].nil? %>
+            <% @amortizacion_adelanto_cantidad = params[:f_amortizacion_inicial_cantidad].to_f %>
+          <% else %>
+            <% @amortizacion_adelanto_cantidad = @subcontratodeequipo.amortizacion_inicial_numero.to_f %>
+        <% end %>
+
+        <td style="text-align: center;">
+          <b>
+            <%= @amortizacion_adelanto_cantidad.to_f == 0 ? '-' : (number_to_currency @amortizacion_adelanto_cantidad, unit: 'S/. ') %>            
+          </b>
+        </td>
+        <% @saldo_por_amortizar = @adelanto_sumariza - @amortizacion_adelanto_cantidad %>
+        <td style="text-align: center;">
+          <b>
+            <%= @saldo_por_amortizar.to_f == 0 ? '-' : (number_to_currency @saldo_por_amortizar, unit: 'S/. ') %>            
+          </b>
+        </td>
+      </tr>
+    </table>
+
+    </div>
+
+    <div class="span12">
+    <table class="table table-bordered table-condensed table-hover">
+      
+      <tr class="well">
+        <th>ITEM</th>
+        <th>Descripcion</th>
+        <th style="text-align: right;">%</th>        
+        <th style="text-align: right;">Actual</th>
+        <th style="text-align: right;">Acumulado Anterior</th>
+        <th style="text-align: right;">Acumulado Actual</th>
+      </tr>
+
+
+      <!-- 1.00 Valorizacion sin I.G.V. -->
+
+      
+      <tr>
+        <td>1.00</td>
+        <td>
+          Valorizacion sin IGV           
+        </td>
+        <td style="text-align: right;">
+          <%= link_to raw("<i class='icon-th-list'></i>"), "/production/reportofmachineries/resumen_subcontratista?subcontratodeequipo_id=#{@subcontratodeequipos_id}&inicio=#{@inicio}&fin=#{@fin}", class: 'btn btn-mini', target: 'blank' %>
+        </td>
+        <td style="text-align: right;">
+          <span class="label label-info">
+            <%= hidden_field_tag 'actual_valorizacion_actual', "#{@valorizacion_cantidad}" %>
+            <%= @valorizacion_cantidad == 0 ? '-' : (number_to_currency @valorizacion_cantidad, unit: '') %>            
+          </span>
+        </td>
+        <td style="text-align: right;">  
+            <%= @valorizacion_acumulado_anterior == 0 ? '-' : (number_to_currency @valorizacion_acumulado_anterior, unit: '') %>
+        </td>
+        <td style="text-align: right;">          
+            <%= @valorizacion_acumulado_actual == 0 ? '-' : (number_to_currency @valorizacion_acumulado_actual, unit: '') %>
+        </td>
+      </tr>
+
+
+
+      <!-- 2.00 Amortizacion inicial -->
+      <tr>
+        <td>2.00</td>
+        <td>Amortizacion de Adelanto (SIN. I.G.V)</td>
+        <td style="text-align: right;">
+          <%= text_field_tag :f_amortizacion_inicial_porcentaje, nil, :value => @amortizacion_inicial_porcentaje, :style => 'width:50px; margin: 0; padding: 0; text-align:right;' %> %
+        </td>
+        <td style="text-align: right;">
+          <%= text_field_tag :f_amortizacion_inicial_cantidad, nil, :value => @amortizacion_adelanto_cantidad, :style => 'width:80px; margin: 0; padding: 0; text-align:right;' %>          
+        </td>
+        <% @amortizacion_adelanto_acumulado_anterior = @amortizacion_adelanto_acumulado_anterior %>
+        <td style="text-align: right;">          
+            <%= @amortizacion_adelanto_acumulado_anterior == 0 ? '-' : (number_to_currency @amortizacion_adelanto_acumulado_anterior, unit: '') %>                    
+        </td>
+        <% @amortizacion_adelanto_acumulado_actual = @amortizacion_adelanto_cantidad.to_f + @amortizacion_adelanto_anterior.to_f %>
+        <td style="text-align: right;">   
+            <%= @amortizacion_adelanto_acumulado_actual == 0 ? '-' : (number_to_currency @amortizacion_adelanto_acumulado_actual, unit: '') %>
+        </td>        
+      </tr>
+
+
+
+      <!-- 3.00 Total a Facturar -->
+      <tr>
+        <td>3.00</td>
+        <td>Total a Facturar (Val-Amort)</td>
+        <td></td>
+        <% @total_a_facturar_cantidad = @valorizacion_cantidad - @amortizacion_adelanto_cantidad %>
+        <td style="text-align: right;">
+          <div class="label label-info">
+            <%= @total_a_facturar_cantidad == 0 ? '-' : (number_to_currency @total_a_facturar_cantidad, unit: '') %>            
+          </div>
+        </td>
+        <td style="text-align: right;">  
+            <%= @total_a_facturar_acumulado_anterior.to_f == 0 ? '-' : (number_to_currency @total_a_facturar_acumulado_anterior, unit: '') %>                            
+        </td>
+        <% @total_acumulado_actual = @total_a_facturar_cantidad + @total_a_facturar_acumulado_anterior.to_f %>
+        <td style="text-align: right;">
+            <%= @total_acumulado_actual == 0 ? '-' : (number_to_currency @total_acumulado_actual, unit: '') %>                      
+        </td>
+      </tr>
+
+
+      <!-- 4.00 I.G.V Total a Facturar  -->
+      <% @igv_del_total_facturar_porcentaje =  @subcontratodeequipo.igv %>
+
+
+      <tr>
+        <td>4.00</td>
+        <td>I.G.V del Total a Facturar</td>
+        <td style="text-align: right;">          
+            <%= number_to_currency @igv_del_total_facturar_porcentaje, unit: '% ' %>           
+        </td>
+        <% @igv_total_facturar_cantidad = (@igv_del_total_facturar_porcentaje.to_f/100)*@total_a_facturar_cantidad  %>
+        <td style="text-align: right;">
+          <span class="label label-info">
+            <%= @igv_total_facturar_cantidad.to_f == 0 ? '-' : (number_to_currency @igv_total_facturar_cantidad, unit: '') %>            
+          </span>
+        </td>
+        <td style="text-align: right;">      
+            <%= @igv_total_facturar_acumulado_anterior.to_f == 0 ? '-' : (number_to_currency @igv_total_facturar_acumulado_anterior, unit: '') %>                         
+        </td>
+        <% @igv_total_facturar_acumulado_actual = @igv_total_facturar_cantidad + @igv_total_facturar_acumulado_anterior.to_f %>
+        <td style="text-align: right;">
+            <%= @igv_total_facturar_acumulado_actual.to_f == 0 ? '-' : (number_to_currency @igv_total_facturar_acumulado_actual, unit: '') %>                    
+        </td>
+      </tr>
+
+
+      <!-- Total Incluido I.G.V. -->
+      <tr class="well">
+        <td></td>
+        <td><b>TOTAL (INCLUIDO I.G.V.)</b></td>
+        <td></td>
+        <% @total_incluido_igv_cantidad = @total_a_facturar_cantidad + @igv_total_facturar_cantidad %>
+        <td style="text-align: right;">
+          <span class="label label-info">
+            <%= @total_incluido_igv_cantidad.to_f == 0 ? '-' : (number_to_currency @total_incluido_igv_cantidad, unit: '') %>            
+          </span>
+        </td>
+        <td style="text-align: right;">          
+          <b><%= @total_igv_acumulado_anterior.to_f == 0 ? '-' : (number_to_currency @total_igv_acumulado_anterior, unit: '') %></b>          
+        </td>          
+        <% @total_igv_acumulado_actual = @total_incluido_igv_cantidad + @total_igv_acumulado_anterior.to_f %>
+        <td style="text-align: right;">          
+            <b><%= @total_igv_acumulado_actual.to_f == 0 ? '-' : (number_to_currency @total_igv_acumulado_actual, unit: '') %></b>           
+        </td>
+      </tr>
+
+
+      <!-- 5.00 Retenciones -->
+      <tr>
+        <td>5.00</td>
+        <td>Retenciones</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+
+      <!-- 5.01 Detraccion del total incluido I.G.V. -->
+      <% if params[:cheked_count_detraccion].nil? %>
+        <% @cheked_count_detraccion = 1 %>      
+      <% else %>                                        
+        <% if !params[:checkbox_detraccion].nil? %>                  
+          <% @cheked_count_detraccion = 1 %>                    
+        <% else %>                  
+          <% @cheked_count_detraccion = 0 %>
+        <% end %>
+      <% end %>
+
+      <% if @subcontratodeequipo.detraccion_porcentaje.blank? or @cheked_count_detraccion == 0 %>
+        <% @detraccion_del_total_porcentaje = 0 %>
+        <% @detraccion_del_total_cantidad = 0.00 %>
+      <% else %>
+        <% @detraccion_del_total_porcentaje =  @subcontratodeequipo.detraccion_porcentaje %> 
+        <% @detraccion_del_total_cantidad = (@detraccion_del_total_porcentaje.to_f/100)*@total_incluido_igv_cantidad %>
+      <% end %>
+      <tr>
+        <td>5.01</td>
+        <td>
+          <label class="checkbox" style="margin: 0; ">
+            <%= hidden_field_tag 'cheked_count_detraccion', "#{@cheked_count_detraccion}" %>
+            <%= check_box_tag 'checkbox_detraccion', 'activo', @cheked_count_detraccion == 1 ? true : false  %>
+            Detraccion del Total (INCL. I.G.V)
+          </label>
+        </td>
+        <td style="text-align: right;">
+            
+            <%= number_to_currency @detraccion_del_total_porcentaje, unit: '% ' %>          
+        </td>
+        <td style="text-align: right;">
+          <span class="label label-info">
+            <%= @detraccion_del_total_cantidad.to_f == 0 ? '-' : (number_to_currency @detraccion_del_total_cantidad, unit: '') %>
+            
+          </span>
+        </td>
+        <td style="text-align: right;">       
+            <%= @detraccion_del_total_acumulado_anterior.to_f == 0 ? '-' : (number_to_currency @detraccion_del_total_acumulado_anterior, unit: '') %>   
+                     
+        </td>
+        <% @detraccion_del_total_acumulado_actual = @detraccion_del_total_cantidad + @detraccion_del_total_acumulado_anterior.to_f %>
+        <td style="text-align: right;">  
+            <%= @detraccion_del_total_acumulado_actual.to_f == 0 ? '-' : (number_to_currency @detraccion_del_total_acumulado_actual, unit: '') %>                            
+        </td>
+      </tr>
+
+
+      <!-- 5.02 Descuento Combustible incuido I.G.V -->
+      <% if params[:cheked_count_descuento_combustible].nil? %>
+        <% @cheked_count_descuento_combustible = 1 %>      
+      <% else %>                                        
+        <% if !params[:checkbox_descuento_combustible].nil? %>                  
+          <% @cheked_count_descuento_combustible = 1 %>                    
+        <% else %>                  
+          <% @cheked_count_descuento_combustible = 0 %>
+        <% end %>
+      <% end %>
+
+      <% if @valorizacion_combustible_precio.blank? or @cheked_count_descuento_combustible == 0 %>
+        <% @valorizacion_combustible_precio = 0 %>        
+      <% else %>
+        <% @valorizacion_combustible_precio =  @valorizacion_combustible_precio %>        
+      <% end %>
+      <tr>
+        <td>5.02</td>
+        <td>
+          <label class="checkbox" style="margin: 0; ">
+            <%= hidden_field_tag 'cheked_count_descuento_combustible', "#{@cheked_count_descuento_combustible}" %>
+            <%= check_box_tag 'checkbox_descuento_combustible', 'activo', @cheked_count_descuento_combustible == 1 ? true : false  %>
+            Descuento Combustible (Incl. IGV)
+          </label>
+        </td>
+        <td></td>
+        <td style="text-align: right;">
+          <span class="label label-info">
+            <%= @valorizacion_combustible_precio.to_f == 0 ? '-' : (number_to_currency @valorizacion_combustible_precio, unit: '') %>            
+          </span>
+        </td>
+        <td style="text-align: right;">       
+          <%= @descuento_combustible_acumulado_anterior.to_f == 0 ? '-' : (number_to_currency @descuento_combustible_acumulado_anterior, unit: '') %>
+        </td>
+        <% @descuento_combustible_acumulado_actual = @valorizacion_combustible_precio + @descuento_combustible_acumulado_anterior.to_f %>
+        <td style="text-align: right;">  
+            <%= @descuento_combustible_acumulado_actual.to_f == 0 ? '-' : (number_to_currency @descuento_combustible_acumulado_actual, unit: '') %>
+        </td>
+      </tr>
+
+      <!-- 5.03 Descuentos Otros -->
+      <% if params[:cheked_count_otros].nil? %>
+        <% @cheked_count_otros = 1 %>      
+      <% else %>                                        
+        <% if !params[:checkbox_otros].nil? %>                  
+          <% @cheked_count_otros = 1 %>                    
+        <% else %>                  
+          <% @cheked_count_otros = 0 %>
+        <% end %>
+      <% end %>
+
+      <% if @cheked_count_otros == 0 %>
+        <% @descuento_otros_cantidad =  0.00 %>        
+      <% else %>
+          <% if !params[:f_descuento_otros_cantidad].nil? %>
+            <% @descuento_otros_cantidad = params[:f_descuento_otros_cantidad].to_f %>
+          <% else %>
+            <% @descuento_otros_cantidad =  0.00 %>
+          <% end %>
+      <% end %>
+      
+      <tr>
+        <td>5.03</td>
+        <td>
+          <label class="checkbox" style="margin: 0; ">
+            <%= hidden_field_tag 'cheked_count_otros', "#{@cheked_count_otros}" %>
+            <%= check_box_tag 'checkbox_otros', 'activo', @cheked_count_otros == 1 ? true : false  %>
+            Descuento Otros (Incl. I.G.V.)
+          </label>
+        </td>
+        <td></td>        
+        <td style="text-align: right;">
+          <%= text_field_tag :f_descuento_otros_cantidad, nil, :value => (number_to_currency @descuento_otros_cantidad, unit: ''), :style => 'width:60px; margin: 0; padding: 0; text-align:right;' %>
+        </td>
+        <td style="text-align: right;">     
+            <%= @descuento_otros_acumulado_anterior.to_f == 0 ? '-' : (number_to_currency @descuento_otros_acumulado_anterior, unit: '') %>            
+        </td>
+        <% @descuento_otros_acumulado_actual = @descuento_otros_cantidad.to_f + @descuento_otros_acumulado_anterior.to_f %>
+        <td style="text-align: right;">
+            <%= @descuento_otros_acumulado_actual.to_f == 0 ? '-' : (number_to_currency @descuento_otros_acumulado_actual, unit: '') %>
+        </td>
+      </tr>
+
+      
+      <tr>
+        <td></td>
+        <td>TOTAL RETENCIONES</td>
+        <td></td>
+        <% @total_retenciones_actual = @detraccion_del_total_cantidad + @valorizacion_combustible_precio + @descuento_otros_cantidad %>
+        <td style="text-align: right;">
+          <span class="label label-info">
+            <%= @total_retenciones_actual.to_f == 0 ? '-' : (number_to_currency @total_retenciones_actual, unit: '') %>            
+          </span>
+        </td>
+        <% @total_retenciones_acumulado_anterior = @detraccion_del_total_acumulado_anterior.to_f + @descuento_combustible_acumulado_anterior.to_f + @descuento_otros_acumulado_anterior.to_f %>
+        <td style="text-align: right;">          
+            <%= @total_retenciones_acumulado_anterior.to_f == 0 ? '-' : (number_to_currency @total_retenciones_acumulado_anterior, unit: '') %>            
+        </td>
+        <% @total_retenciones_acumulado_actual = @detraccion_del_total_acumulado_actual + @descuento_combustible_acumulado_actual + @descuento_otros_acumulado_actual %>
+        <td style="text-align: right;"> 
+            <%= @total_retenciones_acumulado_actual.to_f == 0 ? '-' : (number_to_currency @total_retenciones_acumulado_actual, unit: '') %>
+        </td>
+      </tr>
+
+
+      <tr class="well">
+        <td><b>6.00</b></td>
+        <td>
+          <b>NETO A PAGAR: </b>
+          TOTAL (INCL. IG.V.) - TOTAL RETEN.
+          
+        </td>
+        <td></td>
+        <% @neto_pagar_cantidad = @total_incluido_igv_cantidad - @total_retenciones_actual  %>
+        <td style="text-align: right;">
+          <span class="label label-info">
+          <b>
+            <%= @neto_pagar_cantidad.to_f == 0 ? '-' : (number_to_currency @neto_pagar_cantidad, unit: 'S/. ') %>            
+          </b>
+          </span>
+        </td>
+        <td style="text-align: right;">
+          <b>
+            <%= @neto_pagar_acumulado_anterior.to_f == 0 ? '-' : (number_to_currency @neto_pagar_acumulado_anterior, unit: 'S/. ') %>
+          </b>
+        </td>
+        <% @neto_pagar_acumulado_actual = @total_igv_acumulado_actual - @total_retenciones_acumulado_actual %>
+        <td style="text-align: right;">
+          <b>
+            <%= @neto_pagar_acumulado_actual.to_f == 0 ? '-' : (number_to_currency @neto_pagar_acumulado_actual, unit: 'S/. ') %>
+          </b>
+        </td>
+      </tr>
+    </table>
+    </div>
+    </div>  
+
+    <%= button_tag(type: "submit", class: "btn btn-warning") do %>
+        <i class="icon-pencil icon-white"></i> Recalcular
+    <% end %>
+
+  <% end %>
+    
+
+  <%= form_tag('valorizar_consulta_guardar',{method: :post, :style => 'margin: 0; padding: 0; display:inline;'}) do %>
+    <%= hidden_field_tag 'reportofmachinery[nombre_subcontrato]', nil, value: "#{@nombre_proveedor}" %>
+    <%= hidden_field_tag 'reportofmachinery[subcontractofequipment_id]', nil, value: "#{@subcontratodeequipo_id}" %>    
+    <%= hidden_field_tag 'reportofmachinery[numero_de_valoriacion]', nil, value: "#{@numero_de_valoriacion}" %>
+
+    <%= hidden_field_tag 'reportofmachinery[monto_contratado]', nil, value: "#{@subcontratodeequipo.monto_contratado_suma.to_f}" %>
+    <%= hidden_field_tag 'reportofmachinery[adelanto]', nil, value: "#{@adelanto_sumariza}" %>
+    <%= hidden_field_tag 'reportofmachinery[amortizacion_acumulada]', nil, value: "#{@amortizacion_adelanto_cantidad}" %>
+    <%= hidden_field_tag 'reportofmachinery[saldo]', nil, value: "#{@saldo_por_amortizar}" %>
+
+    <%= hidden_field_tag 'reportofmachinery[inicio]', nil, value: "#{@inicio}" %>
+    <%= hidden_field_tag 'reportofmachinery[fin]', nil, value: "#{@fin}" %>    
+    <%= hidden_field_tag 'reportofmachinery[valorizacion_cantidad]', nil, value: "#{@valorizacion_cantidad}" %>
+    <%= hidden_field_tag 'reportofmachinery[aprobado]', nil, value: "no" %>
+    <%= hidden_field_tag 'reportofmachinery[valorizacion_acumulado_anterior]', nil, value: "#{@valorizacion_acumulado_anterior}" %>
+    <%= hidden_field_tag 'reportofmachinery[valorizacion_acumulado_actual]', nil, value: "#{@valorizacion_acumulado_actual}" %>
+    <%= hidden_field_tag 'reportofmachinery[amortizacion_adelanto_porcentaje]', nil, value: "#{@amortizacion_inicial_porcentaje}" %>
+    <%= hidden_field_tag 'reportofmachinery[amortizacion_adelanto_cantidad]', nil, value: "#{@amortizacion_adelanto_cantidad}" %>
+    <%= hidden_field_tag 'reportofmachinery[amortizacion_adelanto_acumulado_anterior]', nil, value: "#{@amortizacion_adelanto_acumulado_anterior}" %>
+    <%= hidden_field_tag 'reportofmachinery[amortizacion_adelanto_acumulado_actual]', nil, value: "#{@amortizacion_adelanto_acumulado_actual}" %>
+    <%= hidden_field_tag 'reportofmachinery[total_facturar_cantidad]', nil, value: "#{@total_a_facturar_cantidad}" %>
+    <%= hidden_field_tag 'reportofmachinery[total_facturar_acumulado_anterior]', nil, value: "#{@total_a_facturar_acumulado_anterior}" %>
+    <%= hidden_field_tag 'reportofmachinery[total_facturar_acumulado_actual]', nil, value: "#{@total_acumulado_actual}" %>
+    <%= hidden_field_tag 'reportofmachinery[igv_total_facturar_porcentaje]', nil, value: "#{@igv_del_total_facturar_porcentaje}" %>
+    <%= hidden_field_tag 'reportofmachinery[igv_total_facturar_cantidad]', nil, value: "#{@igv_total_facturar_cantidad}" %>
+    <%= hidden_field_tag 'reportofmachinery[igv_total_facturar_acumulado_anterior]', nil, value: "#{@igv_total_facturar_acumulado_anterior}" %>
+    <%= hidden_field_tag 'reportofmachinery[igv_total_facturar_acumulado_actual]', nil, value: "#{@igv_total_facturar_acumulado_actual}" %>
+    <%= hidden_field_tag 'reportofmachinery[total_incluido_igv_cantidad]', nil, value: "#{@total_incluido_igv_cantidad}" %>
+    <%= hidden_field_tag 'reportofmachinery[total_incluido_igv_acumulado_anterior]', nil, value: "#{@total_igv_acumulado_anterior}" %>
+    <%= hidden_field_tag 'reportofmachinery[total_incluido_igv_acumulado_actual]', nil, value: "#{@total_igv_acumulado_actual}" %>
+    <%= hidden_field_tag 'reportofmachinery[detraccion_total_porcentaje]', nil, value: "#{@detraccion_del_total_porcentaje}" %>
+    <%= hidden_field_tag 'reportofmachinery[detraccion_total_cantidad]', nil, value: "#{@detraccion_del_total_cantidad}" %>
+    <%= hidden_field_tag 'reportofmachinery[detraccion_total_acumulado_anterior]', nil, value: "#{@detraccion_del_total_acumulado_anterior}" %>
+    <%= hidden_field_tag 'reportofmachinery[detraccion_total_acumulado_actual]', nil, value: "#{@detraccion_del_total_acumulado_actual}" %>
+    <%= hidden_field_tag 'reportofmachinery[descuento_combustible_cantidad]', nil, value: "#{@valorizacion_combustible_precio}" %>
+    <%= hidden_field_tag 'reportofmachinery[descuento_combustible_acumulado_anterior]', nil, value: "#{@descuento_combustible_acumulado_anterior}" %>
+    <%= hidden_field_tag 'reportofmachinery[descuento_combustible_acumulado_actual]', nil, value: "#{@descuento_combustible_acumulado_actual}" %>
+    <%= hidden_field_tag 'reportofmachinery[descuento_otros_cantidad]', nil, value: "#{@descuento_otros_cantidad}" %>
+    <%= hidden_field_tag 'reportofmachinery[descuento_otros_acumulado_anterior]', nil, value: "#{@descuento_otros_acumulado_anterior}" %>
+    <%= hidden_field_tag 'reportofmachinery[descuento_otros_acumulado_actual]', nil, value: "#{@descuento_otros_acumulado_actual}" %>
+    <%= hidden_field_tag 'reportofmachinery[total_retenciones_cantidad]', nil, value: "#{@total_retenciones_actual}" %>
+    <%= hidden_field_tag 'reportofmachinery[total_retenciones_acumulado_anterior]', nil, value: "#{@total_retenciones_acumulado_anterior}" %>
+    <%= hidden_field_tag 'reportofmachinery[total_retenciones_acumulado_actual]', nil, value: "#{@total_retenciones_acumulado_actual}" %>
+    <%= hidden_field_tag 'reportofmachinery[neto_pagar_cantidad]', nil, value: "#{@neto_pagar_cantidad}" %>
+    <%= hidden_field_tag 'reportofmachinery[neto_pagar_acumulado_anterior]', nil, value: "#{@neto_pagar_acumulado_anterior}" %>
+    <%= hidden_field_tag 'reportofmachinery[neto_pagar_acumulado_actual]', nil, value: "#{@neto_pagar_acumulado_actual}" %>
+
+    <!--    [0]                     1,2,3,4....                                                                         -->
+    <!--    [1]                     1.- MIN-4 MINI CARGADOR FRONTAL S/LLANTA 80-90HP                                    -->
+    <!--    [2]                     hm                                                                                  -->
+    <!--    [3]                     precio_unitario                                                                     -->
+    <!--    [4]                     acumulado_anterior_metrado                                                          -->
+    <!--    [5]                     acumulado_anterior_monto                                                            -->
+    <!--    [6]                     presente_valorizacion_metrado                                                       -->
+    <!--    [7]                     presente_valorizacion_monto                                                         -->
+    <!--    [8]                     acumulado_actual_metrado                                                            -->
+    <!--    [9]                     acumulado_actual_monto                                                              -->
+    <% r = 0 %>
+    <% @equiposdesubcontratos_seleccionados.last[0].each do |resumen| %>
+      <%= hidden_field_tag "reportedemaquinaria[machineryequipmentabstracts_attributes][#{r}][equipmentsofsubcontract_id]", nil, value: "#{resumen[0]}" %>      
+      <%= hidden_field_tag "reportedemaquinaria[machineryequipmentabstracts_attributes][#{r}][nombre_equipo]", nil, value: "#{resumen[1]}" %>      
+      <%= hidden_field_tag "reportedemaquinaria[machineryequipmentabstracts_attributes][#{r}][unidad]", nil, value: "#{resumen[2]}" %>      
+      <%= hidden_field_tag "reportedemaquinaria[machineryequipmentabstracts_attributes][#{r}][precio_unitario]", nil, value: "#{resumen[3]}" %>      
+      <%= hidden_field_tag "reportedemaquinaria[machineryequipmentabstracts_attributes][#{r}][acumulado_anterior_metrado]", nil, value: "#{resumen[4]}" %>      
+      <%= hidden_field_tag "reportedemaquinaria[machineryequipmentabstracts_attributes][#{r}][acumulado_anterior_monto]", nil, value: "#{resumen[5]}" %>      
+      <%= hidden_field_tag "reportedemaquinaria[machineryequipmentabstracts_attributes][#{r}][presente_valorizacion_metrado]", nil, value: "#{resumen[6]}" %>
+      <%= hidden_field_tag "reportedemaquinaria[machineryequipmentabstracts_attributes][#{r}][presente_valorizacion_monto]", nil, value: "#{resumen[7]}" %>
+      <%= hidden_field_tag "reportedemaquinaria[machineryequipmentabstracts_attributes][#{r}][acumulado_actual_metrado]", nil, value: "#{resumen[8]}" %>      
+      <%= hidden_field_tag "reportedemaquinaria[machineryequipmentabstracts_attributes][#{r}][acumulado_actual_monto]", nil, value: "#{resumen[9]}" %>
+      <%= hidden_field_tag "reportedemaquinaria[machineryequipmentabstracts_attributes][#{r}][inicio]", nil, value: "#{@inicio}" %>  
+      <%= hidden_field_tag "reportedemaquinaria[machineryequipmentabstracts_attributes][#{r}][fin]", nil, value: "#{@fin}" %>         
+      <% r += 1 %>
+    <% end %>
+
+    <% i = 0 %>
+    <% @equiposdesubcontratos_seleccionados.take(@equiposdesubcontratos_seleccionados.count.to_i - 1).each do |equipo| %>      
+      <% k = 0 %>
+      <% equipo[1][0][4].each do |fila| %>
+        <% if fila[3].blank? %>
+          <% parte = '-' %>
+        <% else %>
+          <% parte = fila[3] %>
+        <% end %>
+        <%= hidden_field_tag "reportedemaquinaria[machineryequipmentabstracts_attributes][#{i}][maquinariaequipodetalles_attributes][#{k}][parte]", nil, value: "#{parte}" %>
+        <%= hidden_field_tag "reportedemaquinaria[machineryequipmentabstracts_attributes][#{i}][maquinariaequipodetalles_attributes][#{k}][fecha]", nil, value: "#{fila[0]}" %>
+        <% if fila[1].blank? %>
+          <% horometro_inicio = '-' %>
+        <% else %>
+          <% horometro_inicio = format('%.2f',fila[1].to_f) %>
+        <% end %>
+        <%= hidden_field_tag "reportedemaquinaria[machineryequipmentabstracts_attributes][#{i}][maquinariaequipodetalles_attributes][#{k}][horometro_inicio]", nil, value: "#{horometro_inicio}" %>
+        <% if fila[2].blank? %>
+          <% horometro_fin = '-' %>
+        <% else %>
+          <% horometro_fin = format('%.2f',fila[2].to_f) %>
+        <% end %>
+        <%= hidden_field_tag "reportedemaquinaria[machineryequipmentabstracts_attributes][#{i}][maquinariaequipodetalles_attributes][#{k}][horometro_fin]", nil, value: "#{horometro_fin}" %>
+        <% if fila[4].blank? %>
+          <% horometro_horas = '-' %>
+        <% else %>
+          <% horometro_horas = format('%.2f',fila[4].to_f) %>
+        <% end %>
+        <%= hidden_field_tag "reportedemaquinaria[machineryequipmentabstracts_attributes][#{i}][maquinariaequipodetalles_attributes][#{k}][horometro_horas]", nil, value: "#{horometro_horas}" %>
+        <% if fila[5].blank? %>
+          <% horas_efectivas = '-' %>
+        <% else %>
+          <% horas_efectivas = format('%.2f',fila[5].to_f) %>
+        <% end %>
+        <%= hidden_field_tag "reportedemaquinaria[machineryequipmentabstracts_attributes][#{i}][maquinariaequipodetalles_attributes][#{k}][horas_efectivas]", nil, value: "#{horas_efectivas}" %>
+        <% if fila[6].blank? %>
+          <% suministro = '-' %>
+        <% else %>
+          <% suministro = fila[6] %>
+        <% end %>
+        <%= hidden_field_tag "reportedemaquinaria[machineryequipmentabstracts_attributes][#{i}][maquinariaequipodetalles_attributes][#{k}][suministro]", nil, value: "#{suministro}" %>
+        <% if fila[7].blank? %>
+          <% combustible = '-' %>
+        <% else %>
+          <% combustible = format('%.2f',fila[7].to_f) %>
+        <% end %>
+        <%= hidden_field_tag "reportedemaquinaria[machineryequipmentabstracts_attributes][#{i}][maquinariaequipodetalles_attributes][#{k}][combustible]", nil, value: "#{combustible}" %>
+        <% k += 1 %>     
+      <% end %>
+      <% i+= 1 %>      
+    <% end %>
+
+    <%= button_tag(type: "submit", class: "btn btn-success") do %>
+      <i class="icon-user icon-white"></i> Guardar Valorizacion 
+    <% end %>
+  <% end %>
+
+  <%= link_to raw("<i class='icon-arrow-left icon-white'></i> Regresar"), production_reportofmachineries_path, class: 'btn btn-primary' %>
+    
+
+
+
+
+
+
+
+
+
+  
+
+<% elsif @pase == 2 %>
+  <h3>Error Ingresando Datos..</h3>
+<% elsif @pase == 3 %>
+  <h3>Rango de Fecha no Valido</h3>
+  <p>Ultima valorizacion
+    <span class="label label-info"><%= @valorize_actual.inicio.to_date.strftime("%d %b") %> - <%= @valorize_actual.fin.to_date.strftime("%d %b") %></span>
+    y ustede esta valorizando
+    <span class="label label-warning"><%= @inicio.to_date.strftime("%d %b") %> - <%= @fin.to_date.strftime("%d %b") %></span>
+  </p>
+<% end %>
+<br>
+<br>

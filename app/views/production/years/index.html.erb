@@ -1,0 +1,27 @@
+<h1>Calendario</h1>
+
+<div class="row">
+<table class="table table-striped table-condensed table-bordered span6">
+  <tr>
+    <th>#id</th>
+    <th>Nombre</th>
+    <th>Acciones</th>
+  </tr>
+
+<% @years.each do |year| %>
+  <tr>
+    <td><%= year.id %></td>
+    <td><%= year.nombre %></td>
+    <td>
+      <%= link_to raw("<i class='icon-eye-open'></i>"), [:production, year], class: 'btn btn-small' %>
+      <%= link_to raw("<i class='icon-edit'></i>"), edit_production_year_path(year), class: 'btn btn-small' %>
+      <%= link_to raw("<i class='icon-trash'></i>"), [:production,year], method: :delete, data: { confirm: 'Esta Seguro que desea Eliminar?' }, class: 'btn btn-small' %>
+    </td>
+  </tr>
+<% end %>
+</table>
+</div>
+
+<br />
+
+<%= link_to raw("<i class='icon-calendar icon-white'></i> Nuevo año"), new_production_year_path, class: 'btn btn-primary' %>

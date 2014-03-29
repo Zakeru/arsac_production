@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  frente: MyString
+  ejecutor: MyString
+  jefe_de_frente: MyString
+  proveedore_id: 1
+  numero: 1
+  fecha: 2013-08-20
+  maestro_de_obra: MyString
+
+two:
+  frente: MyString
+  ejecutor: MyString
+  jefe_de_frente: MyString
+  proveedore_id: 1
+  numero: 1
+  fecha: 2013-08-20
+  maestro_de_obra: MyString

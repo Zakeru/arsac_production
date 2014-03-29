@@ -1,0 +1,45 @@
+<%= form_for(@maquinariaequiporesumene) do |f| %>
+  <% if @maquinariaequiporesumene.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@maquinariaequiporesumene.errors.count, "error") %> prohibited this maquinariaequiporesumene from being saved:</h2>
+
+      <ul>
+      <% @maquinariaequiporesumene.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :numero %><br />
+    <%= f.text_field :numero %>
+  </div>
+  <div class="field">
+    <%= f.label :equipo %><br />
+    <%= f.text_field :equipo %>
+  </div>
+  <div class="field">
+    <%= f.label :fecha %><br />
+    <%= f.text_field :fecha %>
+  </div>
+  <div class="field">
+    <%= f.label :horometro_horas %><br />
+    <%= f.text_field :horometro_horas %>
+  </div>
+  <div class="field">
+    <%= f.label :horas_efectivas %><br />
+    <%= f.text_field :horas_efectivas %>
+  </div>
+  <div class="field">
+    <%= f.label :combustible %><br />
+    <%= f.text_field :combustible %>
+  </div>
+  <div class="field">
+    <%= f.label :maquinariaequipo_id %><br />
+    <%= f.number_field :maquinariaequipo_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

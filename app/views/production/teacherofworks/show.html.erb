@@ -1,0 +1,60 @@
+<p id="notice"><%= notice %></p>
+
+<div class="page-header">
+  <h2>Detalle Maestro de Obra</h2>
+</div>
+
+<div class="row">
+<table class="table table-striped table-bordered table-condensed table-hover span6">
+  <tr>
+    <th>Nombre</th>
+    <th>Descripcion</th>
+  </tr>
+  <tr>
+    <td>#id</td>
+    <td><%= @teacherofwork.id %></td>
+  </tr> 
+  <tr>
+    <td>Nombre</td>
+    <td>
+      <%= @teacherofwork.entity.nombre %>
+      <%= @teacherofwork.entity.apellido %>
+      <%= @teacherofwork.entity.razon_social %>
+    </td>
+  </tr>
+  <tr>
+    <td>Movil</td>
+    <td><%= @teacherofwork.movil %></td>
+  </tr>
+  <tr>
+    <td>Telefono</td>
+    <td><%= @teacherofwork.telefono %></td>
+  </tr>
+  <tr>         
+    <td>Fecha de Nacimiento</td>
+    <td><%= @teacherofwork.nacimiento %></td>
+  </tr>
+  <tr>
+    <td>Correo</td>
+    <td><%= @teacherofwork.correo %></td>
+  </tr>
+  <tr>
+    <td>Foto</td>
+    <td><%= @teacherofwork.foto %></td>
+  </tr>
+  <tr>
+    <td>Ruc</td>
+    <td><%= @teacherofwork.ruc %></td>
+  </tr>
+  <tr>
+    <td>Banco</td>
+    <td><%= @teacherofwork.banco_1 %></td>
+  </tr>
+</table>
+</div>
+
+<div class="form-actions">
+  <%= link_to raw('<i class="icon-edit icon-white"></i> Editar'), edit_production_teacherofwork_path(@teacherofwork), :class => "btn btn-success" %>
+  <%= link_to raw('<i class="icon-arrow-left icon-white"></i> Regresar'), production_teacherofworks_path, :class => "btn btn-primary" %>  
+</div>
+

@@ -1,0 +1,33 @@
+<h1>Listing vmanodeobras</h1>
+
+<table>
+  <tr>
+    <th>Nombre</th>
+    <th>Cantidad</th>
+    <th>Unidad</th>
+    <th>Precio unitario</th>
+    <th>Parcial</th>
+    <th>Valorizacione</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @vmanodeobras.each do |vmanodeobra| %>
+  <tr>
+    <td><%= vmanodeobra.nombre %></td>
+    <td><%= vmanodeobra.cantidad %></td>
+    <td><%= vmanodeobra.unidad %></td>
+    <td><%= vmanodeobra.precio_unitario %></td>
+    <td><%= vmanodeobra.parcial %></td>
+    <td><%= vmanodeobra.valorizacione_id %></td>
+    <td><%= link_to 'Show', vmanodeobra %></td>
+    <td><%= link_to 'Edit', edit_vmanodeobra_path(vmanodeobra) %></td>
+    <td><%= link_to 'Destroy', vmanodeobra, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Vmanodeobra', new_vmanodeobra_path %>

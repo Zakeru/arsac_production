@@ -1,0 +1,33 @@
+<h1>Listing vequipos</h1>
+
+<table>
+  <tr>
+    <th>Nombre</th>
+    <th>Cantidad</th>
+    <th>Unidad</th>
+    <th>Precio unitario</th>
+    <th>Parcial</th>
+    <th>Valorizacione</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @vequipos.each do |vequipo| %>
+  <tr>
+    <td><%= vequipo.nombre %></td>
+    <td><%= vequipo.cantidad %></td>
+    <td><%= vequipo.unidad %></td>
+    <td><%= vequipo.precio_unitario %></td>
+    <td><%= vequipo.parcial %></td>
+    <td><%= vequipo.valorizacione_id %></td>
+    <td><%= link_to 'Show', vequipo %></td>
+    <td><%= link_to 'Edit', edit_vequipo_path(vequipo) %></td>
+    <td><%= link_to 'Destroy', vequipo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Vequipo', new_vequipo_path %>

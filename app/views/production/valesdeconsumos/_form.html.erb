@@ -1,0 +1,112 @@
+<%= form_for(@valesdeconsumo, :html => {:class => "form-horizontal"}) do |f| %>
+
+  <% if @valesdeconsumo.errors.any? %>
+    <div class="alert alert-error">    
+      <h2><%= pluralize(@valesdeconsumo.errors.count, "Error") %> Cometido al Guardar Vale de Consumo:</h2>
+      <ul>
+      <% @valesdeconsumo.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+    <div class="control-group">
+      <div class="control-label">
+        <%= f.label :grupo_trabajo %>
+      </div>
+      <div class="controls">
+        <%= f.select :gruposdetrabajo_id, Gruposdetrabajo.where("activo = ?", 'Si').collect {|x| 
+            [ "#{x.id}.-  
+              #{x.jefedefrente.ente.nombre} #{x.jefedefrente.ente.apellido} #{x.jefedefrente.ente.razon_social} - 
+              #{x.subcontrato.proveedore.ente.nombre} #{x.subcontrato.proveedore.ente.apellido} #{x.subcontrato.proveedore.ente.razon_social} - 
+              #{x.maestrodeobra.ente.nombre} #{x.maestrodeobra.ente.apellido} #{x.maestrodeobra.ente.razon_social}", x.id]}, {:include_blank => 'SECTOR - SUBSECTOR - JEFEDEFRENTE - EJECUTOR - MAESTRODEOBRA'}, {:style => 'font-size: 11px;', :class => "span9"} %>
+      </div>      
+    </div>
+    
+    <div class='control-group'>
+      <div class='control-label'>
+        <%= f.label :frente %>
+      </div>
+      <div class='controls'>
+        <%= f.select :frente_id, Frente.all.collect{|x| [x.nombre, x.id]}, include_blank: 'Seleccione' %>
+      </div>
+    </div>
+
+
+      <div class="control-group">
+        <div class="control-label">
+          <%= f.label :numero_vale %>  
+        </div>
+        <div class="controls">
+          <%= f.number_field :numero_vale, :class => "span1", :placeholder => "105" %>            
+        </div>    
+      </div>
+      <div class="control-group">
+        <div class="control-label">
+          <%= f.label :tipo_vale %>     
+        </div>
+        <div class="controls">
+          <%= f.select :tipo_vale, [
+                                        ['Agregado', 'agregado'],
+                                        ['Eliminacion', 'eliminacion'],
+                                        ['Agua', 'agua']
+              ], {:include_blank => "Tipo de Vale"}, {:class => "span2"} %>   
+        </div>    
+      </div>
+      <div class="control-group">
+        <div class="control-label">
+          <%= f.label :tipo_material %>  
+        </div>
+        <div class="controls">
+        <%= f.select :tipo_material, [
+                                            ['Arena Para Cama','arena_para_cama'],
+                                            ['Material De Relleno','material_de_relleno'],
+                                            ['Piedra Chancada','piedra_chancada'],
+                                            ['Arena Gruesa','arena_gruesa'],
+                                            ['Arena Fina','arena_fina'],
+                                            ['Eliminacion','eliminacion'],
+                                            ['Agua','agua']
+              ], {:include_blank => "Tipo de Material"}, :class => "span2" %>
+        </div>    
+      </div>
+      <div class="control-group">
+        <div class="control-label">
+          <%= f.label :proveedor %>  
+        </div>
+        <div class="controls">
+          <%= f.select :proveedore_id, Proveedore.all.collect {|x| ["#{x.ente.nombre} #{x.ente.apellido} #{x.ente.razon_social}", x.id]}, {:include_blank => 'Seleccion Proveedor'} %>  
+        </div>    
+      </div>      
+      <div class="control-group">
+        <div class="control-label">
+          <%= f.label :cantidad %>  
+        </div>
+        <div class="controls">
+          <%= f.text_field :cantidad, :class => "span1", :placeholder => "12.71" %>  
+        </div>    
+      </div>
+      <div class="control-group">
+        <div class="control-label">
+              <%= f.label :fecha_de_ingreso %>
+          </div>
+          <div class="controls">
+            <%= f.text_field :fecha_de_ingreso, :placeholder => "Fecha de Ingreso" %>
+        </div>
+      </div>
+      <div class="control-group">
+        <div class="controls">
+          <%= f.submit :class => "btn btn-success" %>  
+        </div>    
+      </div>
+
+<% end %>
+
+<script type="text/javascript">
+  $('#valesdeconsumo_fecha_de_ingreso').datepicker({
+      format: 'yyyy-mm-dd',
+      language: 'es',
+      autoclose: true      
+  });
+</script>

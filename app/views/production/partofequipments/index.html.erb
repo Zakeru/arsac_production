@@ -1,0 +1,99 @@
+<div class="row">
+  <div class="span6">
+    <h1>Equipos <small>Parte de Diario</small> <%= image_tag('glyphicons_045_calendar.png') %></h1>
+  </div>
+  <div class="span6">
+    <br>
+    <%= link_to raw("Nuevo <i class='icon-plus icon-white'></i>"), new_production_partofequipment_path, :class => 'btn btn-primary pull-right' %>
+  </div>
+</div>
+<br>
+<div class="row">
+  <div class="span6">
+    <!-- Paginacion-->
+    <div class="pull-left">
+      <%= will_paginate @partofequipments, renderer: BootstrapPagination::Rails %>  
+    </div>    
+    <!-- End Paginacion -->    
+  </div>
+  <div class="span6">
+    <!-- Search-->
+    <%= form_tag "/production/partofequipments", :method => 'get', :class => "form-search pull-right well", :style => "padding:4px;" do %>
+        <% if !params[:partedeequipo_campo].nil? and !params[:partedeequipo_opcion].nil? %>
+            <% partedeequipo_campo = params[:partedeequipo_campo] %>
+            <% partedeequipo_opcion = params[:partedeequipo_opcion] %>
+            <% preselect_opcion = partedeequipo_opcion %>
+            <% if partedeequipo_campo.to_i == 1 %>
+              <% preselect_campo = 1 %>
+            <% elsif partedeequipo_campo.to_i == 2 %>
+              <% preselect_campo = 2 %>
+            <% elsif partedeequipo_campo.to_i == 3 %>
+              <% preselect_campo = 3 %>
+            <% elsif partedeequipo_campo.to_i == 4 %>
+              <% preselect_campo = 4 %>
+            <% end %>
+        <% else %>
+            <% preselect_opcion = 0 %>
+            <% preselect_campo = 0 %>
+        <% end %>
+      
+        <%= select_tag :partedeequipo_campo, options_for_select([['Numero', 1], ['Subcontato de Equipo', 2], ['Equipo', 3], ['Fecha', 4]],preselect_campo), :prompt => "Seleccione",  :class => 'input-medium' %>
+              <%= select_tag :partedeequipo_opcion, options_for_select(@combo_opcions,preselect_opcion), :prompt => "Seleccione",  :class => 'input-xlarge' %>
+            <%= button_tag(type: "submit", class: "btn ") do %> <i class="icon-search"></i> Buscar<% end %>     
+    <% end %>
+    <!-- End Search -->      
+  </div>
+</div>
+
+<table class="table table-bordered table-condensed table-hover" style="font-size: 12px;" >
+  <tr class="well">    
+    <th>Numero</th>
+    <th>Subcontratodeequipo</th>
+    <th>Codigo(subceq) - Insumo</th>
+    <th>T. Horas Efectivas</th>
+    <th>Fecha</th>
+    <th>Acciones</th>
+  </tr>
+
+<% @partofequipments.each do |partofequipment| %>
+  <tr>    
+    <td><%= partofequipment.numero %></td>
+    <td>
+      <%= partofequipment.subcontractofequipment.supplier.entity.nombre %>
+      <%= partofequipment.subcontractofequipment.supplier.entity.apellido %>
+      <%= partofequipment.subcontractofequipment.supplier.entity.razon_social %>
+    </td>
+    <td>
+      <%= partofequipment.equipmentsofsubcontract.codigo %> - <%= partofequipment.equipmentsofsubcontract.inputofequipment.nombre %> 
+    </td>
+    <td style="text-align: right;">
+      <% sumariza_total_efectivas = 0.0 %>
+      <% partofequipment.equipmentregisters.each do |equipmentregister| %>
+        <% sumariza_total_efectivas += equipmentregister.cantidad.to_f %>
+      <% end %>
+      <%= number_to_currency sumariza_total_efectivas, unit: '' %>
+    </td>
+    <td><%= l(partofequipment.fecha.to_date, format: :long) %></td>
+    <td>
+      <%= link_to raw("<i class='icon-eye-open icon-white'></i>"), [:production,partofequipment], :class => 'btn btn-mini btn-info' %>
+      <% if partofequipment.aprobado.blank? %>
+        <%= link_to raw("<i class='icon-edit icon-white'></i>"), edit_production_partofequipment_path(partofequipment), :class => 'btn btn-mini btn-success' %>  
+        <%= link_to raw("<i class='icon-trash icon-white'></i>"), [:production,partofequipment], method: :delete, data: { confirm: 'Esta seguro que desea Eliminar?' }, :class => 'btn btn-mini btn-danger' %>      
+      <% else %>
+        <button class="btn btn-mini btn-success disabled" type="button"><i class='icon-edit icon-white'></i></button>   
+        <button class="btn btn-mini btn-danger disabled" type="button"><i class='icon-trash icon-white'></i></button>     
+      <% end %>      
+      
+    </td>
+  </tr>
+<% end %>
+</table>
+
+<div class="pull-right">
+  <%= will_paginate @partofequipments, renderer: BootstrapPagination::Rails %>  
+</div>
+<div class="clearfix"></div>
+
+<script type="text/javascript">
+  $(document).ready(function() { $("#partofequipment_opcion").select2(); });
+</script>

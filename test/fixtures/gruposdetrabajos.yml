@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  sectore_id: 1
+  subsectore_id: 1
+  jefedefrente_id: 1
+  proveedore_id: 1
+  maestrodeobra_id: 1
+
+two:
+  sectore_id: 1
+  subsectore_id: 1
+  jefedefrente_id: 1
+  proveedore_id: 1
+  maestrodeobra_id: 1

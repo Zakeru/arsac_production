@@ -1,0 +1,27 @@
+<div class="page-header">
+  <h1 style="text-align: center;">Cuadro Resumen de Mano de Obra</h1>
+</div>  
+  <div class="row">
+  <table class="table table-bordered table-condensed table-hover span7" style="margin: 0 auto; float: none;">
+    <tr class="well">
+      <td colspan="5">
+        <h3 style="text-align: center;"><%= @subcontrato_nombre %> <small><%= params[:inicio].to_date.strftime("%d %b") %> - <%= params[:fin].to_date.strftime("%d %b. %Y") %></small></h3>
+      </td>
+    </tr>
+    <% manodeobra_sumariza = 0 %>
+    <% @vmanodeobras.each do |manodeobra| %>
+      <tr style="font-size:12px;">
+        <td><%= manodeobra.nombre %></td>
+        <td style="text-align: right;"><%= number_with_precision manodeobra.cantidad, :precision => 2 %></td>
+        <td style="text-align: right;"><%= manodeobra.unidad %></td>
+        <td style="text-align: right;"><%= number_with_precision manodeobra.precio_unitario, :precision => 2 %></td>
+        <td style="text-align: right;"><%= number_with_precision manodeobra.parcial, :precision => 2 %></td>
+      </tr>
+      <% manodeobra_sumariza += manodeobra.parcial.to_f %>
+    <% end %>
+    <tr class="well">
+      <td colspan="4"><b>Total</b></td>
+      <td style="text-align: right;"><b><%= number_to_currency manodeobra_sumariza, unit: '' %></b></td>
+    </tr>
+  </table>
+  </div>  

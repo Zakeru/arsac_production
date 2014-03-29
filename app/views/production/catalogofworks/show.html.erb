@@ -1,0 +1,64 @@
+<p id="notice"><%= notice %></p>
+
+<div class="page-header">
+	<h1>Trabajador<small>: <%= @catalogofwork.entity.nombre %>, <%= @catalogofwork.entity.apellido %></small></h1>
+</div>
+
+<div class="row">
+<table class="table table-bordered table-striped table-condensed table-hover span6">
+	<tr>
+		<th>Nombre</th>
+		<th>Descripcion</th>
+	</tr>
+	<tr>
+		<td>#id</td>
+		<td><%= @catalogofwork.id %></td>
+	</tr>
+	<tr>
+		<td>Apellidos y Nombres</td>
+		<td><%= @catalogofwork.entity.nombre %>, <%= @catalogofwork.entity.apellido %></td>
+	</tr>
+	<tr>
+		<td>dni o razon social</td>
+		<td><%= @catalogofwork.entity.dni %></td>
+	</tr>
+	<tr>
+		<td>Telefono</td>
+		<td><%= @catalogofwork.telefono %></td>
+	</tr>
+	<tr>
+		<td>Movil</td>
+		<td><%= @catalogofwork.movil %></td>
+	</tr>
+	<tr>
+		<td>Direccion</td>
+		<td><%= @catalogofwork.direccion %></td>
+	</tr>
+	<tr>
+		<td>Email</td>
+		<td><%= @catalogofwork.mail %></td>
+	</tr>
+	<tr>
+		<td>Banco</td>
+		<td><%= @catalogofwork.banco %></td>
+	</tr>
+	<tr>
+		<td>Numero de Cuenta</td>
+		<td><%= @catalogofwork.numero_cuenta %></td>
+	</tr>
+	<tr>
+		<td>Banco</td>
+		<td><%= @catalogofwork.banco %></td>
+	</tr>
+	<tr>
+		<td>Fecha de nacimiento</td>
+		<td><%= @catalogofwork.fecha_nacimiento %></td>
+	</tr>
+</table>
+</div>
+<div class="form-actions">
+	<%= link_to raw('<i class="icon-edit icon-white"></i> Editar') , edit_production_catalogofwork_path(@catalogofwork), :class => "btn btn-success" %>
+	<%= link_to raw('<i class="icon-arrow-left icon-white"></i> Regresar'), production_catalogofworks_path, :class => "btn btn-primary" %>	
+</div>
+
+

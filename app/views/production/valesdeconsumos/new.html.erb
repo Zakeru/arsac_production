@@ -1,0 +1,18 @@
+<% if !notice.nil? %>
+<div class="alert alert-success">
+	<p id="notice"><%= notice %></p>	
+</div>
+<% end %>
+
+<div class="page-header">
+	<h1>
+		Nuevo Vale de Consumo
+	</h1>
+</div>
+
+<%= render 'form' %>
+
+<div class="form-actions">
+	<%= link_to raw('<i class="icon-arrow-left icon-white"></i> Regresar'), valesdeconsumos_path, :class => "btn btn-primary" %>
+</div>
+

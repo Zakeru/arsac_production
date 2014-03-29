@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  codigo_tobi: MyString
+  nombre: MyString
+  unidade_id: 1
+  cantidad: MyString
+  precio: MyString
+
+two:
+  codigo_tobi: MyString
+  nombre: MyString
+  unidade_id: 1
+  cantidad: MyString
+  precio: MyString
